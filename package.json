@@ -1,0 +1,718 @@
+{
+  "name": "vscode-arduino-app-cli",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "license": "MIT",
+  "publisher": "linucs",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1E1E2E",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/linucs/vscode-arduino-app-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/linucs/vscode-arduino-app-cli/issues"
+  },
+  "homepage": "https://github.com/linucs/vscode-arduino-app-cli#readme",
+  "keywords": [
+    "arduino",
+    "arduino-app-cli",
+    "app-lab",
+    "uno-q",
+    "bricks",
+    "embedded",
+    "microcontroller",
+    "python",
+    "edge-impulse",
+    "iot"
+  ],
+  "engines": {
+    "vscode": "^1.120.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "l10n": "./l10n",
+  "extensionKind": [
+    "workspace"
+  ],
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "yarn run check-types && yarn run lint && yarn run check-l10n && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "yarn run check-types && yarn run lint && yarn run check-l10n && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "check-types": "tsc --noEmit",
+    "check-l10n": "node scripts/check-l10n.js",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "deploy:remote": "bash scripts/deploy-remote.sh",
+    "vsix": "vsce package --no-dependencies",
+    "publish:vsce": "vsce publish --no-dependencies",
+    "publish:ovsx": "ovsx publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.120.0",
+    "@types/ws": "^8.5.13",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.1",
+    "esbuild": "^0.27.3",
+    "eslint": "^9.39.3",
+    "npm-run-all": "^4.1.5",
+    "ovsx": "^0.10.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "appLab",
+          "title": "%viewContainer.appLab%",
+          "icon": "images/activitybar.svg"
+        }
+      ]
+    },
+    "views": {
+      "appLab": [
+        {
+          "id": "appLab.apps",
+          "name": "%view.apps%"
+        },
+        {
+          "id": "appLab.bricks",
+          "name": "%view.bricks%"
+        },
+        {
+          "id": "appLab.models",
+          "name": "%view.models%"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "appLab.showVersion",
+        "title": "%command.showVersion%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.reconnect",
+        "title": "%command.reconnect%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.showConfig",
+        "title": "%command.showConfig%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.editProperty",
+        "title": "%command.editProperty%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.addProperty",
+        "title": "%command.addProperty%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.deleteProperty",
+        "title": "%command.deleteProperty%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.checkUpdate",
+        "title": "%command.checkUpdate%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.applyUpdate",
+        "title": "%command.applyUpdate%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.showResources",
+        "title": "%command.showResources%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.system.init",
+        "title": "%command.system.init%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.cleanup",
+        "title": "%command.cleanup%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.system.networkMode",
+        "title": "%command.system.networkMode%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.system.keyboard",
+        "title": "%command.system.keyboard%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.system.setName",
+        "title": "%command.system.setName%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.installAiAssistant",
+        "title": "%command.installAiAssistant%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.refreshApps",
+        "title": "%command.refreshApps%",
+        "category": "Arduino App",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "appLab.newApp",
+        "title": "%command.newApp%",
+        "category": "Arduino App",
+        "icon": "$(add)"
+      },
+      {
+        "command": "appLab.importApp",
+        "title": "%command.importApp%",
+        "category": "Arduino App",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "appLab.app.start",
+        "title": "%command.app.start%",
+        "category": "Arduino App",
+        "icon": "$(run)"
+      },
+      {
+        "command": "appLab.app.stop",
+        "title": "%command.app.stop%",
+        "category": "Arduino App",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "appLab.app.restart",
+        "title": "%command.app.restart%",
+        "category": "Arduino App",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "appLab.app.destroy",
+        "title": "%command.app.destroy%",
+        "category": "Arduino App",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "appLab.app.logs",
+        "title": "%command.app.logs%",
+        "category": "Arduino App",
+        "icon": "$(output)"
+      },
+      {
+        "command": "appLab.app.export",
+        "title": "%command.app.export%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.app.clone",
+        "title": "%command.app.clone%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.app.rename",
+        "title": "%command.app.rename%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.app.edit",
+        "title": "%command.app.edit%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.app.openExposedPort",
+        "title": "%command.app.openExposedPort%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.app.revealInExplorer",
+        "title": "%command.app.revealInExplorer%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.app.cleanCache",
+        "title": "%command.app.cleanCache%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.getDefaultApp",
+        "title": "%command.getDefaultApp%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.setDefaultApp",
+        "title": "%command.setDefaultApp%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.refreshBricks",
+        "title": "%command.refreshBricks%",
+        "category": "Arduino App",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "appLab.app.addBrick",
+        "title": "%command.app.addBrick%",
+        "category": "Arduino App",
+        "icon": "$(add)"
+      },
+      {
+        "command": "appLab.brick.remove",
+        "title": "%command.brick.remove%",
+        "category": "Arduino App",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "appLab.brick.rename",
+        "title": "%command.brick.rename%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.brick.configure",
+        "title": "%command.brick.configure%",
+        "category": "Arduino App",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "appLab.brick.showDetails",
+        "title": "%command.brick.showDetails%",
+        "category": "Arduino App",
+        "icon": "$(info)"
+      },
+      {
+        "command": "appLab.refreshModels",
+        "title": "%command.refreshModels%",
+        "category": "Arduino App",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "appLab.model.import",
+        "title": "%command.model.import%",
+        "category": "Arduino App",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "appLab.model.delete",
+        "title": "%command.model.delete%",
+        "category": "Arduino App",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "appLab.model.showDetails",
+        "title": "%command.model.showDetails%",
+        "category": "Arduino App",
+        "icon": "$(info)"
+      },
+      {
+        "command": "appLab.app.addSketchLib",
+        "title": "%command.app.addSketchLib%",
+        "category": "Arduino App",
+        "icon": "$(add)"
+      },
+      {
+        "command": "appLab.sketchLib.remove",
+        "title": "%command.sketchLib.remove%",
+        "category": "Arduino App",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "appLab.app.refreshSketchLibs",
+        "title": "%command.app.refreshSketchLibs%",
+        "category": "Arduino App",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "appLab.openMonitor",
+        "title": "%command.openMonitor%",
+        "category": "Arduino App",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "appLab.setMonitorLineEnding",
+        "title": "%command.setMonitorLineEnding%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.saveMonitorLog",
+        "title": "%command.saveMonitorLog%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.configureIntelliSense",
+        "title": "%command.configureIntelliSense%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.python.createVenv",
+        "title": "%command.python.createVenv%",
+        "category": "Arduino App"
+      },
+      {
+        "command": "appLab.python.setupStubs",
+        "title": "%command.python.setupStubs%",
+        "category": "Arduino App"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "appLab.newApp",
+          "when": "view == appLab.apps",
+          "group": "navigation@0"
+        },
+        {
+          "command": "appLab.importApp",
+          "when": "view == appLab.apps",
+          "group": "navigation@1"
+        },
+        {
+          "command": "appLab.refreshApps",
+          "when": "view == appLab.apps",
+          "group": "navigation@2"
+        },
+        {
+          "command": "appLab.refreshBricks",
+          "when": "view == appLab.bricks",
+          "group": "navigation@0"
+        },
+        {
+          "command": "appLab.model.import",
+          "when": "view == appLab.models",
+          "group": "navigation@0"
+        },
+        {
+          "command": "appLab.refreshModels",
+          "when": "view == appLab.models",
+          "group": "navigation@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "appLab.app.start",
+          "when": "view == appLab.apps && viewItem == app:stopped",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.app.stop",
+          "when": "view == appLab.apps && viewItem == app:running",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.app.logs",
+          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "group": "inline@1"
+        },
+        {
+          "command": "appLab.app.restart",
+          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "group": "1_run@0"
+        },
+        {
+          "command": "appLab.openMonitor",
+          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "group": "1_run@1"
+        },
+        {
+          "command": "appLab.app.revealInExplorer",
+          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "group": "2_app@0"
+        },
+        {
+          "command": "appLab.app.clone",
+          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "group": "2_app@1"
+        },
+        {
+          "command": "appLab.app.export",
+          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "group": "2_app@2"
+        },
+        {
+          "command": "appLab.app.rename",
+          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
+          "group": "2_app@3"
+        },
+        {
+          "command": "appLab.app.edit",
+          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
+          "group": "2_app@4"
+        },
+        {
+          "command": "appLab.app.openExposedPort",
+          "when": "view == appLab.apps && viewItem == app:running",
+          "group": "2_app@5"
+        },
+        {
+          "command": "appLab.setDefaultApp",
+          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
+          "group": "3_default@0"
+        },
+        {
+          "command": "appLab.app.cleanCache",
+          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "group": "4_danger@0"
+        },
+        {
+          "command": "appLab.app.destroy",
+          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
+          "group": "4_danger@1"
+        },
+        {
+          "command": "appLab.app.addBrick",
+          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
+          "group": "1_add@0"
+        },
+        {
+          "command": "appLab.app.addSketchLib",
+          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
+          "group": "1_add@1"
+        },
+        {
+          "command": "appLab.brick.showDetails",
+          "when": "view == appLab.bricks && viewItem == catalogBrick",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.app.addBrick",
+          "when": "view == appLab.bricks && viewItem == catalogBrick",
+          "group": "1_brick@0"
+        },
+        {
+          "command": "appLab.model.delete",
+          "when": "view == appLab.models && viewItem == model:custom",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.model.showDetails",
+          "when": "view == appLab.models && viewItem =~ /^model:/",
+          "group": "1_model@0"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "appLab.app.start",
+          "when": "appLab.activeAppStatus == stopped",
+          "group": "navigation@0"
+        },
+        {
+          "command": "appLab.app.stop",
+          "when": "appLab.activeAppStatus == running",
+          "group": "navigation@0"
+        },
+        {
+          "command": "appLab.app.logs",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "navigation@1"
+        },
+        {
+          "command": "appLab.openMonitor",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "navigation@2"
+        },
+        {
+          "command": "appLab.app.addBrick",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "1_app@0"
+        },
+        {
+          "command": "appLab.app.addSketchLib",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "1_app@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "appLab.app.start",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.stop",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.restart",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.destroy",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.logs",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.export",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.clone",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.rename",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.edit",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.openExposedPort",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.revealInExplorer",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.cleanCache",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.addBrick",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.addSketchLib",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.refreshSketchLibs",
+          "when": "false"
+        },
+        {
+          "command": "appLab.brick.remove",
+          "when": "false"
+        },
+        {
+          "command": "appLab.brick.rename",
+          "when": "false"
+        },
+        {
+          "command": "appLab.brick.configure",
+          "when": "false"
+        },
+        {
+          "command": "appLab.brick.showDetails",
+          "when": "false"
+        },
+        {
+          "command": "appLab.sketchLib.remove",
+          "when": "false"
+        },
+        {
+          "command": "appLab.model.delete",
+          "when": "false"
+        },
+        {
+          "command": "appLab.model.showDetails",
+          "when": "false"
+        },
+        {
+          "command": "appLab.setDefaultApp",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Arduino App",
+      "properties": {
+        "appLab.daemon.host": {
+          "type": "string",
+          "default": "127.0.0.1",
+          "description": "%config.daemon.host%"
+        },
+        "appLab.daemon.port": {
+          "type": "number",
+          "default": 8800,
+          "description": "%config.daemon.port%"
+        },
+        "appLab.cliPath": {
+          "type": "string",
+          "default": "arduino-app-cli",
+          "description": "%config.cliPath%"
+        },
+        "appLab.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "%config.apiKey%"
+        },
+        "appLab.monitor.lineEnding": {
+          "type": "string",
+          "enum": [
+            "none",
+            "lf",
+            "cr",
+            "crlf"
+          ],
+          "default": "lf",
+          "description": "%config.monitor.lineEnding%"
+        },
+        "appLab.monitor.autoReconnect": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.monitor.autoReconnect%"
+        },
+        "appLab.logs.tail": {
+          "type": "number",
+          "default": 200,
+          "description": "%config.logs.tail%"
+        },
+        "appLab.updateNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.updateNotifications%"
+        },
+        "appLab.intellisense.autoConfigure": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.intellisense.autoConfigure%"
+        },
+        "appLab.arduinoCliPath": {
+          "type": "string",
+          "default": "",
+          "description": "%config.arduinoCliPath%"
+        },
+        "appLab.python.manageVenv": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config.python.manageVenv%"
+        }
+      }
+    }
+  }
+}

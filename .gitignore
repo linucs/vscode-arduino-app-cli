@@ -1,0 +1,12 @@
+node_modules/
+dist/
+out/
+.vscode-test/
+*.vsix
+.DS_Store
+*.log
+.claude/**
+!.claude/skills/
+!.claude/skills/arduino-app-cli/
+!.claude/skills/arduino-app-cli/**
+CLAUDE.md
