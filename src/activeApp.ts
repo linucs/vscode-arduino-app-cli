@@ -1,14 +1,15 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as vscode from "vscode";
-import { isAppRunning, type AppInfo, type AppStatus } from "./api/types";
+import { isAppRunning, type AppInfo } from "./api/types";
 import { activeDocumentUri } from "./workspaceRoot";
 
 /**
  * Tracks the "current app" — the app that owns the active editor file — mirroring
  * App Lab's app-scoped Run/Stop. Resolution walks the active file's path up to
- * the nearest `app.yaml`; if no editor maps to an app, the last app selected in
- * the Apps tree is used as a fallback.
+ * the nearest `app.yaml`, then asks the {@link AppRegistry} which app owns that
+ * directory. The registry holds the freshest status (kept current by the SSE),
+ * so {@link current} always reflects live state.
  *
  * Publishes two context keys that gate the editor toolbar and status bar:
  *  - `appLab.activeApp`        the app id (or "")
@@ -18,11 +19,10 @@ export class ActiveAppTracker {
   private readonly emitter = new vscode.EventEmitter<void>();
   readonly onDidChange = this.emitter.event;
 
-  private appPath: string | undefined;
-  private app: AppInfo | undefined;
-  private statusByPath = new Map<string, AppStatus>();
+  /** Directory of the active editor's nearest `app.yaml`, if any. */
+  private appRoot: string | undefined;
 
-  constructor(private readonly findByPath: (p: string) => AppInfo | undefined) {}
+  constructor(private readonly resolve: (appRoot: string) => AppInfo | undefined) {}
 
   /** Wire editor + selection listeners. Returns disposables for subscriptions. */
   register(): vscode.Disposable {
@@ -34,43 +34,21 @@ export class ActiveAppTracker {
 
   /** The resolved current app (with freshest known status), if any. */
   get current(): AppInfo | undefined {
-    if (!this.appPath) {
-      return this.app;
-    }
-    const fromTree = this.findByPath(this.appPath);
-    const app = fromTree ?? this.app;
-    if (!app) {
-      return undefined;
-    }
-    const status = this.statusByPath.get(this.appPath);
-    return status ? { ...app, status } : app;
+    return this.appRoot ? this.resolve(this.appRoot) : undefined;
   }
 
-  /** Explicitly select an app (e.g. from a tree click) as the fallback target. */
-  select(app: AppInfo | undefined): void {
-    this.app = app;
-    this.appPath = app?.path;
-    this.publish();
-  }
-
-  /** Feed live status updates (from the `/apps/events` SSE) so the toolbar tracks. */
-  updateStatus(app: AppInfo): void {
-    if (app.path) {
-      this.statusByPath.set(app.path, app.status);
-    }
-    if (this.app && this.app.id === app.id) {
-      this.app = { ...this.app, ...app };
-    }
+  /**
+   * Re-publish without re-walking the filesystem. Called when the registry
+   * lists or a status event arrives, so the toolbar/status bar reflect the
+   * active app as soon as it becomes known and flip on every status change.
+   */
+  reresolve(): void {
     this.publish();
   }
 
   private refreshFromEditor(): void {
     const uri = activeDocumentUri();
-    const appRoot = uri && uri.scheme === "file" ? findAppRoot(uri.fsPath) : undefined;
-    if (appRoot) {
-      this.appPath = appRoot;
-      this.app = this.findByPath(appRoot) ?? this.app;
-    }
+    this.appRoot = uri && uri.scheme === "file" ? findAppRoot(uri.fsPath) : undefined;
     this.publish();
   }
 

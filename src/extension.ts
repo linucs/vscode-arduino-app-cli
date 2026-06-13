@@ -7,7 +7,9 @@ import { ModelManager } from "./modelManager";
 import { SketchLibManager } from "./sketchLibManager";
 import { SystemManager } from "./systemManager";
 import { SerialMonitor } from "./monitor";
-import { AppsTreeProvider, type AppsNode } from "./appsView";
+import { AppRegistry } from "./appRegistry";
+import { ExamplesTreeProvider } from "./examplesView";
+import { AppBricksTreeProvider } from "./appBricksView";
 import { BricksTreeProvider } from "./bricksView";
 import { ModelsTreeProvider } from "./modelsView";
 import { ActiveAppTracker } from "./activeApp";
@@ -28,9 +30,11 @@ interface Ready {
 let context: vscode.ExtensionContext;
 let output: vscode.OutputChannel;
 let daemon: DaemonManager;
+let registry: AppRegistry;
 let activeTracker: ActiveAppTracker;
 let statusBar: StatusBar;
-let appsView: AppsTreeProvider;
+let examplesView: ExamplesTreeProvider;
+let appBricksView: AppBricksTreeProvider;
 let bricksView: BricksTreeProvider;
 let modelsView: ModelsTreeProvider;
 
@@ -46,16 +50,28 @@ export function activate(ctx: vscode.ExtensionContext) {
 
   daemon = new DaemonManager(output);
 
-  appsView = new AppsTreeProvider(async () => (await ensureReady())!.client);
+  const clientOf = async () => (await ensureReady())!.client;
+  registry = new AppRegistry(clientOf);
+  examplesView = new ExamplesTreeProvider(clientOf, (apps) => registry.merge(apps));
+  appBricksView = new AppBricksTreeProvider(clientOf, () => activeTracker.current);
   bricksView = new BricksTreeProvider(async () => (await ensureReady())!.bricks.listCatalog());
   modelsView = new ModelsTreeProvider(async () => (await ensureReady())!.models.list());
 
-  activeTracker = new ActiveAppTracker((p) => appsView.findByPath(p));
+  activeTracker = new ActiveAppTracker((root) => registry.resolveByPath(root));
   statusBar = new StatusBar(activeTracker);
-  ctx.subscriptions.push(statusBar, activeTracker.register());
+  ctx.subscriptions.push(statusBar, activeTracker.register(), registry);
+
+  // Once the active app changes, refresh the active-app Bricks & Libraries view;
+  // once the registry lists/updates apps, the editor toolbar can resolve, so
+  // re-run active-app resolution.
+  ctx.subscriptions.push(
+    activeTracker.onDidChange(() => appBricksView.onActiveChanged()),
+    registry.onDidChange(() => activeTracker.reresolve()),
+  );
 
   ctx.subscriptions.push(
-    vscode.window.createTreeView("appLab.apps", { treeDataProvider: appsView }),
+    vscode.window.createTreeView("appLab.appBricks", { treeDataProvider: appBricksView }),
+    vscode.window.createTreeView("appLab.apps", { treeDataProvider: examplesView }),
     vscode.window.createTreeView("appLab.bricks", { treeDataProvider: bricksView }),
     vscode.window.createTreeView("appLab.models", { treeDataProvider: modelsView }),
   );
@@ -75,7 +91,9 @@ export function deactivate() {
 }
 
 function refreshAll(): void {
-  appsView.refresh();
+  void registry.refresh();
+  examplesView.refresh();
+  appBricksView.refresh();
   bricksView.refresh();
   modelsView.refresh();
 }
@@ -138,6 +156,9 @@ async function doEnsureReady(): Promise<Ready | undefined> {
   // instead of a second round-trip.
   statusBar.setConnected(version.version, daemon.baseUrl);
 
+  // Index the user's apps so the active-editor app resolves even though no tree
+  // lists them any more; this also fires the first-load that arms the SSE.
+  void registry.load();
   armStatusEvents(client);
   return ready;
 }
@@ -161,9 +182,9 @@ function armStatusEvents(client: AppLabClient): void {
     clearTimeout(timer);
     subscribeStatusEvents(client);
   };
-  const disposable = appsView.onDidFirstLoad(go);
+  const disposable = registry.onDidFirstLoad(go);
   const timer = setTimeout(go, 1500);
-  if (appsView.hasLoaded()) {
+  if (registry.hasLoaded()) {
     go();
   }
 }
@@ -182,8 +203,8 @@ function subscribeStatusEvents(client: AppLabClient): void {
     while (!ctrl.signal.aborted) {
       try {
         await client.appStatusEvents((app) => {
-          activeTracker.updateStatus(app);
-          appsView.applyStatus(app);
+          registry.applyStatus(app);
+          examplesView.applyStatus(app);
         }, ctrl.signal);
       } catch {
         // fall through to backoff
@@ -193,7 +214,8 @@ function subscribeStatusEvents(client: AppLabClient): void {
       }
       // The stream dropped: a status may have changed while we were away, and
       // the cache can't be patched from events we missed — re-list to resync.
-      appsView.refresh();
+      void registry.refresh();
+      examplesView.refresh();
       await new Promise((r) => setTimeout(r, 3000));
     }
   };
@@ -219,9 +241,6 @@ async function withReady<T>(fn: (d: Ready) => Promise<T> | T): Promise<T | undef
 function appFrom(arg: unknown): AppInfo | undefined {
   if (arg && typeof arg === "object" && "app" in arg) {
     return (arg as { app: AppInfo }).app;
-  }
-  if (arg && typeof arg === "object" && "kind" in arg && (arg as AppsNode).kind === "app") {
-    return (arg as Extract<AppsNode, { kind: "app" }>).app;
   }
   return activeTracker.current;
 }
@@ -328,7 +347,11 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   reg("appLab.app.addSketchLib", (arg) =>
     withReady((d) => withApp(arg, (a) => d.sketchLibs.add(a))),
   );
-  reg("appLab.app.refreshSketchLibs", () => appsView.refresh());
+  reg("appLab.app.refreshSketchLibs", () => appBricksView.refresh());
+  // Reveal the Bricks & Libraries view wherever the user has docked it (Explorer
+  // by default, or the secondary side bar if moved). The `.focus` command is the
+  // one VS Code auto-generates for a contributed view.
+  reg("appLab.showAppBricks", () => vscode.commands.executeCommand("appLab.appBricks.focus"));
   reg("appLab.sketchLib.remove", (arg) => withReady((d) => withAppLib(arg, (a, l) => d.sketchLibs.remove(a, l))));
 
   // Monitor

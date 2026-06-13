@@ -51,11 +51,26 @@ export class AppManager {
     if (!sketch) {
       return;
     }
-    await vscode.window.withProgress(
+    const created = await vscode.window.withProgress(
       { location: vscode.ProgressLocation.Notification, title: vscode.l10n.t("Creating app…") },
       () => this.client.createApp({ name, description: description || undefined, no_sketch: sketch.no_sketch }),
     );
     this.onChanged();
+
+    // Open the new app in its own window. The create response may omit `path`
+    // (like the list endpoint), so fall back to the app detail to resolve it.
+    let folder = created.path;
+    if (!folder) {
+      const detail = await this.client.getApp(created.id).catch(() => undefined);
+      folder = detail?.path;
+    }
+    if (folder) {
+      await vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(folder), {
+        forceNewWindow: true,
+      });
+    } else {
+      vscode.window.showInformationMessage(vscode.l10n.t("Created app {0}.", created.name));
+    }
   }
 
   /**
@@ -290,8 +305,15 @@ export class AppManager {
       vscode.window.showWarningMessage(vscode.l10n.t("Could not resolve the folder for {0}.", app.name));
       return;
     }
-    // Open the app's folder as the workspace root (in this window).
     const uri = vscode.Uri.file(folder);
+    // If the app's folder is already part of the open workspace — whether it is
+    // the sole root or one of several — just reveal and focus it in the Explorer.
+    // Reopening the window would be jarring and pointless when it's right there.
+    if (vscode.workspace.getWorkspaceFolder(uri)) {
+      await vscode.commands.executeCommand("revealInExplorer", uri);
+      return;
+    }
+    // Not in the workspace: open the folder as the workspace root (in this window).
     await vscode.commands.executeCommand("vscode.openFolder", uri, { forceNewWindow: false });
   }
 

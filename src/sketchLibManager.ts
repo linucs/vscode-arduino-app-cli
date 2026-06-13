@@ -64,6 +64,14 @@ export class SketchLibManager {
   }
 
   async remove(app: AppInfo, lib: SketchLibrary): Promise<void> {
+    const ok = await vscode.window.showWarningMessage(
+      vscode.l10n.t('Remove library "{0}" from {1}?', lib.name, app.name),
+      { modal: true },
+      vscode.l10n.t("Remove"),
+    );
+    if (!ok) {
+      return;
+    }
     const ref = lib.version ? `${lib.name}@${lib.version}` : lib.name;
     await this.client.removeSketchLib(app.id, ref, { removeDeps: true });
     this.onChanged();

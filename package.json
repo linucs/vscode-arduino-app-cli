@@ -93,14 +93,20 @@
       ]
     },
     "views": {
+      "explorer": [
+        {
+          "id": "appLab.appBricks",
+          "name": "%view.appBricks%"
+        }
+      ],
       "appLab": [
         {
           "id": "appLab.apps",
-          "name": "%view.apps%"
+          "name": "%view.examples%"
         },
         {
           "id": "appLab.bricks",
-          "name": "%view.bricks%"
+          "name": "%view.brickCatalog%"
         },
         {
           "id": "appLab.models",
@@ -235,12 +241,14 @@
       {
         "command": "appLab.app.export",
         "title": "%command.app.export%",
-        "category": "Arduino App"
+        "category": "Arduino App",
+        "icon": "$(export)"
       },
       {
         "command": "appLab.app.clone",
         "title": "%command.app.clone%",
-        "category": "Arduino App"
+        "category": "Arduino App",
+        "icon": "$(files)"
       },
       {
         "command": "appLab.app.rename",
@@ -265,7 +273,14 @@
       {
         "command": "appLab.app.cleanCache",
         "title": "%command.app.cleanCache%",
-        "category": "Arduino App"
+        "category": "Arduino App",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "appLab.showAppBricks",
+        "title": "%command.showAppBricks%",
+        "category": "Arduino App",
+        "icon": "$(package)"
       },
       {
         "command": "appLab.getDefaultApp",
@@ -389,6 +404,21 @@
     "menus": {
       "view/title": [
         {
+          "command": "appLab.app.addBrick",
+          "when": "view == appLab.appBricks",
+          "group": "navigation@0"
+        },
+        {
+          "command": "appLab.app.addSketchLib",
+          "when": "view == appLab.appBricks",
+          "group": "navigation@1"
+        },
+        {
+          "command": "appLab.app.refreshSketchLibs",
+          "when": "view == appLab.appBricks",
+          "group": "navigation@2"
+        },
+        {
           "command": "appLab.newApp",
           "when": "view == appLab.apps",
           "group": "navigation@0"
@@ -421,84 +451,64 @@
       ],
       "view/item/context": [
         {
-          "command": "appLab.app.start",
-          "when": "view == appLab.apps && viewItem == app:stopped",
-          "group": "inline@0"
-        },
-        {
-          "command": "appLab.app.stop",
-          "when": "view == appLab.apps && viewItem == app:running",
+          "command": "appLab.app.clone",
+          "when": "view == appLab.apps && viewItem =~ /^app:example/",
           "group": "inline@0"
         },
         {
           "command": "appLab.app.logs",
-          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "when": "view == appLab.apps && viewItem =~ /^app:example/",
           "group": "inline@1"
         },
         {
-          "command": "appLab.app.restart",
-          "when": "view == appLab.apps && viewItem =~ /^app:/",
-          "group": "1_run@0"
-        },
-        {
-          "command": "appLab.openMonitor",
-          "when": "view == appLab.apps && viewItem =~ /^app:/",
-          "group": "1_run@1"
-        },
-        {
           "command": "appLab.app.revealInExplorer",
-          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "when": "view == appLab.apps && viewItem =~ /^app:example/",
           "group": "2_app@0"
         },
         {
-          "command": "appLab.app.clone",
-          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "command": "appLab.app.export",
+          "when": "view == appLab.apps && viewItem =~ /^app:example/",
           "group": "2_app@1"
         },
         {
-          "command": "appLab.app.export",
-          "when": "view == appLab.apps && viewItem =~ /^app:/",
+          "command": "appLab.app.openExposedPort",
+          "when": "view == appLab.apps && viewItem == app:example:running",
           "group": "2_app@2"
         },
         {
-          "command": "appLab.app.rename",
-          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
-          "group": "2_app@3"
-        },
-        {
-          "command": "appLab.app.edit",
-          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
-          "group": "2_app@4"
-        },
-        {
-          "command": "appLab.app.openExposedPort",
-          "when": "view == appLab.apps && viewItem == app:running",
-          "group": "2_app@5"
-        },
-        {
-          "command": "appLab.setDefaultApp",
-          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
-          "group": "3_default@0"
-        },
-        {
-          "command": "appLab.app.cleanCache",
-          "when": "view == appLab.apps && viewItem =~ /^app:/",
-          "group": "4_danger@0"
-        },
-        {
-          "command": "appLab.app.destroy",
-          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
-          "group": "4_danger@1"
-        },
-        {
           "command": "appLab.app.addBrick",
-          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
-          "group": "1_add@0"
+          "when": "view == appLab.appBricks && viewItem == appsection:bricks",
+          "group": "inline@0"
         },
         {
           "command": "appLab.app.addSketchLib",
-          "when": "view == appLab.apps && viewItem =~ /^app:(?!example)/",
-          "group": "1_add@1"
+          "when": "view == appLab.appBricks && viewItem == appsection:libs",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.brick.configure",
+          "when": "view == appLab.appBricks && viewItem == appBrick",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.brick.showDetails",
+          "when": "view == appLab.appBricks && viewItem =~ /^appBrick/",
+          "group": "1_brick@0"
+        },
+        {
+          "command": "appLab.brick.rename",
+          "when": "view == appLab.appBricks && viewItem == appBrick",
+          "group": "1_brick@1"
+        },
+        {
+          "command": "appLab.brick.remove",
+          "when": "view == appLab.appBricks && viewItem == appBrick",
+          "group": "1_brick@2"
+        },
+        {
+          "command": "appLab.sketchLib.remove",
+          "when": "view == appLab.appBricks && viewItem == appLib",
+          "group": "inline@0"
         },
         {
           "command": "appLab.brick.showDetails",
@@ -533,24 +543,39 @@
           "group": "navigation@0"
         },
         {
-          "command": "appLab.app.logs",
-          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "command": "appLab.app.restart",
+          "when": "appLab.activeAppStatus == running",
           "group": "navigation@1"
         },
         {
-          "command": "appLab.openMonitor",
+          "command": "appLab.app.logs",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
           "group": "navigation@2"
         },
         {
-          "command": "appLab.app.addBrick",
+          "command": "appLab.openMonitor",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
           "group": "1_app@0"
         },
         {
-          "command": "appLab.app.addSketchLib",
+          "command": "appLab.app.export",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
           "group": "1_app@1"
+        },
+        {
+          "command": "appLab.app.cleanCache",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "1_app@2"
+        },
+        {
+          "command": "appLab.app.addBrick",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "2_app@0"
+        },
+        {
+          "command": "appLab.app.addSketchLib",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "2_app@1"
         }
       ],
       "commandPalette": [
