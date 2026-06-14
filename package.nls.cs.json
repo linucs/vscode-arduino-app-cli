@@ -72,5 +72,5 @@
   "config.intellisense.autoConfigure": "Po každém úspěšném spuštění znovu vygenerovat konfiguraci C++ IntelliSense.",
   "config.arduinoCliPath": "Volitelná cesta k samostatnému arduino-cli, umožňující rychlé sestavení kompilační databáze bez nahrávání.",
   "config.python.manageVenv": "Umožnit rozšíření vytvořit virtuální prostředí Python a nainstalovat požadavky pro IntelliSense.",
-  "command.openPlotter": "Otevřít sériový plotter"
+  "command.openPlotter": "Otevřít grafer dat"
 }

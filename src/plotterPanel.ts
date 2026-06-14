@@ -30,14 +30,21 @@ export class PlotterPanel {
     panel.webview.onDidReceiveMessage((msg) => this.onMessage(msg));
   }
 
-  static show(extensionUri: vscode.Uri): PlotterPanel {
+  /**
+   * Reveal the (singleton) plotter panel. `title` reflects the chosen feed
+   * source — the plotter charts either the serial monitor or the Python output,
+   * so the caller passes the matching title rather than a fixed "Serial Plotter".
+   * On reuse the title is refreshed in case the source changed.
+   */
+  static show(extensionUri: vscode.Uri, title: string): PlotterPanel {
     if (PlotterPanel.instance) {
+      PlotterPanel.instance.panel.title = title;
       PlotterPanel.instance.panel.reveal(vscode.ViewColumn.Beside);
       return PlotterPanel.instance;
     }
     const panel = vscode.window.createWebviewPanel(
       VIEW_TYPE,
-      "Serial Plotter",
+      title,
       { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true },
       {
         enableScripts: true,

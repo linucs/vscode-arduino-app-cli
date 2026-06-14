@@ -72,5 +72,5 @@
   "config.intellisense.autoConfigure": "Die C++ IntelliSense-Konfiguration nach jeder erfolgreichen Ausführung neu generieren.",
   "config.arduinoCliPath": "Optionaler Pfad zu einer eigenständigen arduino-cli, der einen schnellen Build der Kompilierungsdatenbank ohne Flashen ermöglicht.",
   "config.python.manageVenv": "Der Erweiterung erlauben, eine virtuelle Python-Umgebung zu erstellen und Anforderungen für IntelliSense zu installieren.",
-  "command.openPlotter": "Seriellen Plotter öffnen"
+  "command.openPlotter": "Datenplotter öffnen"
 }

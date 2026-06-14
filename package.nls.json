@@ -72,5 +72,5 @@
   "config.intellisense.autoConfigure": "Regenerate C++ IntelliSense configuration after each successful run.",
   "config.arduinoCliPath": "Optional path to a standalone arduino-cli, enabling a fast compilation-database build without flashing.",
   "config.python.manageVenv": "Allow the extension to create a Python virtual environment and install requirements for IntelliSense.",
-  "command.openPlotter": "Open Serial Plotter"
+  "command.openPlotter": "Open data plotter"
 }

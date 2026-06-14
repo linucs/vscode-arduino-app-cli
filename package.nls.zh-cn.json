@@ -72,5 +72,5 @@
   "config.intellisense.autoConfigure": "在每次成功运行后重新生成 C++ IntelliSense 配置。",
   "config.arduinoCliPath": "独立 arduino-cli 的可选路径，可启用无需烧录的快速编译数据库构建。",
   "config.python.manageVenv": "允许扩展创建 Python 虚拟环境并为 IntelliSense 安装依赖项。",
-  "command.openPlotter": "打开串口绘图仪"
+  "command.openPlotter": "打开数据绘图仪"
 }

@@ -438,7 +438,13 @@ async function openPlotter(d: Ready, app: AppInfo | undefined): Promise<void> {
   }
   plotterSource = pick.value;
   plotterFeeder.reset();
-  PlotterPanel.show(context.extensionUri);
+  // Title the panel after the chosen source — the plotter is no longer
+  // serial-only, so a fixed "Serial Plotter" would mislabel Python feeds.
+  const title =
+    pick.value === "serial"
+      ? vscode.l10n.t("Serial data plotter")
+      : vscode.l10n.t("Python data plotter");
+  PlotterPanel.show(context.extensionUri, title);
   PlotterPanel.current()?.notifyConnected();
   // Make sure the chosen source is actually streaming.
   if (pick.value === "serial") {

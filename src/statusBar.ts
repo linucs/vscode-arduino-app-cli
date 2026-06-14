@@ -79,7 +79,7 @@ export class StatusBar implements vscode.Disposable {
     this.restartItem.tooltip = vscode.l10n.t("Restart {0}", app.name);
     this.logsItem.tooltip = vscode.l10n.t("Show logs for {0}", app.name);
     this.monitorItem.tooltip = vscode.l10n.t("Open Serial Monitor for {0}", app.name);
-    this.plotterItem.tooltip = vscode.l10n.t("Open Serial Plotter for {0}", app.name);
+    this.plotterItem.tooltip = vscode.l10n.t("Open data plotter for {0}", app.name);
     if (running) {
       this.restartItem.show();
     } else {
