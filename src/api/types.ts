@@ -123,10 +123,40 @@ export interface VersionResponse {
   date?: string;
 }
 
-export interface ResourcesResponse {
-  cpu?: number;
-  memory?: { used: number; total: number };
-  disk?: { used: number; total: number };
+/**
+ * System resource samples. `GET /v1/system/resources` is an SSE stream that
+ * emits these as separate events (`cpu`/`stats`, `mem`, `disk`); we assemble one
+ * of each into a snapshot.
+ */
+export interface ResourceCpu {
+  used_percent: number;
+}
+export interface ResourceMem {
+  used: number;
+  total: number;
+}
+export interface ResourceDisk {
+  path?: string;
+  used: number;
+  total: number;
+}
+export interface ResourcesSnapshot {
+  cpu?: ResourceCpu;
+  mem?: ResourceMem;
+  disk?: ResourceDisk;
+}
+
+/** A package the daemon can upgrade (`UpgradablePackage`). */
+export interface UpgradablePackage {
+  name?: string;
+  from_version?: string;
+  to_version?: string;
+  type?: string;
+}
+
+/** Result of `GET /v1/system/update/check` (`null`/empty `updates` ⇒ up to date). */
+export interface UpdateCheckResult {
+  updates?: UpgradablePackage[] | null;
 }
 
 export interface ExposedPort {

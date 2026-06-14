@@ -16,8 +16,16 @@ export class ModelManager {
   async importEi(): Promise<void> {
     const projectId = await vscode.window.showInputBox({
       title: vscode.l10n.t("Import Edge Impulse Model"),
-      prompt: vscode.l10n.t("Edge Impulse project ID"),
-      validateInput: (v) => (v.trim() ? undefined : vscode.l10n.t("Project ID is required")),
+      prompt: vscode.l10n.t("Find it under Dashboard → Project ID in your Edge Impulse project."),
+      placeHolder: vscode.l10n.t("Edge Impulse project ID (e.g. 123456)"),
+      ignoreFocusOut: true,
+      validateInput: (v) => {
+        const t = v.trim();
+        if (!t) {
+          return vscode.l10n.t("Project ID is required");
+        }
+        return /^\d+$/.test(t) ? undefined : vscode.l10n.t("Project ID must be a number.");
+      },
     });
     if (!projectId) {
       return;

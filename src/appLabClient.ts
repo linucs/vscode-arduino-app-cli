@@ -10,12 +10,12 @@ import type {
   ExposedPort,
   LibraryInfo,
   ModelInfo,
-  ResourcesResponse,
   SketchLibrary,
   SseError,
   SseEvent,
   SseMessage,
   SseProgress,
+  UpdateCheckResult,
   VersionResponse,
 } from "./api/types";
 
@@ -446,7 +446,8 @@ export class AppLabClient {
   deleteProperty(key: string): Promise<void> {
     return this.request("DELETE", `/properties/${encodeURIComponent(key)}`);
   }
-  checkUpdate(): Promise<unknown> {
+  /** Returns the upgradable packages, or `undefined` (204) when up to date. */
+  checkUpdate(): Promise<UpdateCheckResult | undefined> {
     return this.request("GET", "/system/update/check");
   }
   applyUpdate(): Promise<void> {
@@ -455,8 +456,13 @@ export class AppLabClient {
   updateEvents(sinks: SseSinks, signal?: AbortSignal): Promise<void> {
     return this.sseStream("GET", "/system/update/events", sinks, { signal });
   }
-  resources(): Promise<ResourcesResponse> {
-    return this.request("GET", "/system/resources");
+  /**
+   * Stream system resource usage. The daemon emits `cpu`/`stats`, `mem` and
+   * `disk` events with their own payload shapes, so callers read them off the
+   * `onRaw` sink rather than the typed progress/message sinks.
+   */
+  systemResourcesEvents(sinks: SseSinks, signal?: AbortSignal): Promise<void> {
+    return this.sseStream("GET", "/system/resources", sinks, { signal });
   }
 
   // ---- Serial monitor (WebSocket) ----

@@ -44,7 +44,7 @@ suite("AppLabClient against a mock daemon", () => {
         res.end(JSON.stringify({ apps: [{ id: "a1", name: "Demo", status: "stopped" }] }));
         return;
       }
-      if (url === "/v1/system/resources") {
+      if (url === "/v1/config") {
         res.statusCode = 500;
         res.end(JSON.stringify({ message: "kaboom" }));
         return;
@@ -84,7 +84,7 @@ suite("AppLabClient against a mock daemon", () => {
   test("non-ok responses throw ApiError with the daemon message", async () => {
     const client = new AppLabClient({ baseUrl: base });
     await assert.rejects(
-      () => client.resources(),
+      () => client.getConfig(),
       (err: unknown) => err instanceof ApiError && err.status === 500 && /kaboom/.test(err.message),
     );
   });
