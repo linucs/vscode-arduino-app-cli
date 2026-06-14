@@ -71,5 +71,6 @@
   "config.updateNotifications": "システム更新が利用可能になったときに通知を表示します。",
   "config.intellisense.autoConfigure": "実行が成功するたびに C++ IntelliSense の構成を再生成します。",
   "config.arduinoCliPath": "スタンドアロンの arduino-cli へのオプションのパス。書き込みを行わない高速なコンパイルデータベースビルドを有効にします。",
-  "config.python.manageVenv": "IntelliSense 用に拡張機能が Python 仮想環境を作成し、依存関係をインストールすることを許可します。"
+  "config.python.manageVenv": "IntelliSense 用に拡張機能が Python 仮想環境を作成し、依存関係をインストールすることを許可します。",
+  "command.openPlotter": "シリアルプロッターを開く"
 }

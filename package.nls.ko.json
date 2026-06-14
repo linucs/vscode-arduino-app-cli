@@ -71,5 +71,6 @@
   "config.updateNotifications": "시스템 업데이트가 있을 때 알림을 표시합니다.",
   "config.intellisense.autoConfigure": "성공적으로 실행할 때마다 C++ IntelliSense 구성을 다시 생성합니다.",
   "config.arduinoCliPath": "독립 실행형 arduino-cli의 선택적 경로로, 플래시 없이 빠른 컴파일 데이터베이스 빌드를 가능하게 합니다.",
-  "config.python.manageVenv": "확장 프로그램이 IntelliSense용 Python 가상 환경을 만들고 요구 사항을 설치하도록 허용합니다."
+  "config.python.manageVenv": "확장 프로그램이 IntelliSense용 Python 가상 환경을 만들고 요구 사항을 설치하도록 허용합니다.",
+  "command.openPlotter": "시리얼 플로터 열기"
 }

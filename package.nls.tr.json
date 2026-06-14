@@ -71,5 +71,6 @@
   "config.updateNotifications": "Bir sistem güncellemesi mevcut olduğunda bir bildirim göster.",
   "config.intellisense.autoConfigure": "Her başarılı çalıştırmadan sonra C++ IntelliSense yapılandırmasını yeniden oluştur.",
   "config.arduinoCliPath": "Yükleme yapmadan hızlı bir derleme veritabanı derlemesi sağlayan, bağımsız bir arduino-cli için isteğe bağlı yol.",
-  "config.python.manageVenv": "Uzantının IntelliSense için bir Python sanal ortamı oluşturmasına ve gereksinimleri yüklemesine izin ver."
+  "config.python.manageVenv": "Uzantının IntelliSense için bir Python sanal ortamı oluşturmasına ve gereksinimleri yüklemesine izin ver.",
+  "command.openPlotter": "Seri Çiziciyi Aç"
 }

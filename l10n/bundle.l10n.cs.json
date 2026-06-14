@@ -110,5 +110,9 @@
   "Version for {0}": "Verze pro {0}",
   "Yes": "Ano",
   "built-in": "vestavěné",
-  "{0} is coming in a later release.": "{0} bude k dispozici v pozdější verzi."
+  "{0} is coming in a later release.": "{0} bude k dispozici v pozdější verzi.",
+  "Serial Monitor": "Sériový monitor",
+  "Python output": "Výstup Pythonu",
+  "Plot data from…": "Vykreslit data z…",
+  "Export Plotter Data": "Exportovat data grafu"
 }

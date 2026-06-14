@@ -392,6 +392,12 @@
         "icon": "$(plug)"
       },
       {
+        "command": "appLab.openPlotter",
+        "title": "%command.openPlotter%",
+        "category": "Arduino App",
+        "icon": "$(graph-line)"
+      },
+      {
         "command": "appLab.setMonitorLineEnding",
         "title": "%command.setMonitorLineEnding%",
         "category": "Arduino App"
@@ -497,6 +503,16 @@
           "group": "2_app@2"
         },
         {
+          "command": "appLab.openMonitor",
+          "when": "view == appLab.apps && viewItem == app:example:running",
+          "group": "3_io@0"
+        },
+        {
+          "command": "appLab.openPlotter",
+          "when": "view == appLab.apps && viewItem == app:example:running",
+          "group": "3_io@1"
+        },
+        {
           "command": "appLab.brick.configure",
           "when": "view == appLab.appBricks && viewItem == appBrick",
           "group": "inline@0"
@@ -566,7 +582,12 @@
         {
           "command": "appLab.openMonitor",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
-          "group": "1_app@0"
+          "group": "navigation@3"
+        },
+        {
+          "command": "appLab.openPlotter",
+          "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
+          "group": "navigation@4"
         },
         {
           "command": "appLab.app.export",

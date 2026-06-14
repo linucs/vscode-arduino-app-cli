@@ -110,5 +110,9 @@
   "Version for {0}": "{0} için sürüm",
   "Yes": "Evet",
   "built-in": "yerleşik",
-  "{0} is coming in a later release.": "{0} daha sonraki bir sürümde gelecek."
+  "{0} is coming in a later release.": "{0} daha sonraki bir sürümde gelecek.",
+  "Serial Monitor": "Seri Monitör",
+  "Python output": "Python çıktısı",
+  "Plot data from…": "Verileri şuradan çiz…",
+  "Export Plotter Data": "Çizici verilerini dışa aktar"
 }

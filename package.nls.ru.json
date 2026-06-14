@@ -71,5 +71,6 @@
   "config.updateNotifications": "Показывать уведомление о доступности системного обновления.",
   "config.intellisense.autoConfigure": "Перегенерировать конфигурацию IntelliSense для C++ после каждого успешного запуска.",
   "config.arduinoCliPath": "Необязательный путь к автономному arduino-cli, включающий быструю сборку базы данных компиляции без прошивки.",
-  "config.python.manageVenv": "Разрешить расширению создавать виртуальное окружение Python и устанавливать зависимости для IntelliSense."
+  "config.python.manageVenv": "Разрешить расширению создавать виртуальное окружение Python и устанавливать зависимости для IntelliSense.",
+  "command.openPlotter": "Открыть последовательный плоттер"
 }

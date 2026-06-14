@@ -7,6 +7,8 @@ import { ModelManager } from "./modelManager";
 import { SketchLibManager } from "./sketchLibManager";
 import { SystemManager } from "./systemManager";
 import { SerialMonitor } from "./monitor";
+import { PlotterPanel } from "./plotterPanel";
+import { PlotterFeeder } from "./plotterFeeder";
 import { AppRegistry } from "./appRegistry";
 import { ExamplesTreeProvider } from "./examplesView";
 import { AppItemsTreeProvider } from "./appBricksView";
@@ -41,6 +43,12 @@ let modelsView: ModelsTreeProvider;
 
 let ready: Ready | undefined;
 let readyPromise: Promise<Ready | undefined> | undefined;
+
+// The serial plotter is fed from ONE source at a time — the serial monitor or
+// the Python log stream — chosen by the user when they open it. Both producers
+// forward their chunks to this single feeder, gated by `plotterSource`.
+const plotterFeeder = new PlotterFeeder();
+let plotterSource: "serial" | "python" | undefined;
 let statusAbort: AbortController | undefined;
 let reconnectTimer: ReturnType<typeof setTimeout> | undefined;
 let reconnectAttempts = 0;
@@ -167,12 +175,20 @@ async function doEnsureReady(): Promise<Ready | undefined> {
   // project off; run/stop refresh nothing (their status flows back via the SSE).
   ready = {
     client,
-    apps: new AppManager(client, output, () => void registry.refresh()),
+    apps: new AppManager(client, output, () => void registry.refresh(), (text) => {
+      if (plotterSource === "python") {
+        plotterFeeder.feed(text);
+      }
+    }),
     bricks: new BrickManager(client, () => appBricksView.refresh()),
     models: new ModelManager(client, () => modelsView.refresh()),
     sketchLibs: new SketchLibManager(client, () => appLibsView.refresh()),
     system: new SystemManager(client, output),
-    monitor: new SerialMonitor(client),
+    monitor: new SerialMonitor(client, (text) => {
+      if (plotterSource === "serial") {
+        plotterFeeder.feed(text);
+      }
+    }),
   };
   context.subscriptions.push(ready.monitor);
 
@@ -391,10 +407,45 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   reg("appLab.setMonitorLineEnding", () => withReady((d) => d.monitor.setLineEnding()));
   reg("appLab.saveMonitorLog", () => withReady((d) => d.monitor.saveLog()));
 
+  // Plotter — charts `>`-prefixed telemetry from the source the user picks.
+  reg("appLab.openPlotter", (arg) => withReady((d) => openPlotter(d, appFrom(arg))));
+
   // IntelliSense / Python (Phase 3 — placeholders for now)
   reg("appLab.configureIntelliSense", () => notImplemented("C++ IntelliSense"));
   reg("appLab.python.createVenv", () => notImplemented("Python environment setup"));
   reg("appLab.python.setupStubs", () => notImplemented("Arduino Python stubs"));
+}
+
+/**
+ * Open the serial plotter, asking the user which stream to chart. The choice
+ * sets `plotterSource` (which gates the two feed callbacks) and starts the
+ * matching stream so data flows even if it wasn't already open.
+ */
+async function openPlotter(d: Ready, app: AppInfo | undefined): Promise<void> {
+  const pick = await vscode.window.showQuickPick(
+    [
+      { label: vscode.l10n.t("Serial Monitor"), value: "serial" as const },
+      { label: vscode.l10n.t("Python output"), value: "python" as const },
+    ],
+    { title: vscode.l10n.t("Plot data from…") },
+  );
+  if (!pick) {
+    return;
+  }
+  if (pick.value === "python" && !app) {
+    noActiveApp();
+    return;
+  }
+  plotterSource = pick.value;
+  plotterFeeder.reset();
+  PlotterPanel.show(context.extensionUri);
+  PlotterPanel.current()?.notifyConnected();
+  // Make sure the chosen source is actually streaming.
+  if (pick.value === "serial") {
+    await d.monitor.open(app);
+  } else if (app) {
+    await d.apps.showLogs(app);
+  }
 }
 
 // ---- node-argument helpers ----

@@ -110,5 +110,9 @@
   "Version for {0}": "A(z) {0} verziója",
   "Yes": "Igen",
   "built-in": "beépített",
-  "{0} is coming in a later release.": "A(z) {0} egy későbbi kiadásban érkezik."
+  "{0} is coming in a later release.": "A(z) {0} egy későbbi kiadásban érkezik.",
+  "Serial Monitor": "Soros monitor",
+  "Python output": "Python kimenet",
+  "Plot data from…": "Adatok ábrázolása innen…",
+  "Export Plotter Data": "Plotter-adatok exportálása"
 }

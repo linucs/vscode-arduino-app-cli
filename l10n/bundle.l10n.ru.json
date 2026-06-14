@@ -110,5 +110,9 @@
   "Version for {0}": "Версия для {0}",
   "Yes": "Да",
   "built-in": "встроенный",
-  "{0} is coming in a later release.": "{0} появится в одном из следующих выпусков."
+  "{0} is coming in a later release.": "{0} появится в одном из следующих выпусков.",
+  "Serial Monitor": "Монитор порта",
+  "Python output": "Вывод Python",
+  "Plot data from…": "Источник данных для графика…",
+  "Export Plotter Data": "Экспорт данных графика"
 }

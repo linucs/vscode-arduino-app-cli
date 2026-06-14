@@ -110,5 +110,9 @@
   "Version for {0}": "{0}의 버전",
   "Yes": "예",
   "built-in": "기본 제공",
-  "{0} is coming in a later release.": "{0}은(는) 이후 릴리스에서 제공될 예정입니다."
+  "{0} is coming in a later release.": "{0}은(는) 이후 릴리스에서 제공될 예정입니다.",
+  "Serial Monitor": "시리얼 모니터",
+  "Python output": "Python 출력",
+  "Plot data from…": "데이터 플롯 소스…",
+  "Export Plotter Data": "플로터 데이터 내보내기"
 }

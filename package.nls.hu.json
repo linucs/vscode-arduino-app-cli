@@ -71,5 +71,6 @@
   "config.updateNotifications": "Értesítés megjelenítése, amikor rendszerfrissítés érhető el.",
   "config.intellisense.autoConfigure": "A C++ IntelliSense konfiguráció újragenerálása minden sikeres futtatás után.",
   "config.arduinoCliPath": "Opcionális elérési út egy különálló arduino-cli-hez, amely lehetővé teszi a gyors, fordítási adatbázist előállító buildet flashelés nélkül.",
-  "config.python.manageVenv": "Lehetővé teszi a bővítmény számára, hogy Python virtuális környezetet hozzon létre, és telepítse a követelményeket az IntelliSense-hez."
+  "config.python.manageVenv": "Lehetővé teszi a bővítmény számára, hogy Python virtuális környezetet hozzon létre, és telepítse a követelményeket az IntelliSense-hez.",
+  "command.openPlotter": "Soros plotter megnyitása"
 }

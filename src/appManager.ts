@@ -13,12 +13,18 @@ import type { AppInfo, AppListResponse } from "./api/types";
  */
 export class AppManager {
   private readonly logChannels = new Map<string, vscode.OutputChannel>();
+  private readonly pythonChannels = new Map<string, vscode.OutputChannel>();
   private readonly logAborts = new Map<string, AbortController>();
 
   constructor(
     private readonly client: AppLabClient,
     private readonly console: vscode.OutputChannel,
     private readonly onChanged: () => void,
+    /**
+     * Optional sink for each Python/runtime log line (newline-terminated), used
+     * to feed the serial plotter when the user selects "Python" as its source.
+     */
+    private readonly onLogLine?: (text: string) => void,
   ) {}
 
   list(filter?: "apps" | "examples"): Promise<AppListResponse> {
@@ -159,10 +165,16 @@ export class AppManager {
     }
   }
 
-  /** Tail the app's console (Python + service logs) into an output channel. */
+  /**
+   * Tail the app's runtime console (Python + service logs) into its own
+   * dedicated channel — mirroring App Lab's "Python" tab, kept separate from the
+   * "App launch" (start/stop) output. Each line is also forwarded to the plotter
+   * feed sink so the plotter can chart `>`-prefixed telemetry from Python.
+   * Returns once the stream is attached (it follows until aborted).
+   */
   async showLogs(app: AppInfo): Promise<void> {
     this.logAborts.get(app.id)?.abort();
-    const channel = this.channelFor(app);
+    const channel = this.pythonChannelFor(app);
     channel.show(true);
     const tail = vscode.workspace.getConfiguration("appLab").get<number>("logs.tail", 200);
     const ctrl = new AbortController();
@@ -172,7 +184,10 @@ export class AppManager {
       .appLogs(
         app.id,
         {
-          onMessage: (m) => channel.appendLine(m.message),
+          onMessage: (m) => {
+            channel.appendLine(m.message);
+            this.onLogLine?.(m.message + "\n");
+          },
           onError: (e) => channel.appendLine(`[error] ${e.message}`),
         },
         { filter: "app,services", tail, signal: ctrl.signal },
@@ -325,13 +340,27 @@ export class AppManager {
     for (const ch of this.logChannels.values()) {
       ch.dispose();
     }
+    for (const ch of this.pythonChannels.values()) {
+      ch.dispose();
+    }
   }
 
+  /** The "App launch" channel — start/stop lifecycle output. */
   private channelFor(app: AppInfo): vscode.OutputChannel {
     let ch = this.logChannels.get(app.id);
     if (!ch) {
       ch = vscode.window.createOutputChannel(`Arduino App: ${app.name}`);
       this.logChannels.set(app.id, ch);
+    }
+    return ch;
+  }
+
+  /** The "Python" channel — runtime container/service logs, kept separate. */
+  private pythonChannelFor(app: AppInfo): vscode.OutputChannel {
+    let ch = this.pythonChannels.get(app.id);
+    if (!ch) {
+      ch = vscode.window.createOutputChannel(`Arduino App: ${app.name} — Python`);
+      this.pythonChannels.set(app.id, ch);
     }
     return ch;
   }

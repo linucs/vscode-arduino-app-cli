@@ -110,5 +110,9 @@
   "Version for {0}": "{0} のバージョン",
   "Yes": "はい",
   "built-in": "組み込み",
-  "{0} is coming in a later release.": "{0} は今後のリリースで提供される予定です。"
+  "{0} is coming in a later release.": "{0} は今後のリリースで提供される予定です。",
+  "Serial Monitor": "シリアルモニター",
+  "Python output": "Python 出力",
+  "Plot data from…": "データのプロット元…",
+  "Export Plotter Data": "プロッターデータをエクスポート"
 }

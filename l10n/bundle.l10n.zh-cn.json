@@ -110,5 +110,9 @@
   "Version for {0}": "{0} 的版本",
   "Yes": "是",
   "built-in": "内置",
-  "{0} is coming in a later release.": "{0} 将在后续版本中推出。"
+  "{0} is coming in a later release.": "{0} 将在后续版本中推出。",
+  "Serial Monitor": "串口监视器",
+  "Python output": "Python 输出",
+  "Plot data from…": "绘制数据来源…",
+  "Export Plotter Data": "导出绘图仪数据"
 }

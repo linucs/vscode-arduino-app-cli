@@ -71,5 +71,6 @@
   "config.updateNotifications": "Afficher une notification lorsqu'une mise à jour système est disponible.",
   "config.intellisense.autoConfigure": "Régénérer la configuration IntelliSense C++ après chaque exécution réussie.",
   "config.arduinoCliPath": "Chemin facultatif vers un arduino-cli autonome, permettant une compilation rapide de la base de données de compilation sans téléversement.",
-  "config.python.manageVenv": "Autoriser l'extension à créer un environnement virtuel Python et à installer les dépendances pour IntelliSense."
+  "config.python.manageVenv": "Autoriser l'extension à créer un environnement virtuel Python et à installer les dépendances pour IntelliSense.",
+  "command.openPlotter": "Ouvrir le traceur série"
 }

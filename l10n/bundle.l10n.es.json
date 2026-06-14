@@ -110,5 +110,9 @@
   "Version for {0}": "Versión de {0}",
   "Yes": "Sí",
   "built-in": "integrado",
-  "{0} is coming in a later release.": "{0} llegará en una versión posterior."
+  "{0} is coming in a later release.": "{0} llegará en una versión posterior.",
+  "Serial Monitor": "Monitor Serie",
+  "Python output": "Salida de Python",
+  "Plot data from…": "Graficar datos desde…",
+  "Export Plotter Data": "Exportar datos del graficador"
 }

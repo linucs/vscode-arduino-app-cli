@@ -21,7 +21,14 @@ export class SerialMonitor implements vscode.Disposable {
   private logBuf: string[] = [];
   private lineEndingStatus: vscode.StatusBarItem;
 
-  constructor(private readonly client: AppLabClient) {
+  constructor(
+    private readonly client: AppLabClient,
+    /**
+     * Optional sink for each decoded serial chunk, used to feed the serial
+     * plotter when the user selects "Serial Monitor" as its source.
+     */
+    private readonly onData?: (text: string) => void,
+  ) {
     this.lineEndingStatus = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 98);
     this.lineEndingStatus.command = "appLab.setMonitorLineEnding";
   }
@@ -41,6 +48,7 @@ export class SerialMonitor implements vscode.Disposable {
     sock.on("data", (chunk: Buffer) => {
       const text = chunk.toString("utf8");
       this.logBuf.push(text);
+      this.onData?.(text);
       this.writeEmitter.fire(text.replace(/\n/g, "\r\n"));
     });
     sock.on("error", (err: Error) => this.writeEmitter.fire(`\x1b[31m[error] ${err.message}\x1b[0m\r\n`));
