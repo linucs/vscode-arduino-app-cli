@@ -59,13 +59,13 @@ export class DaemonManager {
    * Returns the version payload on the first success (usually the first try when
    * the daemon is up), undefined if every attempt fails.
    */
-  private async probeWithRetry(attempts = 4, timeoutMs = 1500): Promise<VersionResponse | undefined> {
+  private async probeWithRetry(attempts = 3, timeoutMs = 1000): Promise<VersionResponse | undefined> {
     for (let i = 0; i < attempts; i++) {
       const version = await this.probe(timeoutMs);
       if (version) {
         return version;
       }
-      await delay(250);
+      await delay(300);
     }
     return undefined;
   }

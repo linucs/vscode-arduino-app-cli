@@ -9,7 +9,7 @@ import { SystemManager } from "./systemManager";
 import { SerialMonitor } from "./monitor";
 import { AppRegistry } from "./appRegistry";
 import { ExamplesTreeProvider } from "./examplesView";
-import { AppBricksTreeProvider } from "./appBricksView";
+import { AppItemsTreeProvider } from "./appBricksView";
 import { BricksTreeProvider } from "./bricksView";
 import { ModelsTreeProvider } from "./modelsView";
 import { ActiveAppTracker } from "./activeApp";
@@ -34,14 +34,21 @@ let registry: AppRegistry;
 let activeTracker: ActiveAppTracker;
 let statusBar: StatusBar;
 let examplesView: ExamplesTreeProvider;
-let appBricksView: AppBricksTreeProvider;
+let appBricksView: AppItemsTreeProvider;
+let appLibsView: AppItemsTreeProvider;
 let bricksView: BricksTreeProvider;
 let modelsView: ModelsTreeProvider;
 
 let ready: Ready | undefined;
 let readyPromise: Promise<Ready | undefined> | undefined;
 let statusAbort: AbortController | undefined;
+let reconnectTimer: ReturnType<typeof setTimeout> | undefined;
+let reconnectAttempts = 0;
 let lastAppClick: { id: string; time: number } | undefined;
+
+/** Bounded background reconnect: re-probe every 5s, up to ~1 minute. */
+const RECONNECT_DELAY_MS = 5000;
+const RECONNECT_MAX_ATTEMPTS = 12;
 
 export function activate(ctx: vscode.ExtensionContext) {
   context = ctx;
@@ -52,25 +59,30 @@ export function activate(ctx: vscode.ExtensionContext) {
 
   const clientOf = async () => (await ensureReady())!.client;
   registry = new AppRegistry(clientOf);
-  examplesView = new ExamplesTreeProvider(clientOf, (apps) => registry.merge(apps));
-  appBricksView = new AppBricksTreeProvider(clientOf, () => activeTracker.current);
+  examplesView = new ExamplesTreeProvider(registry);
+  appBricksView = new AppItemsTreeProvider("bricks", clientOf, () => activeTracker.current);
+  appLibsView = new AppItemsTreeProvider("libs", clientOf, () => activeTracker.current);
   bricksView = new BricksTreeProvider(async () => (await ensureReady())!.bricks.listCatalog());
   modelsView = new ModelsTreeProvider(async () => (await ensureReady())!.models.list());
 
   activeTracker = new ActiveAppTracker((root) => registry.resolveByPath(root));
   statusBar = new StatusBar(activeTracker);
-  ctx.subscriptions.push(statusBar, activeTracker.register(), registry);
+  ctx.subscriptions.push(statusBar, activeTracker.register(), registry, examplesView);
 
-  // Once the active app changes, refresh the active-app Bricks & Libraries view;
-  // once the registry lists/updates apps, the editor toolbar can resolve, so
-  // re-run active-app resolution.
+  // Once the active app changes, refresh the active-app Bricks and Libraries
+  // views; once the registry lists/updates apps, the editor toolbar can resolve,
+  // so re-run active-app resolution.
   ctx.subscriptions.push(
-    activeTracker.onDidChange(() => appBricksView.onActiveChanged()),
+    activeTracker.onDidChange(() => {
+      appBricksView.onActiveChanged();
+      appLibsView.onActiveChanged();
+    }),
     registry.onDidChange(() => activeTracker.reresolve()),
   );
 
   ctx.subscriptions.push(
     vscode.window.createTreeView("appLab.appBricks", { treeDataProvider: appBricksView }),
+    vscode.window.createTreeView("appLab.appLibs", { treeDataProvider: appLibsView }),
     vscode.window.createTreeView("appLab.apps", { treeDataProvider: examplesView }),
     vscode.window.createTreeView("appLab.bricks", { treeDataProvider: bricksView }),
     vscode.window.createTreeView("appLab.models", { treeDataProvider: modelsView }),
@@ -85,15 +97,19 @@ export function activate(ctx: vscode.ExtensionContext) {
 
 export function deactivate() {
   statusAbort?.abort();
+  cancelReconnect();
   ready?.monitor.dispose();
   ready?.apps.dispose();
   // We never own the daemon (it runs under systemd), so there's nothing to stop.
 }
 
+// A full re-sync of every view, for the broad manual action (reconnect). The
+// Examples view re-renders off `registry.refresh()`'s change event, so it isn't
+// listed here. Per-mutation refreshes are scoped to the affected view instead.
 function refreshAll(): void {
   void registry.refresh();
-  examplesView.refresh();
   appBricksView.refresh();
+  appLibsView.refresh();
   bricksView.refresh();
   modelsView.refresh();
 }
@@ -126,9 +142,13 @@ async function doEnsureReady(): Promise<Ready | undefined> {
     version = await daemon.start();
   } catch (err) {
     statusBar.setDisconnected();
-    vscode.window.showErrorMessage(
-      vscode.l10n.t("Cannot reach the Arduino App daemon: {0}", asMessage(err)),
-    );
+    // Notify once on the initial failure; stay quiet while auto-reconnect retries.
+    if (reconnectAttempts === 0) {
+      vscode.window.showErrorMessage(
+        vscode.l10n.t("Cannot reach the Arduino App daemon: {0}", asMessage(err)),
+      );
+    }
+    scheduleReconnect();
     return undefined;
   }
 
@@ -141,12 +161,16 @@ async function doEnsureReady(): Promise<Ready | undefined> {
     log: (m) => output.appendLine(m),
   });
 
+  // Per-mutation refreshes are scoped to the view each manager actually changes,
+  // so a single action doesn't re-scan everything. App structural changes re-list
+  // (unfiltered) into the registry, which the Examples view + active-app toolbar
+  // project off; run/stop refresh nothing (their status flows back via the SSE).
   ready = {
     client,
-    apps: new AppManager(client, output, refreshAll),
-    bricks: new BrickManager(client, refreshAll),
-    models: new ModelManager(client, refreshAll),
-    sketchLibs: new SketchLibManager(client, refreshAll),
+    apps: new AppManager(client, output, () => void registry.refresh()),
+    bricks: new BrickManager(client, () => appBricksView.refresh()),
+    models: new ModelManager(client, () => modelsView.refresh()),
+    sketchLibs: new SketchLibManager(client, () => appLibsView.refresh()),
     system: new SystemManager(client, output),
     monitor: new SerialMonitor(client),
   };
@@ -156,36 +180,40 @@ async function doEnsureReady(): Promise<Ready | undefined> {
   // instead of a second round-trip.
   statusBar.setConnected(version.version, daemon.baseUrl);
 
-  // Index the user's apps so the active-editor app resolves even though no tree
-  // lists them any more; this also fires the first-load that arms the SSE.
-  void registry.load();
-  armStatusEvents(client);
+  // Bootstrap the apps index straight from the SSE: connecting emits a full
+  // snapshot (apps + examples) which populates the registry via applyStatus — no
+  // separate startup `GET /apps` scan. The active-editor app then resolves as the
+  // snapshot lands, and the Examples view projects off the same data.
+  subscribeStatusEvents(client);
+  reconnectAttempts = 0;
+  cancelReconnect();
   return ready;
 }
 
 /**
- * Open the long-lived `/apps/events` stream, but only once the Apps view has
- * painted its first list. Connecting triggers a full filesystem rescan on the
- * board (the daemon's snapshot), so deferring it keeps that scan from running
- * concurrently with the tree's own `listApps` — two heavy scans at once would
- * make both slower on the UNO Q. A timer backstops the case where the view is
- * never rendered (e.g. the activity bar is collapsed).
+ * While the daemon is unreachable, re-probe in the background so a still-booting
+ * board connects on its own — no manual Reconnect needed. Bounded (gives up after
+ * ~1 minute) and self-cancelling on success. This polls liveness only, never the
+ * apps list, so it doesn't add load once connected.
  */
-function armStatusEvents(client: AppLabClient): void {
-  let armed = false;
-  const go = () => {
-    if (armed) {
-      return;
-    }
-    armed = true;
-    disposable.dispose();
-    clearTimeout(timer);
-    subscribeStatusEvents(client);
-  };
-  const disposable = registry.onDidFirstLoad(go);
-  const timer = setTimeout(go, 1500);
-  if (registry.hasLoaded()) {
-    go();
+function scheduleReconnect(): void {
+  if (reconnectTimer || ready || reconnectAttempts >= RECONNECT_MAX_ATTEMPTS) {
+    return;
+  }
+  reconnectTimer = setTimeout(() => {
+    reconnectTimer = undefined;
+    reconnectAttempts++;
+    // ensureReady() re-probes; on success it clears the counter (and this loop),
+    // on failure its catch reschedules the next attempt.
+    void ensureReady();
+  }, RECONNECT_DELAY_MS);
+}
+
+/** Stop any pending background reconnect (on success or manual reconnect). */
+function cancelReconnect(): void {
+  if (reconnectTimer) {
+    clearTimeout(reconnectTimer);
+    reconnectTimer = undefined;
   }
 }
 
@@ -195,27 +223,24 @@ function subscribeStatusEvents(client: AppLabClient): void {
   const ctrl = new AbortController();
   statusAbort = ctrl;
 
-  // On connect the daemon emits one `app` event per app (initial sync), then
-  // streams changes. Each event patches the cached row in place — no re-listing
-  // — and the tree provider debounces the resulting re-renders, so the snapshot
-  // burst costs nothing beyond the one scan the daemon already did to produce it.
+  // On connect the daemon emits one `app` event per app (initial snapshot), then
+  // streams changes. Each event upserts the registry row in place — no re-listing
+  // — and dependent views debounce the resulting re-renders, so the snapshot burst
+  // costs nothing beyond the one scan the daemon already did to produce it.
   const run = async () => {
     while (!ctrl.signal.aborted) {
       try {
-        await client.appStatusEvents((app) => {
-          registry.applyStatus(app);
-          examplesView.applyStatus(app);
-        }, ctrl.signal);
+        await client.appStatusEvents((app) => registry.applyStatus(app), ctrl.signal);
       } catch {
         // fall through to backoff
       }
       if (ctrl.signal.aborted) {
         return;
       }
-      // The stream dropped: a status may have changed while we were away, and
-      // the cache can't be patched from events we missed — re-list to resync.
+      // The stream dropped: events may have been missed, and an upsert can't
+      // reflect a deletion that happened while we were away — re-list (unfiltered,
+      // atomic replace) to resync before the next reconnect re-emits the snapshot.
       void registry.refresh();
-      examplesView.refresh();
       await new Promise((r) => setTimeout(r, 3000));
     }
   };
@@ -254,6 +279,8 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   reg("appLab.reconnect", async () => {
     // Re-probe the (systemd-managed) daemon and re-wire the client.
     statusAbort?.abort();
+    cancelReconnect();
+    reconnectAttempts = 0;
     ready = undefined;
     readyPromise = undefined;
     await ensureReady();
@@ -274,7 +301,7 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   reg("appLab.installAiAssistant", () => installAiAssistants(ctx));
 
   // Apps
-  reg("appLab.refreshApps", () => refreshAll());
+  reg("appLab.refreshApps", () => void registry.refresh());
   reg("appLab.newApp", () => withReady((d) => d.apps.create()));
   reg("appLab.importApp", () => withReady((d) => d.apps.import()));
   reg("appLab.app.start", (arg) => withReady((d) => withApp(arg, (a) => d.apps.run(a))));
@@ -306,15 +333,19 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   reg("appLab.setDefaultApp", (arg) => withReady((d) => withApp(arg, (a) => d.apps.setDefault(a))));
   reg("appLab.getDefaultApp", () =>
     withReady(async (d) => {
-      const v = await d.client.getProperty("default").catch(() => undefined);
+      // The default app is the one flagged `default: true` in the app list —
+      // there is no "default" property key.
+      const res = await d.client.listApps({ filter: "apps" });
+      const def = res.apps?.find((a) => a.default);
       vscode.window.showInformationMessage(
-        v ? vscode.l10n.t("Default app: {0}", String(v)) : vscode.l10n.t("No default app set."),
+        def ? vscode.l10n.t("Default app: {0}", def.name) : vscode.l10n.t("No default app set."),
       );
     }),
   );
 
   // Bricks
   reg("appLab.refreshBricks", () => bricksView.refresh());
+  reg("appLab.app.refreshBricks", () => appBricksView.refresh());
   reg("appLab.app.addBrick", (arg) =>
     withReady((d) => {
       const brickId = arg && typeof arg === "object" && "brick" in arg
@@ -347,11 +378,12 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   reg("appLab.app.addSketchLib", (arg) =>
     withReady((d) => withApp(arg, (a) => d.sketchLibs.add(a))),
   );
-  reg("appLab.app.refreshSketchLibs", () => appBricksView.refresh());
-  // Reveal the Bricks & Libraries view wherever the user has docked it (Explorer
-  // by default, or the secondary side bar if moved). The `.focus` command is the
-  // one VS Code auto-generates for a contributed view.
+  reg("appLab.app.refreshSketchLibs", () => appLibsView.refresh());
+  // Reveal the active-app views wherever the user has docked them (Explorer by
+  // default, or the secondary side bar if moved). The `.focus` command is the one
+  // VS Code auto-generates for a contributed view.
   reg("appLab.showAppBricks", () => vscode.commands.executeCommand("appLab.appBricks.focus"));
+  reg("appLab.showAppLibs", () => vscode.commands.executeCommand("appLab.appLibs.focus"));
   reg("appLab.sketchLib.remove", (arg) => withReady((d) => withAppLib(arg, (a, l) => d.sketchLibs.remove(a, l))));
 
   // Monitor

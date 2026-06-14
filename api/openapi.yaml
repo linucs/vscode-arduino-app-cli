@@ -1,0 +1,2012 @@
+openapi: 3.0.3
+info:
+  title: Arduino-App-Cli
+  version: 0.1.0
+servers:
+- description: local server
+  url: http://localhost:6060
+tags:
+- name: Application
+- name: Brick
+- name: AIModels
+- name: System
+- name: Libraries
+paths:
+  /v1/apps:
+    get:
+      description: Returns a list of all apps, and example present. It is also possible
+        to apply different filters.
+      operationId: getApps
+      parameters:
+      - description: Filters apps by apps,examples,default
+        in: query
+        name: filter
+        schema:
+          description: Filters apps by apps,examples,default
+          type: string
+      - description: Filters applications by status
+        in: query
+        name: status
+        schema:
+          $ref: '#/components/schemas/Status'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppListResponse'
+          description: Successful response
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get a list of installed apps/examples
+      tags:
+      - Application
+    post:
+      description: Creates a new app in the default app location.
+      operationId: createApp
+      parameters:
+      - description: If true, the app will not be created with the sketch part.
+        in: query
+        name: skip-sketch
+        schema:
+          description: If true, the app will not be created with the sketch part.
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAppRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAppResponse'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Creates a new app
+      tags:
+      - Application
+  /v1/apps/{appID}/bricks:
+    get:
+      description: Get the list of brick instances for a specific app.
+      operationId: getAppBrickInstances
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppBrickInstancesResult'
+          description: Successful response
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get brick instances for an app
+      tags:
+      - Application
+    post:
+      description: Create a new local brick for an app.
+      operationId: createAppLocalBrick
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppLocalBrickCreateRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppLocalBrickCreateResponse'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create a new local brick for an app
+      tags:
+      - Application
+  /v1/apps/{appID}/bricks/{brickID}:
+    delete:
+      description: Delete a brick instance for an app. It will remove the brick instance
+        from the app.
+      operationId: deleteAppBrickInstance
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: brick identifier.
+        in: path
+        name: brickID
+        required: true
+        schema:
+          description: brick identifier.
+          type: string
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete a brick instance for an app
+      tags:
+      - Application
+    get:
+      description: Get a specific brick instance for an app by its ID.
+      operationId: getAppBrickInstanceByBrickID
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: brick identifier.
+        in: path
+        name: brickID
+        required: true
+        schema:
+          description: brick identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrickInstance'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get a specific brick instance by ID
+      tags:
+      - Application
+    patch:
+      description: Update a brick instance for an app. It update/add only the provided
+        fields.
+      operationId: updateAppBrickInstance
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: brick identifier.
+        in: path
+        name: brickID
+        required: true
+        schema:
+          description: brick identifier.
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrickCreateUpdateRequest'
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update a brick instance for an app
+      tags:
+      - Application
+    put:
+      description: Upsert a brick instance for an app. If the instance does not exist,
+        it will be created. If it exists, it will be updated.
+      operationId: upsertAppBrickInstance
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: brick identifier.
+        in: path
+        name: brickID
+        required: true
+        schema:
+          description: brick identifier.
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrickCreateUpdateRequest'
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Upsert a brick instance for an app
+      tags:
+      - Application
+  /v1/apps/{appID}/bricks/{brickID}/rename:
+    post:
+      description: Rename a local brick. Changes the brick's ID and folder name derived
+        from the new name. Only local bricks can be renamed.
+      operationId: renameAppLocalBrick
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: brick identifier.
+        in: path
+        name: brickID
+        required: true
+        schema:
+          description: brick identifier.
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppLocalBrickRenameRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalBrickRenameResult'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Rename a local brick
+      tags:
+      - Application
+  /v1/apps/{appID}/exposed-ports:
+    get:
+      description: Return all ports exposed by the given app.
+      operationId: getAppPorts
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppPortResponse'
+          description: Successful response
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get app exposed ports
+      tags:
+      - Application
+  /v1/apps/{appID}/sketch/libraries:
+    get:
+      description: Lists the libraries used in the App' sketch.
+      operationId: appSketchListLibraries
+      parameters:
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SketchListLibraryResponse'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Lists the libraries used in the App' sketch.
+      tags:
+      - Application
+  /v1/apps/{appID}/sketch/libraries/{libRef}:
+    delete:
+      description: Removes a library from the App' sketch. The library will be removed
+        from the sketch project file.
+      operationId: appSketchRemoveLibrary
+      parameters:
+      - description: if set to "true", the library's dependencies will be removed
+          as well if not needed anymore.
+        in: query
+        name: remove_deps
+        schema:
+          description: if set to "true", the library's dependencies will be removed
+            as well if not needed anymore.
+          type: boolean
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: library reference ("LibraryName" or "LibraryName@Version").
+        in: path
+        name: libRef
+        required: true
+        schema:
+          description: library reference ("LibraryName" or "LibraryName@Version").
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SketchRemoveLibraryResponse'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Removes a library from the App' sketch.
+      tags:
+      - Application
+    put:
+      description: Adds a library to the App' sketch. The library will be added to
+        the sketch project file. The dependencies of the library may be optionally
+        added as well.
+      operationId: appSketchAddLibrary
+      parameters:
+      - description: if set to "true", the library's dependencies will be added as
+          well.
+        in: query
+        name: add_deps
+        schema:
+          description: if set to "true", the library's dependencies will be added
+            as well.
+          type: boolean
+      - description: application identifier.
+        in: path
+        name: appID
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: library reference ("LibraryName" or "LibraryName@Version").
+        in: path
+        name: libRef
+        required: true
+        schema:
+          description: library reference ("LibraryName" or "LibraryName@Version").
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SketchAddLibraryResponse'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Adds a library to the App' sketch.
+      tags:
+      - Application
+  /v1/apps/{id}:
+    delete:
+      description: Remove the given app and all the resources it created
+      operationId: deleteApp
+      parameters:
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: delete the app
+      tags:
+      - Application
+    get:
+      description: Return all the detail for the given app
+      operationId: getAppDetails
+      parameters:
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDetailedInfo'
+          description: Successful response
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get app/example detail
+      tags:
+      - Application
+    patch:
+      description: Edit the given application. Is it possible to modify the default
+        status, to add/remove/update bricks and bricks variables.
+      operationId: editApp
+      parameters:
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDetailedInfo'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Update App Details
+      tags:
+      - Application
+  /v1/apps/{id}/clone:
+    post:
+      description: Clone an existing app or example, in a new one. It is possible
+        to specify the new name and icon.
+      operationId: cloneApp
+      parameters:
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloneAppResponse'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Creates a new app, from another app or example identified by ID.
+      tags:
+      - Application
+  /v1/apps/{id}/events:
+    get:
+      description: 'Returns events for a specific app '
+      operationId: getAppEvents
+      parameters:
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                type: string
+          description: OK
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get application events
+      tags:
+      - Application
+  /v1/apps/{id}/export:
+    get:
+      description: Exports the application folder structure as a ZIP file.
+      operationId: exportApp
+      parameters:
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      - description: If true, the exported archive will include the 'data' directory.
+          Default is false.
+        in: query
+        name: include_data
+        schema:
+          description: If true, the exported archive will include the 'data' directory.
+            Default is false.
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+          description: The ZIP archive containing the application structure.
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Exports an app as ZIP
+      tags:
+      - Application
+  /v1/apps/{id}/logs:
+    get:
+      description: Obtain a ServerSentEvnt stream of logs. It is possible to apply
+        different filters.
+      operationId: getAppLogs
+      parameters:
+      - in: query
+        name: filter
+        schema:
+          type: string
+      - in: query
+        name: tail
+        schema:
+          type: integer
+      - in: query
+        name: nofollow
+        schema:
+          type: boolean
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                type: string
+          description: OK
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get the logs of a running app
+      tags:
+      - Application
+  /v1/apps/{id}/start:
+    post:
+      description: Start the application and handles all the operation to start any
+        dependecies. If the app contains a sketch it also flash it in the micro.
+      operationId: startApp
+      parameters:
+      - description: Return a verbose output. Default is false.
+        in: query
+        name: verbose
+        schema:
+          description: Return a verbose output. Default is false.
+          type: boolean
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                type: string
+          description: |
+            A stream of Server-Sent Events (SSE) that notifies the progress.
+            The client will receive events formatted as follows:
+
+            **Event 'progress'**:
+            Contains a JSON object with the percentage of completion.
+            'event: progress'
+            'data: {"progress":0.25}'
+
+            **Event 'message'**:
+            Contains a JSON object with an informational message.
+            'event: message'
+            'data: {"message":"Starting container..."}'
+
+            **Event 'error'**:
+            Contains a JSON object with the details of an error.
+            'event: error'
+            'data: {"code":"INTERNAL_SERVER_ERROR","message":"An error occurred during operation"}'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Start an existing app/example
+      tags:
+      - Application
+  /v1/apps/{id}/stop:
+    post:
+      description: Stop the application and all it's dependecies. If the app contains
+        a sketch it also remove it from the micro.
+      operationId: stopApp
+      parameters:
+      - description: application identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: application identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                type: string
+          description: |
+            A stream of Server-Sent Events (SSE) that notifies the progress.
+            The client will receive events formatted as follows:
+
+            **Event 'progress'**:
+            Contains a JSON object with the percentage of completion.
+            'event: progress'
+            'data: {"progress":0.25}'
+
+            **Event 'message'**:
+            Contains a JSON object with an informational message.
+            'event: message'
+            'data: {"message":"Stopping container..."}'
+
+            **Event 'error'**:
+            Contains a JSON object with the details of an error.
+            'event: error'
+            'data: {"code":"INTERNAL_SERVER_ERROR","message":"An error occurred during operation"}'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Stop an existing app/example
+      tags:
+      - Application
+  /v1/apps/events:
+    get:
+      description: "A stream of Server-Sent Events (SSE) that notifies the apps status.\nThe
+        client will receive events formatted as follows:\n\n**Event 'app'**:\nContains
+        a JSON object with an informational message.\n'event: app'\n'data: {\"id\":\"dXNlcjpleGFtcG\",\"name\":\"example-app-for-status-events\",\"description\":\"My
+        app description\",\"icon\":\"\U0001F4BB\",\"status\":\"running\",\"example\":false,\"default\":false}'\n\n**Event
+        'error'**:\nContains a JSON object with the details of an error.\n'event:
+        error'\n'data: {\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"An error
+        occurred during operation\"}'\n"
+      operationId: getAppsEvents
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                type: string
+          description: OK
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get application events
+      tags:
+      - Application
+  /v1/apps/import:
+    post:
+      description: Imports a new application from a ZIP file. The system extracts
+        the archive, validates the app.yaml manifest, sanitizes the name, and returns
+        the ID in Base64.
+      operationId: importApp
+      parameters:
+      - description: The ZIP archive. Must contain app.yaml (with a valid 'name')
+          and python/main.py. The app folder name will be calculated from the app
+          name.
+        in: query
+        name: file
+        schema:
+          description: The ZIP archive. Must contain app.yaml (with a valid 'name')
+            and python/main.py. The app folder name will be calculated from the app
+            name.
+          format: base64
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                file:
+                  description: The ZIP archive. Must contain app.yaml (with a valid
+                    'name') and python/main.py. The app folder name will be calculated
+                    from the app name.
+                  format: base64
+                  type: string
+              type: object
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    description: The Base64 encoded identifier of the imported application.
+                    type: string
+                type: object
+          description: Application imported successfully.
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Imports an app from ZIP
+      tags:
+      - Application
+  /v1/bricks:
+    get:
+      description: Returns all the existing bricks. Bricks that are ready to use are
+        marked as installed.
+      operationId: getBricks
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrickListResult'
+          description: Successful response
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get a list of available bricks
+      tags:
+      - Brick
+  /v1/bricks/{id}:
+    get:
+      description: Returns a detailed list of property associated to the given brick.
+      operationId: getBrickDetails
+      parameters:
+      - description: brick identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: brick identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrickDetailsResult'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Detail of a brick
+      tags:
+      - Brick
+  /v1/config:
+    get:
+      description: returns information about current directory configuration used
+        by the app
+      operationId: getConfig
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigResponse'
+          description: Successful response
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: returns application configuration
+      tags:
+      - Application
+  /v1/libraries:
+    get:
+      description: Search for Arduino libraries in the registry with various filters.
+      operationId: listLibraries
+      parameters:
+      - description: Search term to filter libraries by name, sentence, paragraph.
+        in: query
+        name: search
+        schema:
+          description: Search term to filter libraries by name, sentence, paragraph.
+          type: string
+      - description: Filter libraries by target architecture
+        in: query
+        name: architecture
+        schema:
+          description: Filter libraries by target architecture
+          type: string
+      - description: Filter libraries by platform
+        in: query
+        name: platform
+        schema:
+          description: Filter libraries by platform
+          type: string
+      - description: Sort order for the results
+        in: query
+        name: sort
+        schema:
+          default: stars_desc
+          description: Sort order for the results
+          enum:
+          - stars_asc
+          - stars_desc
+          - forks_asc
+          - forks_desc
+          - recent_asc
+          - recent_desc
+          type: string
+      - description: Page number for pagination
+        in: query
+        name: page
+        schema:
+          default: 1
+          description: Page number for pagination
+          minimum: 1
+          type: integer
+      - description: Number of results per page
+        in: query
+        name: limit
+        schema:
+          default: 20
+          description: Number of results per page
+          maximum: 1000
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryListResponse'
+          description: Successful response with library search results
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Search Arduino libraries
+      tags:
+      - Libraries
+  /v1/models:
+    get:
+      description: Returns the list of AI models available in the system. It is possible
+        to filter the models by bricks.
+      operationId: getAIModels
+      parameters:
+      - description: Filter models by bricks. If not specified, all models are returned.
+        in: query
+        name: bricks
+        schema:
+          description: Filter models by bricks. If not specified, all models are returned.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIModelsListResult'
+          description: Successful response
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get a list of available AI models
+      tags:
+      - AIModels
+  /v1/models/{id}:
+    delete:
+      description: Deletes a specific AI model. By default, fails if referenced by
+        apps unless force=true is provided.
+      operationId: deleteAIModel
+      parameters:
+      - description: If true, deletes the model even if referenced by apps.
+        in: query
+        name: force
+        schema:
+          description: If true, deletes the model even if referenced by apps.
+          type: boolean
+      - description: AI model identifier
+        in: path
+        name: id
+        required: true
+        schema:
+          description: AI model identifier
+          type: string
+      responses:
+        "204":
+          description: AI model successfully deleted
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "412":
+          $ref: '#/components/responses/PreconditionFailed'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete an AI model
+      tags:
+      - AIModels
+    get:
+      description: Returns the details of a specific AI model.
+      operationId: getAIModelDetails
+      parameters:
+      - description: AI model identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: AI model identifier.
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIModelItem'
+          description: Successful response
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get AI model details
+      tags:
+      - AIModels
+  /v1/models/ei/projects/{projectID}:
+    put:
+      description: Download and install a custom Edge Impulse AI model using the provided
+        project API key.
+      operationId: installEIModel
+      parameters:
+      - description: Edge Impulse project ID
+        in: path
+        name: projectID
+        required: true
+        schema:
+          description: Edge Impulse project ID
+          example: 123456
+          type: integer
+      - description: Edge Impulse project API key
+        in: header
+        name: x-api-key
+        required: true
+        schema:
+          description: Edge Impulse project API key
+          example: your_edge_impulse_api_token
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                impulse_id:
+                  description: Edge Impulse impulse ID
+                  example: 1
+                  type: integer
+              required:
+              - impulse_id
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIModelItem'
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+        "507":
+          $ref: '#/components/responses/InsufficientStorage'
+      summary: Download and install a custom Edge Impulse AI model
+      tags:
+      - AIModels
+  /v1/properties:
+    get:
+      description: Return the list of system properties.
+      operationId: GetPropertyKeys
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyKeysResponse'
+          description: Successful response
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get system properties
+      tags:
+      - Property
+  /v1/properties/{key}:
+    delete:
+      description: Delete the property by the provided key.
+      operationId: DeleteProperty
+      parameters:
+      - description: property key.
+        in: path
+        name: key
+        required: true
+        schema:
+          description: property key.
+          type: string
+      responses:
+        "204":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete property by key
+      tags:
+      - Property
+    get:
+      description: Return a single property by the provided key.
+      operationId: GetProperty
+      parameters:
+      - description: property key.
+        in: path
+        name: key
+        required: true
+        schema:
+          description: property key.
+          type: string
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: base64
+                type: string
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get property by key
+      tags:
+      - Property
+    put:
+      description: Update or create a new property.
+      operationId: UpdateProperty
+      parameters:
+      - description: property key.
+        in: path
+        name: key
+        required: true
+        schema:
+          description: property key.
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              format: base64
+              type: string
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: base64
+                type: string
+          description: Successful response
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Upsert property
+      tags:
+      - Property
+  /v1/system/resources:
+    get:
+      description: Returns the system resources usage, such as memory, disk and CPU.
+      operationId: getSystemResources
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                type: string
+          description: |
+            A stream of Server-Sent Events (SSE) that notifies the stats.
+            The client will receive events formatted as follows:
+
+            **Event 'cpu'**:
+            Contains a JSON object with the CPU information.
+            'event: stats'
+            'data: {"used_percent": 0.25}'
+
+            **Event 'mem'**:
+            Contains a JSON object with the memory information.
+            'event: mem'
+            'data: {"used": 1024, "total": 2048}'
+
+            **Event 'disk'**:
+            Contains a JSON object with the disk information.
+            'event: disk'
+            'data: {"path":"/", "used": 512, "total": 1024}'
+
+            **Event 'error'**:
+            Contains a JSON object with the details of an error.
+            'event: error'
+            'data: {"code":"INTERNAL_SERVER_ERROR","message":"An error occurred during operation"}'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get system resources usage
+      tags:
+      - System
+  /v1/system/update/apply:
+    put:
+      description: Start the upgrade process.
+      operationId: applyUpdate
+      parameters:
+      - description: If true, upgrade only the Arduino packages that require an upgrade.
+          Default is false.
+        in: query
+        name: only-arduino
+        schema:
+          description: If true, upgrade only the Arduino packages that require an
+            upgrade. Default is false.
+          type: boolean
+      responses:
+        "200":
+          description: Successful response
+        "204":
+          $ref: '#/components/responses/NoContent'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Start the upgrade process in background
+      tags:
+      - System
+  /v1/system/update/check:
+    get:
+      description: Returns the details of packages to be upgraded.
+      operationId: checkUpdate
+      parameters:
+      - description: If true, check only for Arduino packages that require an upgrade.
+          Default is false.
+        in: query
+        name: only-arduino
+        schema:
+          description: If true, check only for Arduino packages that require an upgrade.
+            Default is false.
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCheckResult'
+          description: Successful response
+        "204":
+          $ref: '#/components/responses/NoContent'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get the packages that requires an upgrade
+      tags:
+      - System
+  /v1/system/update/events:
+    get:
+      description: Returns the events of current update process.
+      operationId: eventsUpdate
+      responses:
+        "200":
+          content:
+            text/event-stream:
+              schema:
+                type: string
+          description: |
+            A stream of Server-Sent Events (SSE) that notifies the progress of the update process.
+            The client will receive events formatted as follows:
+
+            **Event 'log'**:
+            Contains a log message of the apt upgrade command.
+            'event: log'
+            'data: "updating package: 0.25"'
+
+            **Event 'restarting'**:
+            Contains a string with the message that the upgrade is completed and the system is restarting.
+            'event: restarting'
+            'data: Upgrade completed. Restarting'
+
+            **Event 'error'**:
+            Contains a JSON object with the details of an error.
+            'event: error'
+            'data: {"code":"internal_service_err","message":"An error occurred during operation"}'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: SSE stream of the update process
+      tags:
+      - System
+  /v1/version:
+    get:
+      description: returns the application current version
+      operationId: getVersions
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+          description: Successful response
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+      summary: application version
+      tags:
+      - Application
+components:
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          example:
+            details: The request is invalid or missing required parameters.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Bad Request
+    Conflict:
+      content:
+        application/json:
+          example:
+            details: There is a conflict with an existing resource.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Conflict
+    Forbidden:
+      content:
+        application/json:
+          example:
+            details: You do not have permission to access this resource.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Forbidden
+    InsufficientStorage:
+      content:
+        application/json:
+          example:
+            details: Insufficient storage to complete the request.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Insufficient Storage
+    InternalServerError:
+      content:
+        application/json:
+          example:
+            details: An unexpected error occurred.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Internal Server Error
+    NoContent:
+      content:
+        application/json:
+          example:
+            details: No content to return.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: No Content
+    NotFound:
+      content:
+        application/json:
+          example:
+            details: The requested resource was not found.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Not Found
+    PreconditionFailed:
+      content:
+        application/json:
+          example:
+            details: The request is invalid.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Precondition Failed
+    Unauthorized:
+      content:
+        application/json:
+          example:
+            details: Unauthorized access to the resource.
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Unauthorized
+  schemas:
+    AIModel:
+      properties:
+        description:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+      type: object
+    AIModelItem:
+      properties:
+        brick_ids:
+          items:
+            type: string
+          nullable: true
+          type: array
+        description:
+          type: string
+        disk_usage:
+          minimum: 0
+          nullable: true
+          type: integer
+        id:
+          type: string
+        is_builtin:
+          type: boolean
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        name:
+          type: string
+        runner:
+          type: string
+      type: object
+    AIModelsListResult:
+      properties:
+        models:
+          items:
+            $ref: '#/components/schemas/AIModelItem'
+          nullable: true
+          type: array
+      type: object
+    AppBrickInstancesResult:
+      properties:
+        bricks:
+          items:
+            $ref: '#/components/schemas/BrickInstance'
+          nullable: true
+          type: array
+      type: object
+    AppDetailedBrick:
+      properties:
+        category:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        require_model:
+          type: boolean
+      required:
+      - id
+      - name
+      type: object
+    AppDetailedInfo:
+      properties:
+        bricks:
+          items:
+            $ref: '#/components/schemas/AppDetailedBrick'
+          type: array
+        default:
+          type: boolean
+        description:
+          type: string
+        example:
+          type: boolean
+        icon:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        path:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - id
+      - name
+      - status
+      type: object
+    AppInfo:
+      properties:
+        default:
+          type: boolean
+        description:
+          type: string
+        example:
+          type: boolean
+        icon:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+      type: object
+    AppListResponse:
+      properties:
+        apps:
+          description: List of applications
+          items:
+            $ref: '#/components/schemas/AppInfo'
+          nullable: true
+          type: array
+        broken_apps:
+          description: List of applications that are broken and couldn't be parsed
+          items:
+            $ref: '#/components/schemas/BrokenAppInfo'
+          type: array
+      type: object
+    AppLocalBrickCreateRequest:
+      properties:
+        name:
+          type: string
+      type: object
+    AppLocalBrickCreateResponse:
+      properties:
+        id:
+          type: string
+      type: object
+    AppLocalBrickRenameRequest:
+      properties:
+        name:
+          type: string
+      type: object
+    AppPortResponse:
+      properties:
+        ports:
+          description: exposed port of the app
+          example: 80
+          items:
+            $ref: '#/components/schemas/Port'
+          nullable: true
+          type: array
+      type: object
+    AppReference:
+      properties:
+        icon:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+      type: object
+    BrickConfigVariable:
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        required:
+          type: boolean
+        value:
+          type: string
+      type: object
+    BrickCreateUpdateRequest:
+      properties:
+        model:
+          nullable: true
+          type: string
+        variables:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
+    BrickDetailsResult:
+      properties:
+        api_docs_path:
+          type: string
+        author:
+          type: string
+        category:
+          type: string
+        code_examples:
+          items:
+            $ref: '#/components/schemas/CodeExample'
+          nullable: true
+          type: array
+        compatible_models:
+          items:
+            $ref: '#/components/schemas/AIModel'
+          nullable: true
+          type: array
+        config_variables:
+          items:
+            $ref: '#/components/schemas/BrickConfigVariable'
+          nullable: true
+          type: array
+        description:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        readme:
+          type: string
+        require_model:
+          type: boolean
+        status:
+          type: string
+        used_by_apps:
+          items:
+            $ref: '#/components/schemas/AppReference'
+          nullable: true
+          type: array
+        variables:
+          additionalProperties:
+            $ref: '#/components/schemas/BrickVariable'
+          description: 'Deprecated: use config_variables instead. This field is kept
+            for backward compatibility.'
+          type: object
+      type: object
+    BrickInstance:
+      properties:
+        author:
+          type: string
+        category:
+          type: string
+        compatible_models:
+          items:
+            $ref: '#/components/schemas/AIModel'
+          nullable: true
+          type: array
+        config_variables:
+          items:
+            $ref: '#/components/schemas/BrickConfigVariable'
+          type: array
+        id:
+          type: string
+        model:
+          type: string
+        name:
+          type: string
+        readme:
+          type: string
+        require_model:
+          type: boolean
+        status:
+          type: string
+        variables:
+          additionalProperties:
+            type: string
+          description: 'Deprecated: use config_variables instead. This field is kept
+            for backward compatibility.'
+          type: object
+      type: object
+    BrickListItem:
+      properties:
+        author:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        require_model:
+          type: boolean
+        status:
+          type: string
+      type: object
+    BrickListResult:
+      properties:
+        bricks:
+          items:
+            $ref: '#/components/schemas/BrickListItem'
+          nullable: true
+          type: array
+      type: object
+    BrickVariable:
+      properties:
+        default_value:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+      type: object
+    BrokenAppInfo:
+      properties:
+        error:
+          type: string
+        name:
+          type: string
+      type: object
+    CloneAppResponse:
+      properties:
+        id:
+          type: string
+      type: object
+    CloneRequest:
+      properties:
+        icon:
+          description: application icon
+          nullable: true
+          type: string
+        name:
+          description: application name
+          example: My Awesome App
+          nullable: true
+          type: string
+      type: object
+    CodeExample:
+      properties:
+        path:
+          type: string
+      type: object
+    ConfigDirectories:
+      properties:
+        apps:
+          type: string
+        data:
+          type: string
+        examples:
+          type: string
+      type: object
+    ConfigResponse:
+      properties:
+        directories:
+          $ref: '#/components/schemas/ConfigDirectories'
+      type: object
+    CreateAppRequest:
+      properties:
+        description:
+          description: application description
+          type: string
+        icon:
+          description: application icon
+          type: string
+        name:
+          description: application name
+          example: My Awesome App
+          type: string
+      required:
+      - name
+      type: object
+    CreateAppResponse:
+      properties:
+        id:
+          type: string
+      type: object
+    EditRequest:
+      properties:
+        default:
+          nullable: true
+          type: boolean
+        description:
+          description: application description
+          example: This is my awesome app
+          nullable: true
+          type: string
+        icon:
+          description: application icon
+          example: "\U0001F4BB"
+          nullable: true
+          type: string
+        name:
+          description: application name
+          example: My Awesome App
+          nullable: true
+          type: string
+      type: object
+    ErrorResponse:
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      type: object
+    Library:
+      properties:
+        architectures:
+          items:
+            type: string
+          nullable: true
+          type: array
+        author:
+          type: string
+        category:
+          type: string
+        dependencies:
+          items:
+            properties:
+              name:
+                type: string
+            type: object
+          nullable: true
+          type: array
+        example_count:
+          type: integer
+        id:
+          type: string
+        includes:
+          items:
+            type: string
+          nullable: true
+          type: array
+        license:
+          type: string
+        maintainer:
+          type: string
+        name:
+          type: string
+        paragraph:
+          type: string
+        platform:
+          nullable: true
+          type: string
+        releases:
+          items:
+            properties:
+              id:
+                type: string
+              version:
+                type: string
+            type: object
+          nullable: true
+          type: array
+        repository:
+          nullable: true
+          properties:
+            forks:
+              type: integer
+            stars:
+              type: integer
+            updated_at:
+              type: string
+            url:
+              type: string
+          type: object
+        sentence:
+          type: string
+        types:
+          items:
+            type: string
+          nullable: true
+          type: array
+        website:
+          type: string
+      type: object
+    LibraryListResponse:
+      properties:
+        libraries:
+          items:
+            $ref: '#/components/schemas/Library'
+          nullable: true
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    LocalBrickRenameResult:
+      properties:
+        id:
+          type: string
+      type: object
+    PackageType:
+      description: Package type
+      enum:
+      - arduino-platform
+      - debian-package
+      type: string
+      uniqueItems: true
+    Pagination:
+      properties:
+        next_page:
+          type: integer
+        page:
+          type: integer
+        per_page:
+          type: integer
+        prev_page:
+          type: integer
+        total_items:
+          type: integer
+        total_pages:
+          type: integer
+      type: object
+    Port:
+      properties:
+        port:
+          description: "exposed port\tof the app"
+          example: "80"
+          type: string
+        serviceName:
+          description: name of the service if the port is exposed by a brick
+          example: Web Interface
+          type: string
+        source:
+          description: source of the port, e.g. app or brick:data-storage
+          example: brick:data-storage
+          type: string
+      type: object
+    PropertyKeysResponse:
+      properties:
+        keys:
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    SketchAddLibraryResponse:
+      properties:
+        libraries:
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    SketchListLibraryResponse:
+      properties:
+        dependencies:
+          items:
+            type: string
+          nullable: true
+          type: array
+        libraries:
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    SketchRemoveLibraryResponse:
+      properties:
+        libraries:
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    Status:
+      description: Application status
+      enum:
+      - starting
+      - running
+      - stopping
+      - stopped
+      - failed
+      - uninitialized
+      type: string
+      uniqueItems: true
+    UpdateCheckResult:
+      properties:
+        updates:
+          items:
+            $ref: '#/components/schemas/UpgradablePackage'
+          nullable: true
+          type: array
+      type: object
+    UpgradablePackage:
+      properties:
+        from_version:
+          type: string
+        name:
+          type: string
+        to_version:
+          type: string
+        type:
+          $ref: '#/components/schemas/PackageType'
+      type: object
+    VersionResponse:
+      properties:
+        version:
+          type: string
+      type: object

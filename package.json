@@ -97,6 +97,10 @@
         {
           "id": "appLab.appBricks",
           "name": "%view.appBricks%"
+        },
+        {
+          "id": "appLab.appLibs",
+          "name": "%view.appLibs%"
         }
       ],
       "appLab": [
@@ -283,6 +287,12 @@
         "icon": "$(package)"
       },
       {
+        "command": "appLab.showAppLibs",
+        "title": "%command.showAppLibs%",
+        "category": "Arduino App",
+        "icon": "$(library)"
+      },
+      {
         "command": "appLab.getDefaultApp",
         "title": "%command.getDefaultApp%",
         "category": "Arduino App"
@@ -370,6 +380,12 @@
         "icon": "$(refresh)"
       },
       {
+        "command": "appLab.app.refreshBricks",
+        "title": "%command.app.refreshBricks%",
+        "category": "Arduino App",
+        "icon": "$(refresh)"
+      },
+      {
         "command": "appLab.openMonitor",
         "title": "%command.openMonitor%",
         "category": "Arduino App",
@@ -409,14 +425,19 @@
           "group": "navigation@0"
         },
         {
-          "command": "appLab.app.addSketchLib",
+          "command": "appLab.app.refreshBricks",
           "when": "view == appLab.appBricks",
           "group": "navigation@1"
         },
         {
+          "command": "appLab.app.addSketchLib",
+          "when": "view == appLab.appLibs",
+          "group": "navigation@0"
+        },
+        {
           "command": "appLab.app.refreshSketchLibs",
-          "when": "view == appLab.appBricks",
-          "group": "navigation@2"
+          "when": "view == appLab.appLibs",
+          "group": "navigation@1"
         },
         {
           "command": "appLab.newApp",
@@ -476,16 +497,6 @@
           "group": "2_app@2"
         },
         {
-          "command": "appLab.app.addBrick",
-          "when": "view == appLab.appBricks && viewItem == appsection:bricks",
-          "group": "inline@0"
-        },
-        {
-          "command": "appLab.app.addSketchLib",
-          "when": "view == appLab.appBricks && viewItem == appsection:libs",
-          "group": "inline@0"
-        },
-        {
           "command": "appLab.brick.configure",
           "when": "view == appLab.appBricks && viewItem == appBrick",
           "group": "inline@0"
@@ -507,7 +518,7 @@
         },
         {
           "command": "appLab.sketchLib.remove",
-          "when": "view == appLab.appBricks && viewItem == appLib",
+          "when": "view == appLab.appLibs && viewItem == appLib",
           "group": "inline@0"
         },
         {
@@ -637,6 +648,10 @@
         },
         {
           "command": "appLab.app.refreshSketchLibs",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.refreshBricks",
           "when": "false"
         },
         {

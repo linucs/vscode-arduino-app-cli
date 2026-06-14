@@ -53,7 +53,7 @@ export class AppManager {
     }
     const created = await vscode.window.withProgress(
       { location: vscode.ProgressLocation.Notification, title: vscode.l10n.t("Creating app…") },
-      () => this.client.createApp({ name, description: description || undefined, no_sketch: sketch.no_sketch }),
+      () => this.client.createApp({ name, description: description || undefined }, { skipSketch: sketch.no_sketch }),
     );
     this.onChanged();
 
@@ -152,7 +152,8 @@ export class AppManager {
         );
       },
     );
-    this.onChanged();
+    // No onChanged(): a run/stop is a status-only change, and the status flows
+    // back to the views via the `/apps/events` SSE — no re-list needed.
     if (failure) {
       throw new Error(failure);
     }

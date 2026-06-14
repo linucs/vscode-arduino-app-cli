@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import type { AppLabClient } from "./appLabClient";
+import type { AppRegistry } from "./appRegistry";
 import { isAppRunning, type AppInfo } from "./api/types";
 
 type Node =
@@ -13,42 +13,30 @@ type Node =
  * the open folder *is* the app). Clicking a row reveals its folder; the context
  * menu offers Clone / Export / Logs.
  *
- * Listing examples is expensive on the board (the daemon rescans and parses
- * every example), so the list is fetched **once** and cached; live status
- * changes from the `/apps/events` SSE patch the cache via {@link applyStatus}.
- * Example paths are also handed to the {@link AppRegistry} so the active-app
- * toolbar resolves when an example folder is opened.
+ * This view owns no data: it is a pure projection of the {@link AppRegistry}
+ * (the example rows of the `/apps/events` snapshot), re-rendering off
+ * {@link AppRegistry.onDidChange}. Listing apps is expensive on the board, so
+ * keeping the registry as the single SSE-fed source avoids a separate scan.
  */
 export class ExamplesTreeProvider implements vscode.TreeDataProvider<Node> {
   private readonly emitter = new vscode.EventEmitter<Node | undefined>();
   readonly onDidChangeTreeData = this.emitter.event;
 
-  private cache: AppInfo[] | undefined;
   private rerenderTimer: ReturnType<typeof setTimeout> | undefined;
+  private readonly subscription: vscode.Disposable;
 
-  constructor(
-    private readonly client: () => Promise<AppLabClient>,
-    private readonly register: (apps: AppInfo[]) => void,
-  ) {}
-
-  /** Hard refresh: drop the cache so the next render re-lists from the daemon. */
-  refresh(): void {
-    this.cache = undefined;
-    this.emitter.fire(undefined);
+  constructor(private readonly registry: AppRegistry) {
+    this.subscription = registry.onDidChange(() => this.rerender());
   }
 
-  /** Apply a live status update (one `app` event from the SSE) to the cache. */
-  applyStatus(app: AppInfo): void {
-    if (!this.cache) {
-      return;
-    }
-    const idx = this.cache.findIndex((a) => a.id === app.id);
-    if (idx !== -1) {
-      this.cache[idx] = { ...this.cache[idx], ...app };
-      this.rerender();
+  dispose(): void {
+    this.subscription.dispose();
+    if (this.rerenderTimer) {
+      clearTimeout(this.rerenderTimer);
     }
   }
 
+  /** Coalesce the SSE snapshot burst into a single tree refresh. */
   private rerender(): void {
     if (this.rerenderTimer) {
       return;
@@ -81,30 +69,21 @@ export class ExamplesTreeProvider implements vscode.TreeDataProvider<Node> {
     return item;
   }
 
-  async getChildren(node?: Node): Promise<Node[]> {
+  getChildren(node?: Node): Node[] {
     if (node) {
       return [];
     }
-    try {
-      const apps = await this.loadExamples();
-      return apps.length
-        ? apps.map((app) => ({ kind: "app", app }))
-        : [{ kind: "message", label: vscode.l10n.t("No examples") }];
-    } catch (err) {
-      return [{ kind: "message", label: err instanceof Error ? err.message : String(err) }];
+    const examples = this.registry.examples();
+    if (!examples.length) {
+      // Distinguish "snapshot not in yet" from "genuinely none".
+      return [
+        {
+          kind: "message",
+          label: this.registry.hasBooted() ? vscode.l10n.t("No examples") : vscode.l10n.t("Loading…"),
+        },
+      ];
     }
-  }
-
-  /** List the examples from the daemon once, then serve from the cache. */
-  private async loadExamples(): Promise<AppInfo[]> {
-    if (this.cache) {
-      return this.cache;
-    }
-    const client = await this.client();
-    const res = await client.listApps({ filter: "examples" });
-    this.cache = res.apps ?? [];
-    this.register(this.cache);
-    return this.cache;
+    return examples.map((app) => ({ kind: "app", app }));
   }
 }
 

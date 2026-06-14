@@ -88,6 +88,19 @@ export class AppLabClient {
     return h;
   }
 
+  /**
+   * Auth headers WITHOUT forcing `Content-Type: application/json` — for raw byte
+   * bodies (property values) and multipart uploads, where the caller (or fetch,
+   * for multipart boundaries) must set the content type.
+   */
+  private authHeaders(extra?: Record<string, string>): Record<string, string> {
+    const h: Record<string, string> = { ...extra };
+    if (this.apiKey) {
+      h["X-API-Key"] = this.apiKey;
+    }
+    return h;
+  }
+
   private url(path: string, query?: Query): string {
     const qs = query
       ? Object.entries(query)
@@ -230,8 +243,14 @@ export class AppLabClient {
   listApps(query?: { filter?: string; status?: string }): Promise<AppListResponse> {
     return this.request("GET", "/apps", { query });
   }
-  createApp(body: { name: string; description?: string; icon?: string; from_app?: string; bricks?: string[]; no_sketch?: boolean }): Promise<AppInfo> {
-    return this.request("POST", "/apps", { body });
+  createApp(
+    body: { name: string; description?: string; icon?: string },
+    opts: { skipSketch?: boolean } = {},
+  ): Promise<AppInfo> {
+    // The daemon takes the no-sketch flag as the `skip-sketch` query param; the
+    // request body only carries name/description/icon. Send the flag only when
+    // skipping (like the CLI's boolean `--no-sketch`), else omit it.
+    return this.request("POST", "/apps", { body, query: { "skip-sketch": opts.skipSketch || undefined } });
   }
   getApp(id: string): Promise<AppInfo> {
     return this.request("GET", `/apps/${encodeURIComponent(id)}`);
@@ -283,18 +302,24 @@ export class AppLabClient {
     await fs.promises.writeFile(destPath, buf);
   }
 
-  /** Upload a zip to import an app. */
-  async importApp(zipPath: string): Promise<AppInfo> {
+  /**
+   * Upload a zip to import an app. The daemon expects a multipart/form-data body
+   * with a `file` field holding the raw zip (NOT a raw application/zip body), and
+   * responds with `{ id }` — the base64 id of the imported app.
+   */
+  async importApp(zipPath: string): Promise<{ id: string }> {
     const buf = await fs.promises.readFile(zipPath);
+    const form = new FormData();
+    form.append("file", new Blob([new Uint8Array(buf)], { type: "application/zip" }), "app.zip");
     const res = await fetch(this.url("/apps/import"), {
       method: "POST",
-      headers: this.headers({ "Content-Type": "application/zip" }),
-      body: new Uint8Array(buf),
+      headers: this.authHeaders(), // let fetch set the multipart boundary
+      body: form,
     });
     if (!res.ok) {
       throw new ApiError(res.status, await safeError(res));
     }
-    return (await res.json()) as AppInfo;
+    return (await res.json()) as { id: string };
   }
 
   // ---- Bricks ----
@@ -378,14 +403,37 @@ export class AppLabClient {
   getConfig(): Promise<unknown> {
     return this.request("GET", "/config");
   }
-  listProperties(): Promise<string[]> {
-    return this.request("GET", "/properties");
+  async listProperties(): Promise<string[]> {
+    // The daemon wraps the list as `{ keys: [...] }`.
+    const res = await this.request<{ keys?: string[] }>("GET", "/properties");
+    return res.keys ?? [];
   }
-  getProperty(key: string): Promise<unknown> {
-    return this.request("GET", `/properties/${encodeURIComponent(key)}`);
+  /**
+   * Read a property. The daemon serves the value as a raw octet-stream body
+   * (not JSON), so we return the raw text — or undefined when the key is absent.
+   */
+  async getProperty(key: string): Promise<string | undefined> {
+    const res = await fetch(this.url(`/properties/${encodeURIComponent(key)}`), {
+      headers: this.authHeaders(),
+    });
+    if (res.status === 404) {
+      return undefined;
+    }
+    if (!res.ok) {
+      throw new ApiError(res.status, await safeError(res));
+    }
+    return res.text();
   }
-  putProperty(key: string, value: unknown): Promise<void> {
-    return this.request("PUT", `/properties/${encodeURIComponent(key)}`, { body: { value } });
+  /** Write a property. The daemon stores the raw request body as the value. */
+  async putProperty(key: string, value: string): Promise<void> {
+    const res = await fetch(this.url(`/properties/${encodeURIComponent(key)}`), {
+      method: "PUT",
+      headers: this.authHeaders({ "Content-Type": "application/octet-stream" }),
+      body: value,
+    });
+    if (!res.ok) {
+      throw new ApiError(res.status, await safeError(res));
+    }
   }
   deleteProperty(key: string): Promise<void> {
     return this.request("DELETE", `/properties/${encodeURIComponent(key)}`);
