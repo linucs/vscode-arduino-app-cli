@@ -22,9 +22,8 @@ export class PlotterFeeder {
     }
     const { lines, rest } = splitLines(this.lineBuf, chunk);
     this.lineBuf = rest;
-    const points = lines
-      .map(parseTelemetryLine)
-      .filter((p): p is NonNullable<typeof p> => p !== undefined);
+    // parseTelemetryLine now returns zero or more points per line (Teleplot `;`).
+    const points = lines.flatMap(parseTelemetryLine);
     if (points.length > 0) {
       plotter.postData(points);
     }
