@@ -175,9 +175,17 @@ export class AppLabClient {
         case "app":
           sinks.onApp?.(ev.data as AppInfo);
           break;
-        case "error":
-          sinks.onError?.(ev.data as SseError);
+        case "error": {
+          const err = ev.data as SseError;
+          // The daemon ends every stream with a sentinel `error: {code:"SERVER_CLOSED"}`
+          // (no `message`) followed by a `close` event. This is normal termination,
+          // not a failure — forwarding it surfaced as "[error] undefined" in the
+          // console on every start/stop. Only real errors carry a message.
+          if (err?.code !== "SERVER_CLOSED") {
+            sinks.onError?.(err);
+          }
           break;
+        }
       }
     };
     try {

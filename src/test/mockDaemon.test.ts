@@ -27,6 +27,9 @@ suite("AppLabClient against a mock daemon", () => {
         res.setHeader("content-type", "text/event-stream");
         res.write("event: progress\ndata: {\"name\":\"flash\",\"progress\":0.5}\n\n");
         res.write("event: message\ndata: {\"message\":\"done\"}\n\n");
+        // The real daemon closes every stream with this sentinel (no `message`).
+        res.write("event: error\ndata: {\"code\":\"SERVER_CLOSED\"}\n\n");
+        res.write("event: close\ndata: \"Stream closed by server\"\n\n");
         res.end();
         return;
       }
@@ -96,6 +99,15 @@ suite("AppLabClient against a mock daemon", () => {
     });
     assert.deepStrictEqual(progress, [0.5]);
     assert.deepStrictEqual(messages, ["done"]);
+  });
+
+  test("the SERVER_CLOSED stream-end sentinel is not surfaced as an error", async () => {
+    const client = new AppLabClient({ baseUrl: base });
+    const errors: unknown[] = [];
+    await client.startApp("a1", { onError: (e) => errors.push(e) });
+    // SERVER_CLOSED is normal termination — it must not reach onError (which
+    // would otherwise log "[error] undefined" since the sentinel has no message).
+    assert.deepStrictEqual(errors, []);
   });
 
   test("aborting an SSE stream resolves cleanly (no throw)", async () => {

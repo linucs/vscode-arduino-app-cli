@@ -150,7 +150,8 @@ export interface SseMessage {
 
 export interface SseError {
   code: string;
-  message: string;
+  /** Absent on the daemon's `SERVER_CLOSED` stream-termination sentinel. */
+  message?: string;
 }
 
 /** Discriminated decode of a raw SSE frame. `data` is JSON-parsed when possible. */
