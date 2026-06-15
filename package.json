@@ -631,27 +631,27 @@
         {
           "command": "appLab.openPlotter",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
-          "group": "navigation@4"
+          "group": "1_io@0"
         },
         {
           "command": "appLab.app.export",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
-          "group": "1_app@1"
+          "group": "2_app@1"
         },
         {
           "command": "appLab.app.cleanCache",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
-          "group": "1_app@2"
+          "group": "2_app@2"
         },
         {
           "command": "appLab.app.addBrick",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
-          "group": "2_app@0"
+          "group": "1_app@0"
         },
         {
           "command": "appLab.app.addSketchLib",
           "when": "appLab.activeAppStatus && appLab.activeAppStatus != none",
-          "group": "2_app@1"
+          "group": "1_app@1"
         }
       ],
       "commandPalette": [
