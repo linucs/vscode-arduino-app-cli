@@ -1,0 +1,18 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#1e1e1e" rx="8"/>
+  <!-- Toolbar -->
+  <rect x="30" y="40" width="240" height="34" rx="4" fill="#252526" stroke="#454545" stroke-width="1"/>
+  <!-- Run button -->
+  <circle cx="58" cy="57" r="13" fill="#2d2d2d" stroke="#555" stroke-width="1"/>
+  <path d="M53 51 v12 l10 -6 z" fill="#27c93f"/>
+  <!-- Stop button -->
+  <circle cx="92" cy="57" r="13" fill="#2d2d2d" stroke="#555" stroke-width="1"/>
+  <rect x="87" y="52" width="10" height="10" rx="1.5" fill="#f04848"/>
+  <text x="200" y="61" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#8b8b8b">Run · Stop · Console</text>
+  <!-- Console -->
+  <rect x="30" y="86" width="240" height="84" rx="4" fill="#0d0d0d" stroke="#454545" stroke-width="1"/>
+  <text x="42" y="106" font-size="9" font-family="monospace" fill="#8b8b8b">Compiling sketch…</text>
+  <text x="42" y="122" font-size="9" font-family="monospace" fill="#3794ff">Flashing MCU…</text>
+  <text x="42" y="138" font-size="9" font-family="monospace" fill="#27c93f">Starting Python app…</text>
+  <text x="42" y="154" font-size="9" font-family="monospace" fill="#d4d4d4">App running ▶</text>
+</svg>

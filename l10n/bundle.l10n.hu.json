@@ -141,5 +141,7 @@
   "{0} / {1} ({2}%)": "{0} / {1} ({2}%)",
   "{0} is coming in a later release.": "A(z) {0} egy későbbi kiadásban érkezik.",
   "{0} package(s) can be updated.": "{0} csomag frissíthető.",
-  "{0}: {1} → {2}": "{0}: {1} → {2}"
+  "{0}: {1} → {2}": "{0}: {1} → {2}",
+  "What's New": "Újdonságok",
+  "Arduino App CLI updated to v{0}": "Az Arduino App CLI frissült a(z) {0} verzióra"
 }

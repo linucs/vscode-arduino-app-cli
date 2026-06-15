@@ -1,0 +1,29 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#1e1e1e" rx="8"/>
+  <text x="150" y="34" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#d4d4d4">Bricks &amp; Models</text>
+  <!-- Bricks: interlocking blocks -->
+  <rect x="40" y="58" width="50" height="34" rx="4" fill="#c8a24b"/>
+  <rect x="56" y="52" width="18" height="8" rx="3" fill="#c8a24b"/>
+  <rect x="96" y="58" width="50" height="34" rx="4" fill="#d9b65e"/>
+  <rect x="112" y="52" width="18" height="8" rx="3" fill="#d9b65e"/>
+  <rect x="68" y="98" width="50" height="34" rx="4" fill="#b8923c"/>
+  <rect x="84" y="92" width="18" height="8" rx="3" fill="#b8923c"/>
+  <text x="93" y="152" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#8b8b8b">Bricks</text>
+  <!-- Divider -->
+  <line x1="160" y1="54" x2="160" y2="146" stroke="#454545" stroke-width="1"/>
+  <!-- Models: neural net -->
+  <g stroke="#a371f7" stroke-width="1.5">
+    <line x1="196" y1="70" x2="226" y2="62"/>
+    <line x1="196" y1="70" x2="226" y2="92"/>
+    <line x1="196" y1="110" x2="226" y2="62"/>
+    <line x1="196" y1="110" x2="226" y2="92"/>
+    <line x1="226" y1="62" x2="256" y2="80"/>
+    <line x1="226" y1="92" x2="256" y2="80"/>
+  </g>
+  <circle cx="196" cy="70" r="7" fill="#a371f7"/>
+  <circle cx="196" cy="110" r="7" fill="#a371f7"/>
+  <circle cx="226" cy="62" r="7" fill="#c19bf9"/>
+  <circle cx="226" cy="92" r="7" fill="#c19bf9"/>
+  <circle cx="256" cy="80" r="7" fill="#a371f7"/>
+  <text x="226" y="152" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#8b8b8b">Models</text>
+</svg>

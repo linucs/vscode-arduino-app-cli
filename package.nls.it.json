@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Rigenera la configurazione di IntelliSense C++ dopo ogni esecuzione riuscita.",
   "config.arduinoCliPath": "Percorso opzionale a un arduino-cli autonomo, che abilita una build veloce del database di compilazione senza caricamento.",
   "config.python.manageVenv": "Consenti all'estensione di creare un ambiente virtuale Python e installare le dipendenze per IntelliSense.",
-  "command.openPlotter": "Apri Plotter dati"
+  "command.openPlotter": "Apri Plotter dati",
+  "walkthrough.title": "Inizia con Arduino App CLI",
+  "walkthrough.description": "Crea, esegui e monitora le app per Arduino UNO Q senza uscire da VS Code.",
+  "walkthrough.connect.title": "Connettiti alla tua UNO Q",
+  "walkthrough.connect.description": "Questa estensione comunica con il daemon `arduino-app-cli` sulla tua Arduino UNO Q (di solito tramite Remote-SSH). Verifica che sia raggiungibile: [Mostra versione](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Crea o importa un'app",
+  "walkthrough.createApp.description": "Un'app riunisce una parte **Python** (`python/main.py`) e uno sketch **C++** (`sketch/sketch.ino`). Inizia da zero o importane una esistente.\n\n[Nuova app](command:appLab.newApp) · [Importa app](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Aggiungi brick e modelli",
+  "walkthrough.bricksModels.description": "Sfoglia il **catalogo dei brick** per i componenti riutilizzabili e aggiungili alla tua app, e importa **modelli** di IA da Edge Impulse.\n\n[Aggiungi brick](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Esegui la tua app",
+  "walkthrough.runApp.description": "Premi **Esegui** per compilare e caricare lo sketch sul MCU e avviare la parte Python — l'avanzamento viene mostrato nella **Console**. Puoi fermarla in qualsiasi momento.\n\n[Esegui](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Monitora e traccia i dati seriali",
+  "walkthrough.monitor.description": "Apri il **Monitor** seriale per leggere dalla scheda, o il **Plotter** per tracciare in tempo reale i flussi numerici.\n\n[Apri monitor seriale](command:appLab.openMonitor)"
 }

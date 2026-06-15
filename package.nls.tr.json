@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Her başarılı çalıştırmadan sonra C++ IntelliSense yapılandırmasını yeniden oluştur.",
   "config.arduinoCliPath": "Yükleme yapmadan hızlı bir derleme veritabanı derlemesi sağlayan, bağımsız bir arduino-cli için isteğe bağlı yol.",
   "config.python.manageVenv": "Uzantının IntelliSense için bir Python sanal ortamı oluşturmasına ve gereksinimleri yüklemesine izin ver.",
-  "command.openPlotter": "Veri Çiziciyi Aç"
+  "command.openPlotter": "Veri Çiziciyi Aç",
+  "walkthrough.title": "Arduino App CLI'ye başlayın",
+  "walkthrough.description": "Arduino UNO Q uygulamalarını VS Code'dan çıkmadan oluşturun, çalıştırın ve izleyin.",
+  "walkthrough.connect.title": "UNO Q'nuza bağlanın",
+  "walkthrough.connect.description": "Bu uzantı, Arduino UNO Q üzerindeki `arduino-app-cli` arka plan hizmetiyle (genellikle Remote-SSH ile) iletişim kurar. Erişilebilir olduğunu doğrulayın: [Sürümü göster](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Uygulama oluşturun veya içe aktarın",
+  "walkthrough.createApp.description": "Bir uygulama, bir **Python** bölümü (`python/main.py`) ile bir **C++** taslağını (`sketch/sketch.ino`) bir araya getirir. Sıfırdan başlayın veya mevcut birini içe aktarın.\n\n[Yeni uygulama](command:appLab.newApp) · [Uygulamayı içe aktar](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Brick ve model ekleyin",
+  "walkthrough.bricksModels.description": "Yeniden kullanılabilir bileşenler için **Brick Kataloğu'na** göz atıp uygulamanıza ekleyin ve Edge Impulse'tan yapay zekâ **modellerini** içe aktarın.\n\n[Brick ekle](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Uygulamanızı çalıştırın",
+  "walkthrough.runApp.description": "Taslağı derleyip MCU'ya yüklemek ve Python tarafını başlatmak için **Çalıştır**'a basın — ilerleme **Konsol'da** akar. Dilediğiniz zaman durdurabilirsiniz.\n\n[Çalıştır](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Seri verileri izleyin ve çizin",
+  "walkthrough.monitor.description": "Karttan okumak için seri **Monitör'ü**, sayısal akışları canlı çizmek için **Çizici'yi** açın.\n\n[Seri monitörü aç](command:appLab.openMonitor)"
 }

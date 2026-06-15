@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Regenerate C++ IntelliSense configuration after each successful run.",
   "config.arduinoCliPath": "Optional path to a standalone arduino-cli, enabling a fast compilation-database build without flashing.",
   "config.python.manageVenv": "Allow the extension to create a Python virtual environment and install requirements for IntelliSense.",
-  "command.openPlotter": "Open data plotter"
+  "command.openPlotter": "Open data plotter",
+  "walkthrough.title": "Get Started with Arduino App CLI",
+  "walkthrough.description": "Build, run and monitor Arduino UNO Q apps without leaving VS Code.",
+  "walkthrough.connect.title": "Connect to your UNO Q",
+  "walkthrough.connect.description": "This extension talks to the `arduino-app-cli` daemon on your Arduino UNO Q (usually over Remote-SSH). Confirm it's reachable: [Show Version](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Create or import an app",
+  "walkthrough.createApp.description": "An app bundles a **Python** half (`python/main.py`) and a **C++** sketch (`sketch/sketch.ino`). Start fresh or bring in an existing one.\n\n[New App](command:appLab.newApp) · [Import App](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Add bricks & models",
+  "walkthrough.bricksModels.description": "Browse the **Brick Catalog** for reusable components and add them to your app, and import AI **Models** from Edge Impulse.\n\n[Add Brick](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Run your app",
+  "walkthrough.runApp.description": "Press **Run** to compile and flash the sketch to the MCU and start the Python side — progress streams to the **Console**. Stop it any time.\n\n[Run](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Monitor & plot serial data",
+  "walkthrough.monitor.description": "Open the serial **Monitor** to read from the board, or the **Plotter** to chart numeric streams live.\n\n[Open Serial Monitor](command:appLab.openMonitor)"
 }

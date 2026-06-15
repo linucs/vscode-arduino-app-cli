@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Generuj ponownie konfigurację IntelliSense dla C++ po każdym pomyślnym uruchomieniu.",
   "config.arduinoCliPath": "Opcjonalna ścieżka do samodzielnego arduino-cli, umożliwiająca szybkie budowanie bazy danych kompilacji bez wgrywania.",
   "config.python.manageVenv": "Zezwól rozszerzeniu na tworzenie wirtualnego środowiska Python i instalowanie wymagań na potrzeby IntelliSense.",
-  "command.openPlotter": "Otwórz kreślarz danych"
+  "command.openPlotter": "Otwórz kreślarz danych",
+  "walkthrough.title": "Rozpocznij pracę z Arduino App CLI",
+  "walkthrough.description": "Twórz, uruchamiaj i monitoruj aplikacje Arduino UNO Q bez opuszczania VS Code.",
+  "walkthrough.connect.title": "Połącz się ze swoim UNO Q",
+  "walkthrough.connect.description": "To rozszerzenie komunikuje się z demonem `arduino-app-cli` na Twoim Arduino UNO Q (zwykle przez Remote-SSH). Sprawdź, czy jest osiągalny: [Pokaż wersję](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Utwórz lub zaimportuj aplikację",
+  "walkthrough.createApp.description": "Aplikacja łączy część w **Pythonie** (`python/main.py`) oraz szkic w **C++** (`sketch/sketch.ino`). Zacznij od zera lub zaimportuj istniejącą.\n\n[Nowa aplikacja](command:appLab.newApp) · [Importuj aplikację](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Dodaj bricki i modele",
+  "walkthrough.bricksModels.description": "Przeglądaj **katalog bricków** w poszukiwaniu komponentów wielokrotnego użytku i dodawaj je do aplikacji oraz importuj **modele** AI z Edge Impulse.\n\n[Dodaj brick](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Uruchom aplikację",
+  "walkthrough.runApp.description": "Naciśnij **Uruchom**, aby skompilować i wgrać szkic na MCU oraz uruchomić część w Pythonie — postęp pojawia się w **Konsoli**. Możesz ją zatrzymać w dowolnej chwili.\n\n[Uruchom](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Monitoruj i wykreślaj dane szeregowe",
+  "walkthrough.monitor.description": "Otwórz **Monitor** portu szeregowego, aby odczytywać dane z płytki, lub **Wykres**, aby na żywo wizualizować strumienie liczbowe.\n\n[Otwórz monitor portu szeregowego](command:appLab.openMonitor)"
 }

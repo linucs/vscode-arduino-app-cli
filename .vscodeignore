@@ -9,6 +9,7 @@ test/**
 scripts/**
 .claude/**
 .gitignore
+.nvmrc
 .yarnrc
 esbuild.js
 eslint.config.mjs

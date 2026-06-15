@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "在每次成功运行后重新生成 C++ IntelliSense 配置。",
   "config.arduinoCliPath": "独立 arduino-cli 的可选路径，可启用无需烧录的快速编译数据库构建。",
   "config.python.manageVenv": "允许扩展创建 Python 虚拟环境并为 IntelliSense 安装依赖项。",
-  "command.openPlotter": "打开数据绘图仪"
+  "command.openPlotter": "打开数据绘图仪",
+  "walkthrough.title": "开始使用 Arduino App CLI",
+  "walkthrough.description": "无需离开 VS Code 即可构建、运行和监视 Arduino UNO Q 应用。",
+  "walkthrough.connect.title": "连接到你的 UNO Q",
+  "walkthrough.connect.description": "此扩展与 Arduino UNO Q 上的 `arduino-app-cli` 守护进程通信（通常通过 Remote-SSH）。确认其可访问：[显示版本](command:appLab.showVersion)。",
+  "walkthrough.createApp.title": "创建或导入应用",
+  "walkthrough.createApp.description": "一个应用同时包含 **Python** 部分（`python/main.py`）和 **C++** 草图（`sketch/sketch.ino`）。从零开始，或导入现有应用。\n\n[新建应用](command:appLab.newApp) · [导入应用](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "添加积木与模型",
+  "walkthrough.bricksModels.description": "在 **积木目录** 中浏览可复用组件并添加到你的应用，并从 Edge Impulse 导入 AI **模型**。\n\n[添加积木](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "运行你的应用",
+  "walkthrough.runApp.description": "按 **运行** 即可编译草图并烧录到 MCU，同时启动 Python 部分——进度会显示在 **控制台**。可随时停止。\n\n[运行](command:appLab.app.start)",
+  "walkthrough.monitor.title": "监视并绘制串口数据",
+  "walkthrough.monitor.description": "打开串口 **监视器** 读取开发板数据，或打开 **绘图器** 实时绘制数值流。\n\n[打开串口监视器](command:appLab.openMonitor)"
 }

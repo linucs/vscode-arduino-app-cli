@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Die C++ IntelliSense-Konfiguration nach jeder erfolgreichen Ausführung neu generieren.",
   "config.arduinoCliPath": "Optionaler Pfad zu einer eigenständigen arduino-cli, der einen schnellen Build der Kompilierungsdatenbank ohne Flashen ermöglicht.",
   "config.python.manageVenv": "Der Erweiterung erlauben, eine virtuelle Python-Umgebung zu erstellen und Anforderungen für IntelliSense zu installieren.",
-  "command.openPlotter": "Datenplotter öffnen"
+  "command.openPlotter": "Datenplotter öffnen",
+  "walkthrough.title": "Erste Schritte mit Arduino App CLI",
+  "walkthrough.description": "Erstelle, starte und überwache Arduino-UNO-Q-Apps, ohne VS Code zu verlassen.",
+  "walkthrough.connect.title": "Mit deinem UNO Q verbinden",
+  "walkthrough.connect.description": "Diese Erweiterung kommuniziert mit dem `arduino-app-cli`-Daemon auf deinem Arduino UNO Q (meist über Remote-SSH). Prüfe die Erreichbarkeit: [Version anzeigen](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "App erstellen oder importieren",
+  "walkthrough.createApp.description": "Eine App bündelt einen **Python**-Teil (`python/main.py`) und einen **C++**-Sketch (`sketch/sketch.ino`). Fang neu an oder importiere eine vorhandene.\n\n[Neue App](command:appLab.newApp) · [App importieren](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Bricks & Modelle hinzufügen",
+  "walkthrough.bricksModels.description": "Durchsuche den **Brick-Katalog** nach wiederverwendbaren Komponenten und füge sie deiner App hinzu, und importiere KI-**Modelle** von Edge Impulse.\n\n[Brick hinzufügen](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "App ausführen",
+  "walkthrough.runApp.description": "Klicke auf **Ausführen**, um den Sketch zu kompilieren, auf den MCU zu flashen und den Python-Teil zu starten — der Fortschritt erscheint in der **Konsole**. Du kannst jederzeit stoppen.\n\n[Ausführen](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Serielle Daten überwachen & plotten",
+  "walkthrough.monitor.description": "Öffne den seriellen **Monitor**, um vom Board zu lesen, oder den **Plotter**, um numerische Datenströme live darzustellen.\n\n[Seriellen Monitor öffnen](command:appLab.openMonitor)"
 }

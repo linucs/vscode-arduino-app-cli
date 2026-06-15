@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Po každém úspěšném spuštění znovu vygenerovat konfiguraci C++ IntelliSense.",
   "config.arduinoCliPath": "Volitelná cesta k samostatnému arduino-cli, umožňující rychlé sestavení kompilační databáze bez nahrávání.",
   "config.python.manageVenv": "Umožnit rozšíření vytvořit virtuální prostředí Python a nainstalovat požadavky pro IntelliSense.",
-  "command.openPlotter": "Otevřít grafer dat"
+  "command.openPlotter": "Otevřít grafer dat",
+  "walkthrough.title": "Začínáme s Arduino App CLI",
+  "walkthrough.description": "Vytvářejte, spouštějte a sledujte aplikace pro Arduino UNO Q přímo ve VS Code.",
+  "walkthrough.connect.title": "Připojte se k UNO Q",
+  "walkthrough.connect.description": "Toto rozšíření komunikuje s démonem `arduino-app-cli` na vaší desce Arduino UNO Q (obvykle přes Remote-SSH). Ověřte dostupnost: [Zobrazit verzi](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Vytvořte nebo importujte aplikaci",
+  "walkthrough.createApp.description": "Aplikace spojuje část v **Pythonu** (`python/main.py`) a sketch v **C++** (`sketch/sketch.ino`). Začněte od začátku nebo importujte existující.\n\n[Nová aplikace](command:appLab.newApp) · [Importovat aplikaci](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Přidejte bricky a modely",
+  "walkthrough.bricksModels.description": "Procházejte **katalog bricků** pro znovupoužitelné komponenty a přidejte je do aplikace a importujte **modely** AI z Edge Impulse.\n\n[Přidat brick](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Spusťte aplikaci",
+  "walkthrough.runApp.description": "Stiskněte **Spustit** pro kompilaci a nahrání sketche do MCU a spuštění části v Pythonu — průběh se zobrazuje v **konzoli**. Kdykoli ji můžete zastavit.\n\n[Spustit](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Sledujte a vykreslujte sériová data",
+  "walkthrough.monitor.description": "Otevřete sériový **Monitor** pro čtení z desky nebo **Plotter** pro živé vykreslení číselných toků.\n\n[Otevřít sériový monitor](command:appLab.openMonitor)"
 }

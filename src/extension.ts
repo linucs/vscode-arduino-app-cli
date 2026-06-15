@@ -65,6 +65,8 @@ export function activate(ctx: vscode.ExtensionContext) {
 
   daemon = new DaemonManager(output);
 
+  maybeAnnounceVersion(ctx);
+
   const clientOf = async () => (await ensureReady())!.client;
   registry = new AppRegistry(clientOf);
   examplesView = new ExamplesTreeProvider(registry);
@@ -101,6 +103,50 @@ export function activate(ctx: vscode.ExtensionContext) {
   // Kick off a connection in the background so the views populate and the status
   // bar reflects reality without waiting for the first user action.
   void ensureReady();
+}
+
+/**
+ * Announce the packaged version once per version by comparing it against the one
+ * stored in globalState: on first install open the Get Started walkthrough, and
+ * after an update surface a "What's New" notification linking to the changelog.
+ * Cheap and daemon-independent, so it runs at activation without waiting on the
+ * daemon connection.
+ */
+function maybeAnnounceVersion(ctx: vscode.ExtensionContext): void {
+  const currentVersion = ctx.extension.packageJSON.version as string;
+  const lastVersion = ctx.globalState.get<string>("announcedVersion");
+  if (lastVersion === currentVersion) {
+    return;
+  }
+  void ctx.globalState.update("announcedVersion", currentVersion);
+
+  if (lastVersion === undefined) {
+    // Fresh install → Get Started walkthrough.
+    void vscode.commands.executeCommand(
+      "workbench.action.openWalkthrough",
+      `${ctx.extension.id}#appLab.welcome`,
+      false,
+    );
+    return;
+  }
+
+  // Update → changelog notification.
+  void showUpdateNotification(ctx, currentVersion);
+}
+
+async function showUpdateNotification(
+  ctx: vscode.ExtensionContext,
+  version: string,
+): Promise<void> {
+  const whatsNew = vscode.l10n.t("What's New");
+  const choice = await vscode.window.showInformationMessage(
+    vscode.l10n.t("Arduino App CLI updated to v{0}", version),
+    whatsNew,
+  );
+  if (choice === whatsNew) {
+    const uri = vscode.Uri.joinPath(ctx.extensionUri, "CHANGELOG.md");
+    void vscode.commands.executeCommand("markdown.showPreview", uri);
+  }
 }
 
 export function deactivate() {

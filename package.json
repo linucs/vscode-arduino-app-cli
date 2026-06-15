@@ -83,6 +83,50 @@
     "ws": "^8.18.0"
   },
   "contributes": {
+    "walkthroughs": [
+      {
+        "id": "appLab.welcome",
+        "title": "%walkthrough.title%",
+        "description": "%walkthrough.description%",
+        "steps": [
+          {
+            "id": "connect",
+            "title": "%walkthrough.connect.title%",
+            "description": "%walkthrough.connect.description%",
+            "media": { "svg": "images/walkthrough/connect.svg", "altText": "Connecting to the Arduino UNO Q daemon" },
+            "completionEvents": ["onCommand:appLab.showVersion"]
+          },
+          {
+            "id": "createApp",
+            "title": "%walkthrough.createApp.title%",
+            "description": "%walkthrough.createApp.description%",
+            "media": { "svg": "images/walkthrough/create-app.svg", "altText": "Creating or importing an app" },
+            "completionEvents": ["onCommand:appLab.newApp"]
+          },
+          {
+            "id": "bricksModels",
+            "title": "%walkthrough.bricksModels.title%",
+            "description": "%walkthrough.bricksModels.description%",
+            "media": { "svg": "images/walkthrough/bricks-models.svg", "altText": "Bricks and models catalogs" },
+            "completionEvents": ["onCommand:appLab.app.addBrick"]
+          },
+          {
+            "id": "runApp",
+            "title": "%walkthrough.runApp.title%",
+            "description": "%walkthrough.runApp.description%",
+            "media": { "svg": "images/walkthrough/run-app.svg", "altText": "Running an app and watching the console" },
+            "completionEvents": ["onCommand:appLab.app.start"]
+          },
+          {
+            "id": "monitor",
+            "title": "%walkthrough.monitor.title%",
+            "description": "%walkthrough.monitor.description%",
+            "media": { "svg": "images/walkthrough/monitor.svg", "altText": "Serial monitor and data plotter" },
+            "completionEvents": ["onCommand:appLab.openMonitor"]
+          }
+        ]
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {

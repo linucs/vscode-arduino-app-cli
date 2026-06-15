@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "A C++ IntelliSense konfiguráció újragenerálása minden sikeres futtatás után.",
   "config.arduinoCliPath": "Opcionális elérési út egy különálló arduino-cli-hez, amely lehetővé teszi a gyors, fordítási adatbázist előállító buildet flashelés nélkül.",
   "config.python.manageVenv": "Lehetővé teszi a bővítmény számára, hogy Python virtuális környezetet hozzon létre, és telepítse a követelményeket az IntelliSense-hez.",
-  "command.openPlotter": "Adatplotter megnyitása"
+  "command.openPlotter": "Adatplotter megnyitása",
+  "walkthrough.title": "Ismerkedés az Arduino App CLI-vel",
+  "walkthrough.description": "Készíts, futtass és figyelj Arduino UNO Q alkalmazásokat a VS Code elhagyása nélkül.",
+  "walkthrough.connect.title": "Csatlakozás az UNO Q-hoz",
+  "walkthrough.connect.description": "Ez a bővítmény az Arduino UNO Q-n futó `arduino-app-cli` démonnal kommunikál (általában Remote-SSH-n keresztül). Ellenőrizd, hogy elérhető: [Verzió megjelenítése](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Alkalmazás létrehozása vagy importálása",
+  "walkthrough.createApp.description": "Egy alkalmazás egy **Python** részt (`python/main.py`) és egy **C++** sketchet (`sketch/sketch.ino`) fog össze. Kezdj újat, vagy hozz be egy meglévőt.\n\n[Új alkalmazás](command:appLab.newApp) · [Alkalmazás importálása](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Brickek és modellek hozzáadása",
+  "walkthrough.bricksModels.description": "Böngészd a **brick-katalógust** újrafelhasználható összetevőkért, és add hozzá őket az alkalmazásodhoz, valamint importálj MI-**modelleket** az Edge Impulse-ból.\n\n[Brick hozzáadása](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Alkalmazás futtatása",
+  "walkthrough.runApp.description": "Nyomd meg a **Futtatás** gombot a sketch lefordításához és az MCU-ra töltéséhez, valamint a Python rész indításához — a folyamat a **konzolon** jelenik meg. Bármikor leállíthatod.\n\n[Futtatás](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Soros adatok figyelése és ábrázolása",
+  "walkthrough.monitor.description": "Nyisd meg a soros **Monitort** a kártyáról való olvasáshoz, vagy a **Plottert** a számfolyamok élő ábrázolásához.\n\n[Soros monitor megnyitása](command:appLab.openMonitor)"
 }

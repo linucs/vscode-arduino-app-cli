@@ -141,5 +141,7 @@
   "{0} / {1} ({2}%)": "{0} / {1} ({2}%)",
   "{0} is coming in a later release.": "{0} arrivera dans une prochaine version.",
   "{0} package(s) can be updated.": "{0} paquet(s) peuvent être mis à jour.",
-  "{0}: {1} → {2}": "{0}: {1} → {2}"
+  "{0}: {1} → {2}": "{0}: {1} → {2}",
+  "What's New": "Nouveautés",
+  "Arduino App CLI updated to v{0}": "Arduino App CLI a été mis à jour vers la v{0}"
 }

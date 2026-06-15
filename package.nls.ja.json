@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "実行が成功するたびに C++ IntelliSense の構成を再生成します。",
   "config.arduinoCliPath": "スタンドアロンの arduino-cli へのオプションのパス。書き込みを行わない高速なコンパイルデータベースビルドを有効にします。",
   "config.python.manageVenv": "IntelliSense 用に拡張機能が Python 仮想環境を作成し、依存関係をインストールすることを許可します。",
-  "command.openPlotter": "データプロッターを開く"
+  "command.openPlotter": "データプロッターを開く",
+  "walkthrough.title": "Arduino App CLI をはじめる",
+  "walkthrough.description": "VS Code から離れずに Arduino UNO Q アプリのビルド・実行・監視ができます。",
+  "walkthrough.connect.title": "UNO Q に接続する",
+  "walkthrough.connect.description": "この拡張機能は Arduino UNO Q 上の `arduino-app-cli` デーモンと（通常は Remote-SSH 経由で）通信します。到達可能か確認しましょう: [バージョンを表示](command:appLab.showVersion)。",
+  "walkthrough.createApp.title": "アプリを作成またはインポートする",
+  "walkthrough.createApp.description": "アプリは **Python** 部分 (`python/main.py`) と **C++** スケッチ (`sketch/sketch.ino`) をまとめたものです。新規作成するか、既存のものを取り込みます。\n\n[新しいアプリ](command:appLab.newApp) · [アプリをインポート](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "ブリックとモデルを追加する",
+  "walkthrough.bricksModels.description": "再利用可能なコンポーネントを **ブリックカタログ** から探してアプリに追加し、Edge Impulse から AI **モデル** をインポートします。\n\n[ブリックを追加](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "アプリを実行する",
+  "walkthrough.runApp.description": "**実行** を押すとスケッチがコンパイルされて MCU に書き込まれ、Python 側が起動します。進行状況は **コンソール** に表示されます。いつでも停止できます。\n\n[実行](command:appLab.app.start)",
+  "walkthrough.monitor.title": "シリアルデータを監視・プロットする",
+  "walkthrough.monitor.description": "ボードから読み取るにはシリアル **モニター** を、数値ストリームをリアルタイムに描画するには **プロッター** を開きます。\n\n[シリアルモニターを開く](command:appLab.openMonitor)"
 }

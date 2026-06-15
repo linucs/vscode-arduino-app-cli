@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Regenerar la configuración de IntelliSense de C++ tras cada ejecución correcta.",
   "config.arduinoCliPath": "Ruta opcional a un arduino-cli independiente, que permite una compilación rápida con base de datos de compilación sin flashear.",
   "config.python.manageVenv": "Permitir que la extensión cree un entorno virtual de Python e instale los requisitos para IntelliSense.",
-  "command.openPlotter": "Abrir Graficador de datos"
+  "command.openPlotter": "Abrir Graficador de datos",
+  "walkthrough.title": "Empieza con Arduino App CLI",
+  "walkthrough.description": "Crea, ejecuta y monitoriza apps de Arduino UNO Q sin salir de VS Code.",
+  "walkthrough.connect.title": "Conéctate a tu UNO Q",
+  "walkthrough.connect.description": "Esta extensión se comunica con el daemon `arduino-app-cli` en tu Arduino UNO Q (normalmente mediante Remote-SSH). Comprueba que esté accesible: [Mostrar versión](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Crea o importa una app",
+  "walkthrough.createApp.description": "Una app reúne una parte **Python** (`python/main.py`) y un sketch **C++** (`sketch/sketch.ino`). Empieza de cero o importa una existente.\n\n[Nueva app](command:appLab.newApp) · [Importar app](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Añade bricks y modelos",
+  "walkthrough.bricksModels.description": "Explora el **catálogo de bricks** para componentes reutilizables y añádelos a tu app, e importa **modelos** de IA desde Edge Impulse.\n\n[Añadir brick](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Ejecuta tu app",
+  "walkthrough.runApp.description": "Pulsa **Ejecutar** para compilar y grabar el sketch en el MCU e iniciar la parte Python; el progreso aparece en la **Consola**. Puedes detenerla cuando quieras.\n\n[Ejecutar](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Monitoriza y representa datos serie",
+  "walkthrough.monitor.description": "Abre el **Monitor** serie para leer de la placa, o el **Plotter** para graficar flujos numéricos en vivo.\n\n[Abrir monitor serie](command:appLab.openMonitor)"
 }

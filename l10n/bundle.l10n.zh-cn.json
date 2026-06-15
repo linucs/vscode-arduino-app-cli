@@ -141,5 +141,7 @@
   "{0} / {1} ({2}%)": "{0} / {1} ({2}%)",
   "{0} is coming in a later release.": "{0} 将在后续版本中推出。",
   "{0} package(s) can be updated.": "有 {0} 个软件包可更新。",
-  "{0}: {1} → {2}": "{0}: {1} → {2}"
+  "{0}: {1} → {2}": "{0}: {1} → {2}",
+  "What's New": "新增功能",
+  "Arduino App CLI updated to v{0}": "Arduino App CLI 已更新到 v{0}"
 }

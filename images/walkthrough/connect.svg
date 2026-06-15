@@ -1,0 +1,21 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#1e1e1e" rx="8"/>
+  <!-- Editor (VS Code) -->
+  <rect x="24" y="60" width="100" height="80" rx="6" fill="#252526" stroke="#454545" stroke-width="1"/>
+  <rect x="34" y="72" width="80" height="8" rx="2" fill="#3794ff"/>
+  <rect x="34" y="88" width="60" height="6" rx="2" fill="#555"/>
+  <rect x="34" y="100" width="68" height="6" rx="2" fill="#555"/>
+  <rect x="34" y="112" width="48" height="6" rx="2" fill="#555"/>
+  <text x="74" y="156" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#8b8b8b">VS Code</text>
+  <!-- Board (UNO Q) -->
+  <rect x="176" y="60" width="100" height="80" rx="6" fill="#2d2d2d" stroke="#00979d" stroke-width="1.5"/>
+  <rect x="188" y="72" width="76" height="40" rx="3" fill="#00979d" opacity="0.25"/>
+  <circle cx="200" cy="124" r="4" fill="#27c93f"/>
+  <circle cx="214" cy="124" r="4" fill="#555"/>
+  <circle cx="228" cy="124" r="4" fill="#555"/>
+  <text x="226" y="156" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#8b8b8b">UNO Q</text>
+  <!-- Link -->
+  <path d="M126 100 h48" stroke="#27c93f" stroke-width="2.5" stroke-dasharray="5 4" fill="none"/>
+  <path d="M170 100 l-8 -5 v10 z" fill="#27c93f"/>
+  <text x="150" y="40" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#d4d4d4">arduino-app-cli daemon</text>
+</svg>

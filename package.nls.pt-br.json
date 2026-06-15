@@ -72,5 +72,17 @@
   "config.intellisense.autoConfigure": "Regenerar a configuração do IntelliSense de C++ após cada execução bem-sucedida.",
   "config.arduinoCliPath": "Caminho opcional para um arduino-cli independente, habilitando uma compilação rápida com banco de dados de compilação sem gravar na placa.",
   "config.python.manageVenv": "Permitir que a extensão crie um ambiente virtual Python e instale os requisitos para o IntelliSense.",
-  "command.openPlotter": "Abrir Plotter de dados"
+  "command.openPlotter": "Abrir Plotter de dados",
+  "walkthrough.title": "Comece com o Arduino App CLI",
+  "walkthrough.description": "Crie, execute e monitore apps do Arduino UNO Q sem sair do VS Code.",
+  "walkthrough.connect.title": "Conecte-se à sua UNO Q",
+  "walkthrough.connect.description": "Esta extensão se comunica com o daemon `arduino-app-cli` na sua Arduino UNO Q (geralmente via Remote-SSH). Confirme se está acessível: [Mostrar versão](command:appLab.showVersion).",
+  "walkthrough.createApp.title": "Crie ou importe um app",
+  "walkthrough.createApp.description": "Um app reúne uma parte **Python** (`python/main.py`) e um sketch **C++** (`sketch/sketch.ino`). Comece do zero ou importe um existente.\n\n[Novo app](command:appLab.newApp) · [Importar app](command:appLab.importApp)",
+  "walkthrough.bricksModels.title": "Adicione bricks e modelos",
+  "walkthrough.bricksModels.description": "Navegue pelo **catálogo de bricks** em busca de componentes reutilizáveis e adicione-os ao seu app, e importe **modelos** de IA do Edge Impulse.\n\n[Adicionar brick](command:appLab.app.addBrick)",
+  "walkthrough.runApp.title": "Execute seu app",
+  "walkthrough.runApp.description": "Pressione **Executar** para compilar e gravar o sketch no MCU e iniciar a parte Python — o progresso aparece no **Console**. Pare quando quiser.\n\n[Executar](command:appLab.app.start)",
+  "walkthrough.monitor.title": "Monitore e plote dados seriais",
+  "walkthrough.monitor.description": "Abra o **Monitor** serial para ler da placa, ou o **Plotter** para traçar fluxos numéricos ao vivo.\n\n[Abrir monitor serial](command:appLab.openMonitor)"
 }
