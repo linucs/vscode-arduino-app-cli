@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "앱 실행",
   "walkthrough.runApp.description": "**실행**을 누르면 스케치가 컴파일되어 MCU에 업로드되고 Python 부분이 시작됩니다. 진행 상황은 **콘솔**에 표시됩니다. 언제든 중지할 수 있습니다.\n\n[실행](command:appLab.app.start)",
   "walkthrough.monitor.title": "시리얼 데이터 모니터링 및 플롯",
-  "walkthrough.monitor.description": "보드에서 읽으려면 시리얼 **모니터**를, 숫자 스트림을 실시간으로 그리려면 **플로터**를 여세요.\n\n[시리얼 모니터 열기](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "보드에서 읽으려면 시리얼 **모니터**를, 숫자 스트림을 실시간으로 그리려면 **플로터**를 여세요.\n\n[시리얼 모니터 열기](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Python 빠른 다시 로드 전환",
+  "config.python.fastReload": "저장 시 실행 중인 앱의 Python을 (전체 재시작 대신) <app>/bricks/sitecustomize.py를 통해 SIGHUP re-exec 핸들러를 삽입하고 앱 컨테이너에 신호를 보내 다시 로드합니다. 보드에서 실행되는 VS Code(예: Remote-SSH)가 필요합니다."
 }

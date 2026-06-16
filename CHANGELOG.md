@@ -4,7 +4,7 @@ All notable changes to the "Arduino App CLI" extension will be documented in thi
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [0.1.0] - 2026-06-14
+## [0.0.1] - 2026-06-16
 
 Initial release — a lightweight VS Code wrapper over the `arduino-app-cli` daemon
 for building, running and monitoring **Arduino UNO Q** apps without leaving the

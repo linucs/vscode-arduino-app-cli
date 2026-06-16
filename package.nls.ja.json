@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "アプリを実行する",
   "walkthrough.runApp.description": "**実行** を押すとスケッチがコンパイルされて MCU に書き込まれ、Python 側が起動します。進行状況は **コンソール** に表示されます。いつでも停止できます。\n\n[実行](command:appLab.app.start)",
   "walkthrough.monitor.title": "シリアルデータを監視・プロットする",
-  "walkthrough.monitor.description": "ボードから読み取るにはシリアル **モニター** を、数値ストリームをリアルタイムに描画するには **プロッター** を開きます。\n\n[シリアルモニターを開く](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "ボードから読み取るにはシリアル **モニター** を、数値ストリームをリアルタイムに描画するには **プロッター** を開きます。\n\n[シリアルモニターを開く](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Python の高速リロードを切り替え",
+  "config.python.fastReload": "保存時に、実行中アプリの Python を（完全な再起動ではなく）<app>/bricks/sitecustomize.py 経由で SIGHUP の re-exec ハンドラーを挿入し、アプリのコンテナーにシグナルを送って再読み込みします。ボード上で動作する VS Code（例: Remote-SSH）が必要です。"
 }

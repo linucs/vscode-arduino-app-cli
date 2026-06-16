@@ -143,5 +143,9 @@
   "{0} package(s) can be updated.": "Lze aktualizovat {0} balíčků.",
   "{0}: {1} → {2}": "{0}: {1} → {2}",
   "What's New": "Novinky",
-  "Arduino App CLI updated to v{0}": "Arduino App CLI byl aktualizován na verzi {0}"
+  "Arduino App CLI updated to v{0}": "Arduino App CLI byl aktualizován na verzi {0}",
+  "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Rychlé znovunačtení povoleno. Jednou spusťte (nebo restartujte) aplikaci, aby se načetl handler znovunačtení; poté uložení souboru Python aplikaci znovu načte.",
+  "Fast Reload disabled.": "Rychlé znovunačtení zakázáno.",
+  "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Rychlé znovunačtení: {0} již existuje a nebyl vytvořen rozšířením — ponecháno beze změny.",
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Rychlému znovunačtení se nepodařilo připojit k Dockeru. Funguje, když VS Code běží na desce (např. přes Remote-SSH), kde je kontejner aplikace."
 }

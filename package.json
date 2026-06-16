@@ -2,7 +2,7 @@
   "name": "vscode-arduino-app-cli-ide",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "license": "MIT",
   "publisher": "linucs",
   "icon": "images/icon.png",
@@ -465,6 +465,11 @@
         "command": "appLab.python.setupStubs",
         "title": "%command.python.setupStubs%",
         "category": "Arduino App"
+      },
+      {
+        "command": "appLab.python.toggleFastReload",
+        "title": "%command.python.toggleFastReload%",
+        "category": "Arduino App"
       }
     ],
     "menus": {
@@ -816,6 +821,11 @@
           "type": "boolean",
           "default": false,
           "description": "%config.python.manageVenv%"
+        },
+        "appLab.python.fastReload": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config.python.fastReload%"
         }
       }
     }

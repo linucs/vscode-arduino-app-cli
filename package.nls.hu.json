@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "Alkalmazás futtatása",
   "walkthrough.runApp.description": "Nyomd meg a **Futtatás** gombot a sketch lefordításához és az MCU-ra töltéséhez, valamint a Python rész indításához — a folyamat a **konzolon** jelenik meg. Bármikor leállíthatod.\n\n[Futtatás](command:appLab.app.start)",
   "walkthrough.monitor.title": "Soros adatok figyelése és ábrázolása",
-  "walkthrough.monitor.description": "Nyisd meg a soros **Monitort** a kártyáról való olvasáshoz, vagy a **Plottert** a számfolyamok élő ábrázolásához.\n\n[Soros monitor megnyitása](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "Nyisd meg a soros **Monitort** a kártyáról való olvasáshoz, vagy a **Plottert** a számfolyamok élő ábrázolásához.\n\n[Soros monitor megnyitása](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Python gyors újratöltés be-/kikapcsolása",
+  "config.python.fastReload": "Mentéskor újratölti a futó alkalmazás Python kódját (teljes újraindítás helyett) egy SIGHUP re-exec kezelő beillesztésével a <app>/bricks/sitecustomize.py fájlon keresztül, és jelet küld az alkalmazás konténerének. A VS Code futtatása szükséges a kártyán (pl. Remote-SSH)."
 }

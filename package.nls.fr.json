@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "Exécuter votre app",
   "walkthrough.runApp.description": "Appuyez sur **Exécuter** pour compiler et flasher le sketch sur le MCU et démarrer la partie Python — la progression s'affiche dans la **Console**. Vous pouvez arrêter à tout moment.\n\n[Exécuter](command:appLab.app.start)",
   "walkthrough.monitor.title": "Surveiller et tracer les données série",
-  "walkthrough.monitor.description": "Ouvrez le **Moniteur** série pour lire depuis la carte, ou le **Traceur** pour visualiser en direct des flux numériques.\n\n[Ouvrir le moniteur série](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "Ouvrez le **Moniteur** série pour lire depuis la carte, ou le **Traceur** pour visualiser en direct des flux numériques.\n\n[Ouvrir le moniteur série](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Activer/désactiver le rechargement rapide Python",
+  "config.python.fastReload": "Recharge le code Python d'une app en cours d'exécution à l'enregistrement (au lieu d'un redémarrage complet) en injectant un gestionnaire SIGHUP de re-exec via <app>/bricks/sitecustomize.py et en signalant le conteneur de l'app. Nécessite VS Code exécuté sur la carte (par ex. Remote-SSH)."
 }

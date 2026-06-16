@@ -143,5 +143,9 @@
   "{0} package(s) can be updated.": "{0} paquet(s) peuvent être mis à jour.",
   "{0}: {1} → {2}": "{0}: {1} → {2}",
   "What's New": "Nouveautés",
-  "Arduino App CLI updated to v{0}": "Arduino App CLI a été mis à jour vers la v{0}"
+  "Arduino App CLI updated to v{0}": "Arduino App CLI a été mis à jour vers la v{0}",
+  "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Rechargement rapide activé. Démarrez (ou redémarrez) l'app une fois pour charger le gestionnaire de rechargement ; ensuite, enregistrer un fichier Python le recharge.",
+  "Fast Reload disabled.": "Rechargement rapide désactivé.",
+  "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Rechargement rapide : {0} existe déjà et n'a pas été créé par l'extension — laissé tel quel.",
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Le rechargement rapide n'a pas pu atteindre Docker. Il fonctionne lorsque VS Code s'exécute sur la carte (par ex. via Remote-SSH), où se trouve le conteneur de l'app."
 }

@@ -143,5 +143,9 @@
   "{0} package(s) can be updated.": "{0} paket güncellenebilir.",
   "{0}: {1} → {2}": "{0}: {1} → {2}",
   "What's New": "Yenilikler",
-  "Arduino App CLI updated to v{0}": "Arduino App CLI v{0} sürümüne güncellendi"
+  "Arduino App CLI updated to v{0}": "Arduino App CLI v{0} sürümüne güncellendi",
+  "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Hızlı yeniden yükleme etkin. Yeniden yükleme işleyicisinin yüklenmesi için uygulamayı bir kez başlatın (veya yeniden başlatın); ardından bir Python dosyasını kaydetmek onu yeniden yükler.",
+  "Fast Reload disabled.": "Hızlı yeniden yükleme devre dışı.",
+  "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Hızlı yeniden yükleme: {0} zaten var ve uzantı tarafından oluşturulmadı — olduğu gibi bırakıldı.",
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Hızlı yeniden yükleme Docker'a ulaşamadı. Uygulamanın kapsayıcısının bulunduğu kartta VS Code çalıştığında (ör. Remote-SSH ile) çalışır."
 }

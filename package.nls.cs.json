@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "Spusťte aplikaci",
   "walkthrough.runApp.description": "Stiskněte **Spustit** pro kompilaci a nahrání sketche do MCU a spuštění části v Pythonu — průběh se zobrazuje v **konzoli**. Kdykoli ji můžete zastavit.\n\n[Spustit](command:appLab.app.start)",
   "walkthrough.monitor.title": "Sledujte a vykreslujte sériová data",
-  "walkthrough.monitor.description": "Otevřete sériový **Monitor** pro čtení z desky nebo **Plotter** pro živé vykreslení číselných toků.\n\n[Otevřít sériový monitor](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "Otevřete sériový **Monitor** pro čtení z desky nebo **Plotter** pro živé vykreslení číselných toků.\n\n[Otevřít sériový monitor](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Přepnout rychlé znovunačtení Pythonu",
+  "config.python.fastReload": "Při uložení znovu načte Python kód běžící aplikace (místo úplného restartu) vložením SIGHUP re-exec handleru přes <app>/bricks/sitecustomize.py a odesláním signálu kontejneru aplikace. Vyžaduje VS Code spuštěné na desce (např. Remote-SSH)."
 }

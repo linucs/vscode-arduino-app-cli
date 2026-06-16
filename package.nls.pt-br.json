@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "Execute seu app",
   "walkthrough.runApp.description": "Pressione **Executar** para compilar e gravar o sketch no MCU e iniciar a parte Python — o progresso aparece no **Console**. Pare quando quiser.\n\n[Executar](command:appLab.app.start)",
   "walkthrough.monitor.title": "Monitore e plote dados seriais",
-  "walkthrough.monitor.description": "Abra o **Monitor** serial para ler da placa, ou o **Plotter** para traçar fluxos numéricos ao vivo.\n\n[Abrir monitor serial](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "Abra o **Monitor** serial para ler da placa, ou o **Plotter** para traçar fluxos numéricos ao vivo.\n\n[Abrir monitor serial](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Ativar/desativar a recarga rápida do Python",
+  "config.python.fastReload": "Recarrega o código Python de um app em execução ao salvar (em vez de uma reinicialização completa) injetando um manipulador SIGHUP de re-exec via <app>/bricks/sitecustomize.py e sinalizando o contêiner do app. Requer o VS Code em execução na placa (por ex. Remote-SSH)."
 }

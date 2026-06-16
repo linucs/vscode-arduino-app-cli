@@ -143,5 +143,9 @@
   "{0} package(s) can be updated.": "{0}개 패키지를 업데이트할 수 있습니다.",
   "{0}: {1} → {2}": "{0}: {1} → {2}",
   "What's New": "새로운 기능",
-  "Arduino App CLI updated to v{0}": "Arduino App CLI가 v{0}(으)로 업데이트되었습니다"
+  "Arduino App CLI updated to v{0}": "Arduino App CLI가 v{0}(으)로 업데이트되었습니다",
+  "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "빠른 다시 로드가 활성화되었습니다. 다시 로드 핸들러가 로드되도록 앱을 한 번 시작(또는 다시 시작)하세요. 그 후에는 Python 파일을 저장하면 다시 로드됩니다.",
+  "Fast Reload disabled.": "빠른 다시 로드가 비활성화되었습니다.",
+  "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "빠른 다시 로드: {0}이(가) 이미 존재하며 확장에서 만든 것이 아닙니다 — 그대로 둡니다.",
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "빠른 다시 로드가 Docker에 연결할 수 없습니다. 앱 컨테이너가 있는 보드에서 VS Code를 실행할 때(예: Remote-SSH를 통해) 작동합니다."
 }

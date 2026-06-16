@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "运行你的应用",
   "walkthrough.runApp.description": "按 **运行** 即可编译草图并烧录到 MCU，同时启动 Python 部分——进度会显示在 **控制台**。可随时停止。\n\n[运行](command:appLab.app.start)",
   "walkthrough.monitor.title": "监视并绘制串口数据",
-  "walkthrough.monitor.description": "打开串口 **监视器** 读取开发板数据，或打开 **绘图器** 实时绘制数值流。\n\n[打开串口监视器](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "打开串口 **监视器** 读取开发板数据，或打开 **绘图器** 实时绘制数值流。\n\n[打开串口监视器](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "切换 Python 快速重新加载",
+  "config.python.fastReload": "保存时重新加载正在运行的应用的 Python 代码（而非完整重启）：通过 <app>/bricks/sitecustomize.py 注入 SIGHUP re-exec 处理程序，并向应用的容器发送信号。需要在开发板上运行 VS Code（例如通过 Remote-SSH）。"
 }

@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "Uygulamanızı çalıştırın",
   "walkthrough.runApp.description": "Taslağı derleyip MCU'ya yüklemek ve Python tarafını başlatmak için **Çalıştır**'a basın — ilerleme **Konsol'da** akar. Dilediğiniz zaman durdurabilirsiniz.\n\n[Çalıştır](command:appLab.app.start)",
   "walkthrough.monitor.title": "Seri verileri izleyin ve çizin",
-  "walkthrough.monitor.description": "Karttan okumak için seri **Monitör'ü**, sayısal akışları canlı çizmek için **Çizici'yi** açın.\n\n[Seri monitörü aç](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "Karttan okumak için seri **Monitör'ü**, sayısal akışları canlı çizmek için **Çizici'yi** açın.\n\n[Seri monitörü aç](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Python Hızlı Yeniden Yüklemeyi Aç/Kapat",
+  "config.python.fastReload": "Kaydetme sırasında çalışan bir uygulamanın Python kodunu (tam yeniden başlatma yerine) <app>/bricks/sitecustomize.py aracılığıyla bir SIGHUP re-exec işleyicisi enjekte ederek ve uygulamanın kapsayıcısına sinyal göndererek yeniden yükler. Kartta çalışan VS Code gerektirir (ör. Remote-SSH)."
 }

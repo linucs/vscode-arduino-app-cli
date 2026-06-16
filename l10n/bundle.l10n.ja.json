@@ -143,5 +143,9 @@
   "{0} package(s) can be updated.": "{0} 個のパッケージを更新できます。",
   "{0}: {1} → {2}": "{0}: {1} → {2}",
   "What's New": "新機能",
-  "Arduino App CLI updated to v{0}": "Arduino App CLI が v{0} に更新されました"
+  "Arduino App CLI updated to v{0}": "Arduino App CLI が v{0} に更新されました",
+  "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "高速リロードを有効にしました。リロードハンドラーを読み込むためにアプリを一度起動（または再起動）してください。その後は Python ファイルを保存すると再読み込みされます。",
+  "Fast Reload disabled.": "高速リロードを無効にしました。",
+  "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "高速リロード: {0} は既に存在し、拡張機能が作成したものではありません — そのままにします。",
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "高速リロードが Docker に接続できませんでした。アプリのコンテナーが存在するボード上で VS Code を実行している場合（例: Remote-SSH 経由）に動作します。"
 }

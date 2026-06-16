@@ -15,6 +15,7 @@ import { AppItemsTreeProvider } from "./appBricksView";
 import { BricksTreeProvider } from "./bricksView";
 import { ModelsTreeProvider } from "./modelsView";
 import { ActiveAppTracker } from "./activeApp";
+import { FastReloadManager } from "./fastReload";
 import { StatusBar } from "./statusBar";
 import { installAiAssistants } from "./skill/installSkill";
 import type { AppInfo, BrickInstance, ModelInfo, SketchLibrary, VersionResponse } from "./api/types";
@@ -34,6 +35,7 @@ let output: vscode.OutputChannel;
 let daemon: DaemonManager;
 let registry: AppRegistry;
 let activeTracker: ActiveAppTracker;
+let fastReload: FastReloadManager;
 let statusBar: StatusBar;
 let examplesView: ExamplesTreeProvider;
 let appBricksView: AppItemsTreeProvider;
@@ -77,7 +79,27 @@ export function activate(ctx: vscode.ExtensionContext) {
 
   activeTracker = new ActiveAppTracker((root) => registry.resolveByPath(root));
   statusBar = new StatusBar(activeTracker);
-  ctx.subscriptions.push(statusBar, activeTracker.register(), registry, examplesView);
+  fastReload = new FastReloadManager(ctx, {
+    output,
+    activeApp: () => activeTracker.current,
+    // The apps list omits `path`; fall back to the detail endpoint, like
+    // revealInExplorer does.
+    resolveAppDir: async (app) => {
+      if (app.path) {
+        return app.path;
+      }
+      const d = await ensureReady();
+      if (!d) {
+        return undefined;
+      }
+      try {
+        return (await d.client.getApp(app.id)).path;
+      } catch {
+        return undefined;
+      }
+    },
+  });
+  ctx.subscriptions.push(statusBar, activeTracker.register(), registry, examplesView, fastReload);
 
   // Once the active app changes, refresh the active-app Bricks and Libraries
   // views; once the registry lists/updates apps, the editor toolbar can resolve,
@@ -86,6 +108,7 @@ export function activate(ctx: vscode.ExtensionContext) {
     activeTracker.onDidChange(() => {
       appBricksView.onActiveChanged();
       appLibsView.onActiveChanged();
+      fastReload.onActiveAppChanged();
     }),
     registry.onDidChange(() => activeTracker.reresolve()),
   );
@@ -460,6 +483,7 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   reg("appLab.configureIntelliSense", () => notImplemented("C++ IntelliSense"));
   reg("appLab.python.createVenv", () => notImplemented("Python environment setup"));
   reg("appLab.python.setupStubs", () => notImplemented("Arduino Python stubs"));
+  reg("appLab.python.toggleFastReload", () => fastReload.toggle());
 }
 
 /**

@@ -143,5 +143,9 @@
   "{0} package(s) can be updated.": "{0} csomag frissíthető.",
   "{0}: {1} → {2}": "{0}: {1} → {2}",
   "What's New": "Újdonságok",
-  "Arduino App CLI updated to v{0}": "Az Arduino App CLI frissült a(z) {0} verzióra"
+  "Arduino App CLI updated to v{0}": "Az Arduino App CLI frissült a(z) {0} verzióra",
+  "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Gyors újratöltés engedélyezve. Indítsd el (vagy indítsd újra) az alkalmazást egyszer, hogy betöltődjön az újratöltési kezelő; ezután egy Python-fájl mentése újratölti.",
+  "Fast Reload disabled.": "Gyors újratöltés letiltva.",
+  "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Gyors újratöltés: {0} már létezik, és nem a bővítmény hozta létre — változatlanul hagyva.",
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "A gyors újratöltés nem érte el a Dockert. Akkor működik, ha a VS Code a kártyán fut (pl. Remote-SSH-en keresztül), ahol az alkalmazás konténere található."
 }

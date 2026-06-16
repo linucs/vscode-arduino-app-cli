@@ -84,5 +84,7 @@
   "walkthrough.runApp.title": "Uruchom aplikację",
   "walkthrough.runApp.description": "Naciśnij **Uruchom**, aby skompilować i wgrać szkic na MCU oraz uruchomić część w Pythonie — postęp pojawia się w **Konsoli**. Możesz ją zatrzymać w dowolnej chwili.\n\n[Uruchom](command:appLab.app.start)",
   "walkthrough.monitor.title": "Monitoruj i wykreślaj dane szeregowe",
-  "walkthrough.monitor.description": "Otwórz **Monitor** portu szeregowego, aby odczytywać dane z płytki, lub **Wykres**, aby na żywo wizualizować strumienie liczbowe.\n\n[Otwórz monitor portu szeregowego](command:appLab.openMonitor)"
+  "walkthrough.monitor.description": "Otwórz **Monitor** portu szeregowego, aby odczytywać dane z płytki, lub **Wykres**, aby na żywo wizualizować strumienie liczbowe.\n\n[Otwórz monitor portu szeregowego](command:appLab.openMonitor)",
+  "command.python.toggleFastReload": "Przełącz szybkie przeładowanie Pythona",
+  "config.python.fastReload": "Po zapisaniu przeładowuje kod Python działającej aplikacji (zamiast pełnego restartu), wstrzykując program obsługi SIGHUP re-exec przez <app>/bricks/sitecustomize.py i wysyłając sygnał do kontenera aplikacji. Wymaga VS Code uruchomionego na płytce (np. Remote-SSH)."
 }

@@ -143,5 +143,9 @@
   "{0} package(s) can be updated.": "有 {0} 個套件可更新。",
   "{0}: {1} → {2}": "{0}: {1} → {2}",
   "What's New": "新增功能",
-  "Arduino App CLI updated to v{0}": "Arduino App CLI 已更新至 v{0}"
+  "Arduino App CLI updated to v{0}": "Arduino App CLI 已更新至 v{0}",
+  "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "已啟用快速重新載入。請先啟動（或重新啟動）一次應用程式以載入重新載入處理常式；之後儲存 Python 檔案即可重新載入。",
+  "Fast Reload disabled.": "已停用快速重新載入。",
+  "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "快速重新載入：{0} 已存在且不是由擴充功能建立的 — 保持不變。",
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "快速重新載入無法連線到 Docker。當 VS Code 在開發板上執行（例如透過 Remote-SSH）時才有效，應用程式的容器位於該處。"
 }

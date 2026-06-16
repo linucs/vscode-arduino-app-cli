@@ -6,7 +6,7 @@ Build, run, and monitor **Arduino UNO Q** apps in **plain VS Code** — without 
 
 ---
 
-## v0.1.0 — 2026-06-14 — first public release
+## v0.0.1 — 2026-06-16 — first public release
 
 - **App Lab views** — an Activity Bar container with **Examples**, **Brick Catalog**, and **Models** trees, plus per-app **Project Bricks** and **Project Libraries** views in the Explorer.
 - **App lifecycle** — create, import, run, stop, restart, and delete apps; stream build and run progress to a live **Console**; export apps and copy examples to edit; set a default app and open an app's exposed port.
@@ -22,6 +22,6 @@ Build, run, and monitor **Arduino UNO Q** apps in **plain VS Code** — without 
 
 ---
 
-**Install:** [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-app-cli) · [Open VSX](https://open-vsx.org/extension/linucs/vscode-arduino-app-cli) · or download the `.vsix` from the release.
+**Install:** [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-app-cli-ide) · [Open VSX](https://open-vsx.org/extension/linucs/vscode-arduino-app-cli-ide) · or download the `.vsix` from the release.
 
 Found a bug or have an idea? [Open an issue](https://github.com/linucs/vscode-arduino-app-cli/issues). For the structured, technical history see the [full changelog](https://github.com/linucs/vscode-arduino-app-cli/blob/main/CHANGELOG.md).
