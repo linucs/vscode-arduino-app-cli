@@ -1,5 +1,5 @@
 {
-  "name": "vscode-arduino-app-cli",
+  "name": "vscode-arduino-app-cli-ide",
   "displayName": "%displayName%",
   "description": "%description%",
   "version": "0.1.0",
