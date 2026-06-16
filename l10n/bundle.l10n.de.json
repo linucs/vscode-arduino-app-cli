@@ -147,5 +147,8 @@
   "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Schnelles Neuladen aktiviert. Starten Sie die App einmal (oder neu), damit der Reload-Handler geladen wird; danach lädt das Speichern einer Python-Datei sie neu.",
   "Fast Reload disabled.": "Schnelles Neuladen deaktiviert.",
   "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Schnelles Neuladen: {0} existiert bereits und wurde nicht von der Erweiterung erstellt — bleibt unverändert.",
-  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Schnelles Neuladen konnte Docker nicht erreichen. Es funktioniert, wenn VS Code auf dem Board läuft (z. B. über Remote-SSH), wo sich der Container der App befindet."
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Schnelles Neuladen konnte Docker nicht erreichen. Es funktioniert, wenn VS Code auf dem Board läuft (z. B. über Remote-SSH), wo sich der Container der App befindet.",
+  "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.": "Schnelles Neuladen: {0} läuft nicht, daher gab es nichts neu zu laden. Starten Sie zuerst die App.",
+  "Fast Reload: {0} reloaded.": "Schnelles Neuladen: {0} neu geladen.",
+  "Fast Reload: {0} couldn't be reloaded — {1}": "Schnelles Neuladen: {0} konnte nicht neu geladen werden — {1}"
 }

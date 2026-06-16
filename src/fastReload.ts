@@ -224,15 +224,32 @@ export class FastReloadManager implements vscode.Disposable {
     if (ids.length === 0) {
       // Not running (or never started since enabling) — nothing to signal.
       this.deps.output.appendLine(`[fast-reload] ${app.name}: no running container; skipped`);
+      vscode.window.showWarningMessage(
+        vscode.l10n.t(
+          "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.",
+          app.name,
+        ),
+      );
       return;
     }
+    let failure: string | undefined;
     for (const id of ids) {
       try {
         await docker(["kill", "-s", "HUP", id]);
         this.deps.output.appendLine(`[fast-reload] ${app.name}: reloaded (SIGHUP ${id.slice(0, 12)})`);
       } catch (err) {
-        this.deps.output.appendLine(`[fast-reload] ${app.name}: SIGHUP failed: ${asMessage(err)}`);
+        failure = asMessage(err);
+        this.deps.output.appendLine(`[fast-reload] ${app.name}: SIGHUP failed: ${failure}`);
       }
+    }
+    if (failure === undefined) {
+      vscode.window.showInformationMessage(
+        vscode.l10n.t("Fast Reload: {0} reloaded.", app.name),
+      );
+    } else {
+      vscode.window.showErrorMessage(
+        vscode.l10n.t("Fast Reload: {0} couldn't be reloaded — {1}", app.name, failure),
+      );
     }
   }
 

@@ -147,5 +147,8 @@
   "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Recarga rápida activada. Inicia (o reinicia) la app una vez para que se cargue el controlador de recarga; después, guardar un archivo Python la recarga.",
   "Fast Reload disabled.": "Recarga rápida desactivada.",
   "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Recarga rápida: {0} ya existe y no fue creado por la extensión — se deja sin cambios.",
-  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "La recarga rápida no pudo conectarse a Docker. Funciona cuando VS Code se ejecuta en la placa (p. ej. mediante Remote-SSH), donde está el contenedor de la app."
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "La recarga rápida no pudo conectarse a Docker. Funciona cuando VS Code se ejecuta en la placa (p. ej. mediante Remote-SSH), donde está el contenedor de la app.",
+  "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.": "Recarga rápida: {0} no se está ejecutando, así que no había nada que recargar. Inicia la app primero.",
+  "Fast Reload: {0} reloaded.": "Recarga rápida: {0} recargado.",
+  "Fast Reload: {0} couldn't be reloaded — {1}": "Recarga rápida: {0} no se pudo recargar — {1}"
 }

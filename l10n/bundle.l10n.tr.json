@@ -147,5 +147,8 @@
   "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Hızlı yeniden yükleme etkin. Yeniden yükleme işleyicisinin yüklenmesi için uygulamayı bir kez başlatın (veya yeniden başlatın); ardından bir Python dosyasını kaydetmek onu yeniden yükler.",
   "Fast Reload disabled.": "Hızlı yeniden yükleme devre dışı.",
   "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Hızlı yeniden yükleme: {0} zaten var ve uzantı tarafından oluşturulmadı — olduğu gibi bırakıldı.",
-  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Hızlı yeniden yükleme Docker'a ulaşamadı. Uygulamanın kapsayıcısının bulunduğu kartta VS Code çalıştığında (ör. Remote-SSH ile) çalışır."
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Hızlı yeniden yükleme Docker'a ulaşamadı. Uygulamanın kapsayıcısının bulunduğu kartta VS Code çalıştığında (ör. Remote-SSH ile) çalışır.",
+  "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.": "Hızlı yeniden yükleme: {0} çalışmıyor, bu yüzden yeniden yüklenecek bir şey yoktu. Önce uygulamayı başlatın.",
+  "Fast Reload: {0} reloaded.": "Hızlı yeniden yükleme: {0} yeniden yüklendi.",
+  "Fast Reload: {0} couldn't be reloaded — {1}": "Hızlı yeniden yükleme: {0} yeniden yüklenemedi — {1}"
 }

@@ -147,5 +147,8 @@
   "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Rychlé znovunačtení povoleno. Jednou spusťte (nebo restartujte) aplikaci, aby se načetl handler znovunačtení; poté uložení souboru Python aplikaci znovu načte.",
   "Fast Reload disabled.": "Rychlé znovunačtení zakázáno.",
   "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Rychlé znovunačtení: {0} již existuje a nebyl vytvořen rozšířením — ponecháno beze změny.",
-  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Rychlému znovunačtení se nepodařilo připojit k Dockeru. Funguje, když VS Code běží na desce (např. přes Remote-SSH), kde je kontejner aplikace."
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Rychlému znovunačtení se nepodařilo připojit k Dockeru. Funguje, když VS Code běží na desce (např. přes Remote-SSH), kde je kontejner aplikace.",
+  "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.": "Rychlé znovunačtení: {0} neběží, takže nebylo co znovu načíst. Nejprve spusťte aplikaci.",
+  "Fast Reload: {0} reloaded.": "Rychlé znovunačtení: {0} znovu načteno.",
+  "Fast Reload: {0} couldn't be reloaded — {1}": "Rychlé znovunačtení: {0} se nepodařilo znovu načíst — {1}"
 }

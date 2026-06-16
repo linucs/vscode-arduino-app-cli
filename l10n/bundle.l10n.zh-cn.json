@@ -147,5 +147,8 @@
   "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "已启用快速重新加载。请先启动（或重启）一次应用以加载重载处理程序；之后保存 Python 文件即可重新加载。",
   "Fast Reload disabled.": "已禁用快速重新加载。",
   "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "快速重新加载：{0} 已存在且不是由扩展创建的 — 保持不变。",
-  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "快速重新加载无法连接到 Docker。当 VS Code 在开发板上运行（例如通过 Remote-SSH）时它才有效，应用的容器就在那里。"
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "快速重新加载无法连接到 Docker。当 VS Code 在开发板上运行（例如通过 Remote-SSH）时它才有效，应用的容器就在那里。",
+  "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.": "快速重新加载：{0} 未在运行，因此没有可重新加载的内容。请先启动应用。",
+  "Fast Reload: {0} reloaded.": "快速重新加载：{0} 已重新加载。",
+  "Fast Reload: {0} couldn't be reloaded — {1}": "快速重新加载：{0} 无法重新加载 — {1}"
 }

@@ -147,5 +147,8 @@
   "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "Szybkie przeładowanie włączone. Uruchom (lub uruchom ponownie) aplikację raz, aby załadować program obsługi przeładowania; potem zapisanie pliku Python przeładuje ją.",
   "Fast Reload disabled.": "Szybkie przeładowanie wyłączone.",
   "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "Szybkie przeładowanie: {0} już istnieje i nie został utworzony przez rozszerzenie — pozostawiono bez zmian.",
-  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Szybkiemu przeładowaniu nie udało się połączyć z Dockerem. Działa, gdy VS Code działa na płytce (np. przez Remote-SSH), gdzie znajduje się kontener aplikacji."
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "Szybkiemu przeładowaniu nie udało się połączyć z Dockerem. Działa, gdy VS Code działa na płytce (np. przez Remote-SSH), gdzie znajduje się kontener aplikacji.",
+  "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.": "Szybkie przeładowanie: {0} nie jest uruchomiony, więc nie było nic do przeładowania. Najpierw uruchom aplikację.",
+  "Fast Reload: {0} reloaded.": "Szybkie przeładowanie: {0} przeładowano.",
+  "Fast Reload: {0} couldn't be reloaded — {1}": "Szybkie przeładowanie: {0} nie udało się przeładować — {1}"
 }

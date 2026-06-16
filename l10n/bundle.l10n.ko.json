@@ -147,5 +147,8 @@
   "Fast Reload enabled. Start (or restart) the app once so the reload handler loads; after that, saving a Python file reloads it.": "빠른 다시 로드가 활성화되었습니다. 다시 로드 핸들러가 로드되도록 앱을 한 번 시작(또는 다시 시작)하세요. 그 후에는 Python 파일을 저장하면 다시 로드됩니다.",
   "Fast Reload disabled.": "빠른 다시 로드가 비활성화되었습니다.",
   "Fast Reload: {0} already exists and wasn't created by the extension — leaving it untouched.": "빠른 다시 로드: {0}이(가) 이미 존재하며 확장에서 만든 것이 아닙니다 — 그대로 둡니다.",
-  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "빠른 다시 로드가 Docker에 연결할 수 없습니다. 앱 컨테이너가 있는 보드에서 VS Code를 실행할 때(예: Remote-SSH를 통해) 작동합니다."
+  "Fast Reload couldn't reach Docker. It works when VS Code runs on the board (e.g. via Remote-SSH), where the app's container lives.": "빠른 다시 로드가 Docker에 연결할 수 없습니다. 앱 컨테이너가 있는 보드에서 VS Code를 실행할 때(예: Remote-SSH를 통해) 작동합니다.",
+  "Fast Reload: {0} isn't running, so there was nothing to reload. Start the app first.": "빠른 다시 로드: {0}이(가) 실행 중이 아니므로 다시 로드할 것이 없습니다. 먼저 앱을 시작하세요.",
+  "Fast Reload: {0} reloaded.": "빠른 다시 로드: {0} 다시 로드됨.",
+  "Fast Reload: {0} couldn't be reloaded — {1}": "빠른 다시 로드: {0}을(를) 다시 로드할 수 없습니다 — {1}"
 }
