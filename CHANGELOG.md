@@ -24,9 +24,12 @@ editor.
   delete.
 - **Sketch (MCU) C++ libraries** — search the Arduino catalog and add or remove
   per-app libraries.
+- **C++ IntelliSense** — generate `.vscode/c_cpp_properties.json` from the
+  sketch's last build (the compilation database under `<app>/.cache/sketch/`),
+  resolving the Arduino core, board defines and libraries; regenerates
+  automatically after each successful run.
 - **Serial monitor & plotter** — a monitor terminal over the daemon WebSocket
   with configurable line ending and auto-reconnect, and a data plotter.
-- **Python environment** — optional managed virtual-environment setup.
 - **System utilities** — show version, configuration and properties; reconnect to
   the daemon; update and cleanup; network mode, keyboard layout and board naming.
 - **AI assistant integration** — install a Claude/Copilot skill describing the

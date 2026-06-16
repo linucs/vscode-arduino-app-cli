@@ -16,6 +16,7 @@ import { BricksTreeProvider } from "./bricksView";
 import { ModelsTreeProvider } from "./modelsView";
 import { ActiveAppTracker } from "./activeApp";
 import { FastReloadManager } from "./fastReload";
+import { IntelliSenseManager } from "./intellisense";
 import { StatusBar } from "./statusBar";
 import { installAiAssistants } from "./skill/installSkill";
 import type { AppInfo, BrickInstance, ModelInfo, SketchLibrary, VersionResponse } from "./api/types";
@@ -28,6 +29,7 @@ interface Ready {
   sketchLibs: SketchLibManager;
   system: SystemManager;
   monitor: SerialMonitor;
+  intellisense: IntelliSenseManager;
 }
 
 let context: vscode.ExtensionContext;
@@ -242,13 +244,26 @@ async function doEnsureReady(): Promise<Ready | undefined> {
   // so a single action doesn't re-scan everything. App structural changes re-list
   // (unfiltered) into the registry, which the Examples view + active-app toolbar
   // project off; run/stop refresh nothing (their status flows back via the SSE).
+  const intellisense = new IntelliSenseManager(client, output);
   ready = {
     client,
-    apps: new AppManager(client, output, () => void registry.refresh(), (text) => {
-      if (plotterSource === "python") {
-        plotterFeeder.feed(text);
-      }
-    }),
+    apps: new AppManager(
+      client,
+      output,
+      () => void registry.refresh(),
+      (text) => {
+        if (plotterSource === "python") {
+          plotterFeeder.feed(text);
+        }
+      },
+      // After a successful run the sketch has been rebuilt, so refresh IntelliSense
+      // from the fresh compilation database (gated by the user's setting).
+      (app) => {
+        if (intellisense.autoEnabled()) {
+          void intellisense.configure(app, { silent: true });
+        }
+      },
+    ),
     bricks: new BrickManager(client, () => appBricksView.refresh()),
     models: new ModelManager(client, () => modelsView.refresh()),
     sketchLibs: new SketchLibManager(client, () => appLibsView.refresh()),
@@ -258,6 +273,7 @@ async function doEnsureReady(): Promise<Ready | undefined> {
         plotterFeeder.feed(text);
       }
     }),
+    intellisense,
   };
   context.subscriptions.push(ready.monitor);
 
@@ -479,10 +495,10 @@ function registerCommands(ctx: vscode.ExtensionContext) {
   // Plotter — charts `>`-prefixed telemetry from the source the user picks.
   reg("appLab.openPlotter", (arg) => withReady((d) => openPlotter(d, appFrom(arg))));
 
-  // IntelliSense / Python (Phase 3 — placeholders for now)
-  reg("appLab.configureIntelliSense", () => notImplemented("C++ IntelliSense"));
-  reg("appLab.python.createVenv", () => notImplemented("Python environment setup"));
-  reg("appLab.python.setupStubs", () => notImplemented("Arduino Python stubs"));
+  // IntelliSense / Python
+  reg("appLab.configureIntelliSense", (arg) =>
+    withReady((d) => withApp(arg, (a) => d.intellisense.configure(a))),
+  );
   reg("appLab.python.toggleFastReload", () => fastReload.toggle());
 }
 
@@ -571,12 +587,6 @@ function noActiveApp(): undefined {
     vscode.l10n.t("No app selected. Open a file inside an app or pick one in the Apps view."),
   );
   return undefined;
-}
-
-function notImplemented(feature: string): void {
-  vscode.window.showInformationMessage(
-    vscode.l10n.t("{0} is coming in a later release.", feature),
-  );
 }
 
 function asMessage(err: unknown): string {

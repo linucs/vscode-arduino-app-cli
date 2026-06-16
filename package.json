@@ -457,16 +457,6 @@
         "category": "Arduino App"
       },
       {
-        "command": "appLab.python.createVenv",
-        "title": "%command.python.createVenv%",
-        "category": "Arduino App"
-      },
-      {
-        "command": "appLab.python.setupStubs",
-        "title": "%command.python.setupStubs%",
-        "category": "Arduino App"
-      },
-      {
         "command": "appLab.python.toggleFastReload",
         "title": "%command.python.toggleFastReload%",
         "category": "Arduino App"
@@ -816,11 +806,6 @@
           "type": "string",
           "default": "",
           "description": "%config.arduinoCliPath%"
-        },
-        "appLab.python.manageVenv": {
-          "type": "boolean",
-          "default": false,
-          "description": "%config.python.manageVenv%"
         },
         "appLab.python.fastReload": {
           "type": "boolean",

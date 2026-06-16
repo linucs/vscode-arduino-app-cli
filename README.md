@@ -16,8 +16,8 @@ files on disk, edited with VS Code's native editor.
   WebSocket for the serial monitor); no heavyweight runtime.
 - 🧰 **In-editor** — Apps / Bricks / Models trees, an app-scoped **Run / Stop**, a
   live **Console**, and a serial monitor terminal.
-- 🧠 **Native files** — edit `python/main.py` and `sketch/sketch.ino` directly;
-  IntelliSense uses the real C/C++ and Python engines (Phase 3).
+- 🧠 **Native files** — edit `python/main.py` and `sketch/sketch.ino` directly,
+  with C++ IntelliSense generated from the sketch's last build.
 
 ## Getting started
 
@@ -35,6 +35,7 @@ files on disk, edited with VS Code's native editor.
 | **Bricks** | Browse the catalog, add to an app, configure variables, rename, remove |
 | **Models** | List, import an Edge Impulse project, delete, view details |
 | **Sketch (MCU) C++ libraries** | Search the Arduino catalog and add/remove per-app libraries |
+| **C++ IntelliSense** | Generate `.vscode/c_cpp_properties.json` from the sketch's last build, so the C/C++ extension resolves the Arduino core, board defines and libraries |
 | **Serial monitor** | A terminal over the daemon WebSocket, with line-ending control and log save |
 | **System** | Version, configuration, properties, system update, cleanup, network mode, keyboard, board name |
 | **AI assistant** | One command installs a Claude/Copilot skill describing the CLI |
@@ -53,8 +54,7 @@ and also appear on each app in the tree, in the editor toolbar, and the status b
 | `appLab.apiKey` | `""` | Optional `X-API-Key` header. |
 | `appLab.monitor.lineEnding` | `lf` | Serial monitor line ending. |
 | `appLab.logs.tail` | `200` | Lines requested when opening a console. |
-| `appLab.intellisense.autoConfigure` | `true` | Regenerate C++ IntelliSense after a run (Phase 3). |
-| `appLab.python.manageVenv` | `false` | Allow creating a Python venv for IntelliSense (Phase 3). |
+| `appLab.intellisense.autoConfigure` | `true` | Regenerate C++ IntelliSense automatically after each successful run. |
 
 ## Requirements
 

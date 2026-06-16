@@ -25,6 +25,11 @@ export class AppManager {
      * to feed the serial plotter when the user selects "Python" as its source.
      */
     private readonly onLogLine?: (text: string) => void,
+    /**
+     * Called after a successful run (compile + flash + start), so dependents can
+     * react to the freshly rebuilt sketch — e.g. regenerate C++ IntelliSense.
+     */
+    private readonly onRan?: (app: AppInfo) => void,
   ) {}
 
   list(filter?: "apps" | "examples"): Promise<AppListResponse> {
@@ -114,6 +119,9 @@ export class AppManager {
     await this.streamLifecycle(app, vscode.l10n.t("Running {0}…", app.name), (sinks, signal) =>
       this.client.startApp(app.id, sinks, { signal }),
     );
+    // streamLifecycle throws on failure, so reaching here means the build + start
+    // succeeded and the compilation database under .cache/sketch/ is up to date.
+    this.onRan?.(app);
   }
 
   async stop(app: AppInfo): Promise<void> {
