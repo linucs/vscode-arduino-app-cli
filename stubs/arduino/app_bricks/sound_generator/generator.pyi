@@ -1,0 +1,37 @@
+from _typeshed import Incomplete
+
+class WaveSamplesBuilder:
+    """Generate wave audio blocks.
+
+    This class produces wave blocks as NumPy buffers.
+
+    Attributes:
+        sample_rate (int): Audio sample rate in Hz.
+    """
+    wave_form: Incomplete
+    sample_rate: Incomplete
+    def __init__(self, wave_form: str = 'sine', sample_rate: int = 16000) -> None:
+        '''Create a new WaveGenerator.
+
+        Args:
+            wave_form (str): The type of wave form to generate. Supported values
+                are "sine", "square", "triangle", "white_noise" and "sawtooth".
+            sample_rate (int): The playback sample rate (Hz) used to compute
+                phase increments and buffer sizes.
+        '''
+    def generate_block(self, freq: float, block_dur: float, master_volume: float = 1.0):
+        """Generate a block of float32 audio samples.
+
+        Returned buffer is a NumPy view (float32) into an internal preallocated array and is valid
+        until the next call to this method.
+
+        Args:
+            freq (float): Target frequency in Hz for this block.
+            block_dur (float): Duration of the requested block in seconds.
+            master_volume (float, optional): Global gain multiplier. Defaults
+                to 1.0.
+
+        Returns:
+            numpy.ndarray: A 1-D float32 NumPy array containing the generated
+            audio samples for the requested block.
+        """

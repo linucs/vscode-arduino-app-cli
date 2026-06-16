@@ -58,7 +58,7 @@
   "command.openMonitor": "シリアルモニターを開く",
   "command.setMonitorLineEnding": "シリアルモニターの行末記号を設定",
   "command.saveMonitorLog": "シリアルモニターのログを保存",
-  "command.configureIntelliSense": "C++ IntelliSense を構成",
+  "command.configureIntelliSense": "IntelliSense を構成",
   "config.daemon.host": "arduino-app-cli デーモンに接続するホスト。",
   "config.daemon.port": "arduino-app-cli デーモンの TCP ポート (ボード上の systemd サービスは 8800 を使用します)。",
   "config.cliPath": "CLI 専用コマンド (clean-cache、system init/cleanup/network-mode/keyboard/set-name) の実行に使用する arduino-app-cli 実行可能ファイルへのパス。",

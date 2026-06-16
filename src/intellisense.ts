@@ -6,7 +6,10 @@ import type { AppLabClient } from "./appLabClient";
 import type { AppInfo } from "./api/types";
 
 const CPPTOOLS_EXT = "ms-vscode.cpptools";
+const PYTHON_EXT = "ms-python.python";
 const CONFIG_NAME = "Arduino";
+/** Marks the `typings/arduino` dir as ours and records the stub version. */
+const STUBS_MARKER = ".arduino-stubs";
 
 /** Flags extracted from a single compile_commands.json entry. */
 export interface ParsedCommand {
@@ -37,13 +40,21 @@ interface CompileCommandEntry {
  * flash). The one artifact we can use is the `compile_commands.json` arduino-cli
  * drops into `<app>/.cache/sketch/` during that build, so we read and translate
  * it. It is always the real build the device used, with the correct toolchain.
+ *
+ * The same `configure` action also installs Python type stubs for the Arduino
+ * framework (`arduino.app_utils` / `arduino.app_bricks.*`), which lives only in the
+ * app's Docker image — see {@link ensureStubs}. C++ and Python IntelliSense are one
+ * feature: one command, one setting, both artifacts.
  */
 export class IntelliSenseManager {
   private cpptoolsHintShown = false;
+  private pythonHintShown = false;
+  private stubsVersionCache: string | undefined;
 
   constructor(
     private readonly client: AppLabClient,
     private readonly output: vscode.OutputChannel,
+    private readonly context: vscode.ExtensionContext,
   ) {}
 
   /** Whether auto-regeneration after a run is enabled. */
@@ -54,8 +65,10 @@ export class IntelliSenseManager {
   }
 
   /**
-   * Translate the app's last compilation database into `c_cpp_properties.json`.
-   * `silent` suppresses user-facing messages (used by the post-run auto-trigger).
+   * Set up IntelliSense for the app: install the Arduino Python stubs (always) and
+   * translate the sketch's last compilation database into `c_cpp_properties.json`
+   * (when a build exists). `silent` suppresses user-facing messages (used by the
+   * post-run auto-trigger).
    */
   async configure(app: AppInfo, opts: { silent?: boolean } = {}): Promise<void> {
     const appPath = app.path ?? (await this.client.getApp(app.id)).path;
@@ -67,18 +80,24 @@ export class IntelliSenseManager {
       }
       return;
     }
+    const root = this.resolveRoot(appPath);
 
+    // Python first, so a sketch that hasn't been built yet still gets working
+    // Python IntelliSense.
+    await this.ensureStubs(root, opts);
+
+    // C++ side: the compilation database only exists after a build.
     const dbPath = path.join(appPath, ".cache", "sketch", "compile_commands.json");
     let raw: string;
     try {
       raw = await fsp.readFile(dbPath, "utf8");
     } catch {
-      // The DB only exists after a build. Don't auto-run (that flashes the MCU);
-      // just point the user at Run when they ask for it explicitly.
+      // Don't auto-run (that flashes the MCU); the Python stubs are already in
+      // place, so report this as a partial success and point the user at Run.
       if (!opts.silent) {
         vscode.window.showInformationMessage(
           vscode.l10n.t(
-            "No compiled sketch found yet. Run the app once to build it, then configure IntelliSense again.",
+            "Python stubs installed. Run the app once to build the sketch for C++ IntelliSense.",
           ),
         );
       }
@@ -106,7 +125,7 @@ export class IntelliSenseManager {
     const parsed = parseCompileCommand(entry);
     const forced = resolveForcedInclude(entry, parsed.includes);
     const config = buildCppProperties(parsed, forced);
-    await this.writeConfig(appPath, config);
+    await this.writeConfig(root, config);
 
     this.output.appendLine(
       `[intellisense] wrote c_cpp_properties.json (${parsed.includes.length} include paths, ${parsed.defines.length} defines)`,
@@ -120,14 +139,84 @@ export class IntelliSenseManager {
 
   // --- internals -------------------------------------------------------------
 
-  private async writeConfig(
-    appPath: string,
-    arduinoConfig: Record<string, unknown>,
-  ): Promise<void> {
+  /** The workspace root the editor config is written to (or the app dir). */
+  private resolveRoot(appPath: string): string {
     const folder =
       vscode.workspace.getWorkspaceFolder(vscode.Uri.file(appPath)) ??
       vscode.workspace.workspaceFolders?.[0];
-    const root = folder?.uri.fsPath ?? appPath;
+    return folder?.uri.fsPath ?? appPath;
+  }
+
+  /**
+   * Copy the bundled Arduino Python stubs into `<root>/typings/arduino` so Pylance
+   * resolves `arduino.app_utils` / `arduino.app_bricks.*`. `typings` is Pylance's
+   * default `stubPath`, so no settings change is needed.
+   *
+   * Idempotent: a marker file records the shipped stub version; we skip the copy
+   * when it already matches (keeps the silent after-run path cheap). A `typings/
+   * arduino` we didn't create is left untouched.
+   */
+  private async ensureStubs(root: string, opts: { silent?: boolean }): Promise<void> {
+    const src = path.join(this.context.extensionPath, "stubs", "arduino");
+    const dest = path.join(root, "typings", "arduino");
+    const markerPath = path.join(dest, STUBS_MARKER);
+    const version = await this.stubsVersion();
+
+    const existingMarker = await fsp.readFile(markerPath, "utf8").catch(() => undefined);
+    if (existingMarker === undefined && (await exists(dest))) {
+      // A typings/arduino we didn't create — never clobber the user's own stubs.
+      if (!opts.silent) {
+        vscode.window.showWarningMessage(
+          vscode.l10n.t(
+            "typings/arduino already exists and wasn't created by the extension — leaving it untouched.",
+          ),
+        );
+      }
+      return;
+    }
+    if (existingMarker?.trim() === version) {
+      return; // already current
+    }
+
+    await fsp.rm(dest, { recursive: true, force: true });
+    await fsp.cp(src, dest, { recursive: true });
+    await fsp.writeFile(markerPath, version + "\n");
+    this.output.appendLine(`[intellisense] installed Python stubs (${version}) into ${dest}`);
+
+    if (!opts.silent) {
+      this.warnIfStubPathMoved();
+      this.maybeHintPython();
+    }
+  }
+
+  /** The shipped stub version, from `stubs/STUBS_VERSION` (cached). */
+  private async stubsVersion(): Promise<string> {
+    if (this.stubsVersionCache === undefined) {
+      const file = path.join(this.context.extensionPath, "stubs", "STUBS_VERSION");
+      this.stubsVersionCache = (await fsp.readFile(file, "utf8").catch(() => "")).trim() || "unknown";
+    }
+    return this.stubsVersionCache;
+  }
+
+  /** Warn if the user moved `python.analysis.stubPath` off the default `typings`. */
+  private warnIfStubPathMoved(): void {
+    const stubPath = vscode.workspace
+      .getConfiguration("python")
+      .get<string>("analysis.stubPath", "typings");
+    if (stubPath && stubPath !== "typings") {
+      vscode.window.showWarningMessage(
+        vscode.l10n.t(
+          "Arduino stubs were written to 'typings', but python.analysis.stubPath is '{0}', so they won't be picked up.",
+          stubPath,
+        ),
+      );
+    }
+  }
+
+  private async writeConfig(
+    root: string,
+    arduinoConfig: Record<string, unknown>,
+  ): Promise<void> {
     const vscodeDir = path.join(root, ".vscode");
     await fsp.mkdir(vscodeDir, { recursive: true });
     const file = path.join(vscodeDir, "c_cpp_properties.json");
@@ -164,10 +253,41 @@ export class IntelliSenseManager {
         }
       });
   }
+
+  private maybeHintPython(): void {
+    if (this.pythonHintShown) {
+      return;
+    }
+    if (vscode.extensions.getExtension(PYTHON_EXT)) {
+      return;
+    }
+    this.pythonHintShown = true;
+    void vscode.window
+      .showInformationMessage(
+        vscode.l10n.t("Python IntelliSense uses the Python extension, which isn't installed."),
+        vscode.l10n.t("Install"),
+      )
+      .then((choice) => {
+        if (choice) {
+          void vscode.commands.executeCommand(
+            "workbench.extensions.installExtension",
+            PYTHON_EXT,
+          );
+        }
+      });
+  }
 }
 
 function asMessage(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
+}
+
+/** Whether a filesystem path exists. */
+async function exists(p: string): Promise<boolean> {
+  return fsp.stat(p).then(
+    () => true,
+    () => false,
+  );
 }
 
 // --- pure helpers (unit-testable) -------------------------------------------

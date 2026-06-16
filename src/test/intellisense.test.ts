@@ -1,4 +1,6 @@
 import * as assert from "assert";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import {
   tokenize,
   tokenizeResponseFile,
@@ -9,6 +11,9 @@ import {
   buildCppProperties,
   mergeConfiguration,
 } from "../intellisense";
+
+// Repo root: this test runs from out/test/, two levels below the project root.
+const REPO_ROOT = path.resolve(__dirname, "..", "..");
 
 suite("intellisense — parseCompileCommand", () => {
   test("extracts includes, defines, compiler, std and arch args", () => {
@@ -211,5 +216,26 @@ suite("intellisense — mergeConfiguration", () => {
     const merged = mergeConfiguration({}, { name: "Arduino" });
     assert.strictEqual(merged.version, 4);
     assert.strictEqual(merged.configurations.length, 1);
+  });
+});
+
+suite("intellisense — shipped Python stubs", () => {
+  const stubs = path.join(REPO_ROOT, "stubs", "arduino");
+
+  test("the bundled stub tree exists with the key public surface", () => {
+    assert.ok(fs.existsSync(path.join(stubs, "py.typed")), "stubs/arduino/py.typed missing");
+    assert.ok(
+      fs.existsSync(path.join(REPO_ROOT, "stubs", "STUBS_VERSION")),
+      "stubs/STUBS_VERSION missing",
+    );
+    const appUtils = path.join(stubs, "app_utils", "__init__.pyi");
+    assert.ok(fs.existsSync(appUtils), "app_utils/__init__.pyi missing");
+    // App is the primary entry point; it must be typed (not Incomplete).
+    const app = fs.readFileSync(path.join(stubs, "app_utils", "app.pyi"), "utf8");
+    assert.match(app, /^App: AppController$/m, "App singleton not typed as AppController");
+    assert.ok(
+      fs.existsSync(path.join(stubs, "app_bricks", "mqtt", "__init__.pyi")),
+      "a representative brick stub (mqtt) is missing — generation may be flattened/broken",
+    );
   });
 });

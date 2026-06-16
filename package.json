@@ -60,6 +60,8 @@
     "lint": "eslint src",
     "test": "vscode-test",
     "deploy:remote": "bash scripts/deploy-remote.sh",
+    "gen:stubs": "bash scripts/gen-stubs.sh",
+    "check:stubs": "yarn gen:stubs && git diff --exit-code -- stubs && echo 'stubs up to date'",
     "vsix": "vsce package --no-dependencies",
     "publish:vsce": "vsce publish --no-dependencies",
     "publish:ovsx": "ovsx publish --no-dependencies"

@@ -58,7 +58,7 @@
   "command.openMonitor": "Serial Monitor öffnen",
   "command.setMonitorLineEnding": "Serial Monitor-Zeilenende festlegen",
   "command.saveMonitorLog": "Serial Monitor-Protokoll speichern",
-  "command.configureIntelliSense": "C++ IntelliSense konfigurieren",
+  "command.configureIntelliSense": "IntelliSense konfigurieren",
   "config.daemon.host": "Host, unter dem der arduino-app-cli-Daemon erreichbar ist.",
   "config.daemon.port": "TCP-Port des arduino-app-cli-Daemons (der systemd-Dienst auf dem Board verwendet 8800).",
   "config.cliPath": "Pfad zur ausführbaren Datei arduino-app-cli, die zum Ausführen von reinen CLI-Befehlen verwendet wird (clean-cache, system init/cleanup/network-mode/keyboard/set-name).",

@@ -58,7 +58,7 @@
   "command.openMonitor": "Soros monitor megnyitása",
   "command.setMonitorLineEnding": "Soros monitor sorvégének beállítása",
   "command.saveMonitorLog": "Soros monitor napló mentése",
-  "command.configureIntelliSense": "C++ IntelliSense konfigurálása",
+  "command.configureIntelliSense": "IntelliSense konfigurálása",
   "config.daemon.host": "A gazdagép, amelyen az arduino-app-cli démon elérhető.",
   "config.daemon.port": "Az arduino-app-cli démon TCP-portja (a fedélzeti systemd-szolgáltatás a 8800-as portot használja).",
   "config.cliPath": "Az arduino-app-cli végrehajtható fájl elérési útja, amely a kizárólag CLI-n keresztül elérhető parancsok futtatására szolgál (clean-cache, system init/cleanup/network-mode/keyboard/set-name).",

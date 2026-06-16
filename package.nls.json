@@ -58,7 +58,7 @@
   "command.openMonitor": "Open Serial Monitor",
   "command.setMonitorLineEnding": "Set Serial Monitor Line Ending",
   "command.saveMonitorLog": "Save Serial Monitor Log",
-  "command.configureIntelliSense": "Configure C++ IntelliSense",
+  "command.configureIntelliSense": "Configure IntelliSense",
   "command.python.toggleFastReload": "Toggle Python Fast Reload",
   "config.daemon.host": "Host where the arduino-app-cli daemon is reachable.",
   "config.daemon.port": "TCP port of the arduino-app-cli daemon (the on-board systemd service uses 8800).",

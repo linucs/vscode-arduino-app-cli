@@ -58,7 +58,7 @@
   "command.openMonitor": "Открыть монитор порта",
   "command.setMonitorLineEnding": "Задать окончание строки монитора порта",
   "command.saveMonitorLog": "Сохранить журнал монитора порта",
-  "command.configureIntelliSense": "Настроить IntelliSense для C++",
+  "command.configureIntelliSense": "Настроить IntelliSense",
   "config.daemon.host": "Узел, на котором доступен демон arduino-app-cli.",
   "config.daemon.port": "TCP-порт демона arduino-app-cli (бортовая служба systemd использует 8800).",
   "config.cliPath": "Путь к исполняемому файлу arduino-app-cli, используемому для команд, доступных только через CLI (clean-cache, system init/cleanup/network-mode/keyboard/set-name).",

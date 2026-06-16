@@ -244,7 +244,7 @@ async function doEnsureReady(): Promise<Ready | undefined> {
   // so a single action doesn't re-scan everything. App structural changes re-list
   // (unfiltered) into the registry, which the Examples view + active-app toolbar
   // project off; run/stop refresh nothing (their status flows back via the SSE).
-  const intellisense = new IntelliSenseManager(client, output);
+  const intellisense = new IntelliSenseManager(client, output, context);
   ready = {
     client,
     apps: new AppManager(

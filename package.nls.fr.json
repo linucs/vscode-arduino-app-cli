@@ -58,7 +58,7 @@
   "command.openMonitor": "Ouvrir le moniteur série",
   "command.setMonitorLineEnding": "Définir la fin de ligne du moniteur série",
   "command.saveMonitorLog": "Enregistrer le journal du moniteur série",
-  "command.configureIntelliSense": "Configurer IntelliSense C++",
+  "command.configureIntelliSense": "Configurer IntelliSense",
   "config.daemon.host": "Hôte sur lequel le démon arduino-app-cli est joignable.",
   "config.daemon.port": "Port TCP du démon arduino-app-cli (le service systemd embarqué utilise le port 8800).",
   "config.cliPath": "Chemin de l'exécutable arduino-app-cli, utilisé pour exécuter les commandes disponibles uniquement via la CLI (clean-cache, system init/cleanup/network-mode/keyboard/set-name).",

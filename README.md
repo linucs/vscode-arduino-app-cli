@@ -17,7 +17,8 @@ files on disk, edited with VS Code's native editor.
 - 🧰 **In-editor** — Apps / Bricks / Models trees, an app-scoped **Run / Stop**, a
   live **Console**, and a serial monitor terminal.
 - 🧠 **Native files** — edit `python/main.py` and `sketch/sketch.ino` directly,
-  with C++ IntelliSense generated from the sketch's last build.
+  with IntelliSense for both halves — C++ from the sketch's last build and Python
+  stubs for the Arduino framework.
 
 ## Getting started
 
@@ -35,7 +36,7 @@ files on disk, edited with VS Code's native editor.
 | **Bricks** | Browse the catalog, add to an app, configure variables, rename, remove |
 | **Models** | List, import an Edge Impulse project, delete, view details |
 | **Sketch (MCU) C++ libraries** | Search the Arduino catalog and add/remove per-app libraries |
-| **C++ IntelliSense** | Generate `.vscode/c_cpp_properties.json` from the sketch's last build, so the C/C++ extension resolves the Arduino core, board defines and libraries |
+| **IntelliSense** | One **Configure IntelliSense** command sets up both: `.vscode/c_cpp_properties.json` from the sketch's last build (C/C++ extension resolves the Arduino core, board defines and libraries) and `typings/arduino/**` Python stubs so Pylance resolves `arduino.app_utils` / `arduino.app_bricks.*` |
 | **Serial monitor** | A terminal over the daemon WebSocket, with line-ending control and log save |
 | **System** | Version, configuration, properties, system update, cleanup, network mode, keyboard, board name |
 | **AI assistant** | One command installs a Claude/Copilot skill describing the CLI |
@@ -54,7 +55,7 @@ and also appear on each app in the tree, in the editor toolbar, and the status b
 | `appLab.apiKey` | `""` | Optional `X-API-Key` header. |
 | `appLab.monitor.lineEnding` | `lf` | Serial monitor line ending. |
 | `appLab.logs.tail` | `200` | Lines requested when opening a console. |
-| `appLab.intellisense.autoConfigure` | `true` | Regenerate C++ IntelliSense automatically after each successful run. |
+| `appLab.intellisense.autoConfigure` | `true` | Refresh IntelliSense (C++ config + Python stubs) automatically after each successful run. |
 
 ## Requirements
 

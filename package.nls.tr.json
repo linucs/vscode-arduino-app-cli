@@ -58,7 +58,7 @@
   "command.openMonitor": "Seri Monitörü Aç",
   "command.setMonitorLineEnding": "Seri Monitör Satır Sonunu Ayarla",
   "command.saveMonitorLog": "Seri Monitör Günlüğünü Kaydet",
-  "command.configureIntelliSense": "C++ IntelliSense'i Yapılandır",
+  "command.configureIntelliSense": "IntelliSense'i Yapılandır",
   "config.daemon.host": "arduino-app-cli daemon'una ulaşılabilen ana bilgisayar.",
   "config.daemon.port": "arduino-app-cli daemon'unun TCP portu (kart üzerindeki systemd hizmeti 8800 kullanır).",
   "config.cliPath": "Yalnızca CLI komutlarını (clean-cache, system init/cleanup/network-mode/keyboard/set-name) çalıştırmak için kullanılan arduino-app-cli yürütülebilir dosyasının yolu.",

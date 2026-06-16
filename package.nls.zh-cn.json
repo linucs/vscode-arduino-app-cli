@@ -58,7 +58,7 @@
   "command.openMonitor": "打开串口监视器",
   "command.setMonitorLineEnding": "设置串口监视器行尾",
   "command.saveMonitorLog": "保存串口监视器日志",
-  "command.configureIntelliSense": "配置 C++ IntelliSense",
+  "command.configureIntelliSense": "配置 IntelliSense",
   "config.daemon.host": "可连接到 arduino-app-cli 守护进程的主机。",
   "config.daemon.port": "arduino-app-cli 守护进程的 TCP 端口（板载 systemd 服务使用 8800）。",
   "config.cliPath": "arduino-app-cli 可执行文件的路径，用于运行仅限 CLI 的命令（clean-cache、system init/cleanup/network-mode/keyboard/set-name）。",

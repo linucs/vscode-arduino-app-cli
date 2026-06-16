@@ -58,7 +58,7 @@
   "command.openMonitor": "시리얼 모니터 열기",
   "command.setMonitorLineEnding": "시리얼 모니터 줄 바꿈 설정",
   "command.saveMonitorLog": "시리얼 모니터 로그 저장",
-  "command.configureIntelliSense": "C++ IntelliSense 구성",
+  "command.configureIntelliSense": "IntelliSense 구성",
   "config.daemon.host": "arduino-app-cli 데몬에 연결할 수 있는 호스트입니다.",
   "config.daemon.port": "arduino-app-cli 데몬의 TCP 포트입니다(온보드 systemd 서비스는 8800을 사용합니다).",
   "config.cliPath": "CLI 전용 명령(clean-cache, system init/cleanup/network-mode/keyboard/set-name)을 실행하는 데 사용되는 arduino-app-cli 실행 파일의 경로입니다.",

@@ -58,7 +58,7 @@
   "command.openMonitor": "開啟序列埠監控視窗",
   "command.setMonitorLineEnding": "設定序列埠監控視窗換行符號",
   "command.saveMonitorLog": "儲存序列埠監控視窗記錄",
-  "command.configureIntelliSense": "設定 C++ IntelliSense",
+  "command.configureIntelliSense": "設定 IntelliSense",
   "config.daemon.host": "可連線到 arduino-app-cli 常駐程式的主機。",
   "config.daemon.port": "arduino-app-cli 常駐程式的 TCP 連接埠（開發板上的 systemd 服務使用 8800）。",
   "config.cliPath": "arduino-app-cli 執行檔的路徑，用於執行僅限 CLI 的命令（clean-cache、system init/cleanup/network-mode/keyboard/set-name）。",

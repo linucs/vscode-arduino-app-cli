@@ -58,7 +58,7 @@
   "command.openMonitor": "Otwórz monitor portu szeregowego",
   "command.setMonitorLineEnding": "Ustaw zakończenie wiersza monitora portu szeregowego",
   "command.saveMonitorLog": "Zapisz dziennik monitora portu szeregowego",
-  "command.configureIntelliSense": "Skonfiguruj IntelliSense dla C++",
+  "command.configureIntelliSense": "Skonfiguruj IntelliSense",
   "config.daemon.host": "Host, pod którym dostępny jest demon arduino-app-cli.",
   "config.daemon.port": "Port TCP demona arduino-app-cli (wbudowana usługa systemd używa portu 8800).",
   "config.cliPath": "Ścieżka do pliku wykonywalnego arduino-app-cli, używana do uruchamiania poleceń dostępnych tylko z CLI (clean-cache, system init/cleanup/network-mode/keyboard/set-name).",

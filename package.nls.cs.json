@@ -58,7 +58,7 @@
   "command.openMonitor": "Otevřít sériový monitor",
   "command.setMonitorLineEnding": "Nastavit zakončení řádku sériového monitoru",
   "command.saveMonitorLog": "Uložit protokol sériového monitoru",
-  "command.configureIntelliSense": "Konfigurovat C++ IntelliSense",
+  "command.configureIntelliSense": "Konfigurovat IntelliSense",
   "config.daemon.host": "Hostitel, na kterém je dostupný démon arduino-app-cli.",
   "config.daemon.port": "TCP port démona arduino-app-cli (palubní služba systemd používá 8800).",
   "config.cliPath": "Cesta ke spustitelnému souboru arduino-app-cli, používanému pro příkazy dostupné pouze přes CLI (clean-cache, system init/cleanup/network-mode/keyboard/set-name).",
