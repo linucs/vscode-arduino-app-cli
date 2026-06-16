@@ -182,10 +182,39 @@ export class IntelliSenseManager {
     await fsp.cp(src, dest, { recursive: true });
     await fsp.writeFile(markerPath, version + "\n");
     this.output.appendLine(`[intellisense] installed Python stubs (${version}) into ${dest}`);
+    await this.silenceMissingSourceWarning();
 
     if (!opts.silent) {
       this.warnIfStubPathMoved();
       this.maybeHintPython();
+    }
+  }
+
+  /**
+   * Silence Pylance's `reportMissingModuleSource` for this workspace. We ship
+   * stubs only — the real `arduino_app_bricks` package lives in the app's Docker
+   * image, not on the host — so Pylance resolves types from the `.pyi` but warns
+   * that it can't find the runtime source. That warning is expected here and would
+   * fire on every `import arduino.*`, so we turn it off (workspace-scoped, merged
+   * into existing overrides). Written via the config API so `.vscode/settings.json`
+   * comments/formatting survive.
+   */
+  private async silenceMissingSourceWarning(): Promise<void> {
+    try {
+      const cfg = vscode.workspace.getConfiguration("python.analysis");
+      const current = cfg.get<Record<string, string>>("diagnosticSeverityOverrides") ?? {};
+      if (current.reportMissingModuleSource === "none") {
+        return;
+      }
+      await cfg.update(
+        "diagnosticSeverityOverrides",
+        { ...current, reportMissingModuleSource: "none" },
+        vscode.ConfigurationTarget.Workspace,
+      );
+    } catch (err) {
+      this.output.appendLine(
+        `[intellisense] could not set diagnosticSeverityOverrides: ${asMessage(err)}`,
+      );
     }
   }
 
