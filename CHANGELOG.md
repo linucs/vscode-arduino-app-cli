@@ -27,7 +27,8 @@ editor.
 - **IntelliSense** — one **Configure IntelliSense** command sets up both halves:
   `.vscode/c_cpp_properties.json` from the sketch's last build (the compilation
   database under `<app>/.cache/sketch/`), resolving the Arduino core, board defines
-  and libraries; and `typings/arduino/**` Python stubs so Pylance resolves
+  and libraries; and `.vscode/typings/arduino/**` Python stubs (with
+  `python.analysis.stubPath` pointed at them) so Pylance resolves
   `arduino.app_utils` / `arduino.app_bricks.*` (which live only in the app image).
   Both refresh automatically after each successful run.
 - **Serial monitor & plotter** — a monitor terminal over the daemon WebSocket

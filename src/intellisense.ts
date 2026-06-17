@@ -8,8 +8,15 @@ import type { AppInfo } from "./api/types";
 const CPPTOOLS_EXT = "ms-vscode.cpptools";
 const PYTHON_EXT = "ms-python.python";
 const CONFIG_NAME = "Arduino";
-/** Marks the `typings/arduino` dir as ours and records the stub version. */
+/** Marks the stubs dir as ours and records the stub version. */
 const STUBS_MARKER = ".arduino-stubs";
+/**
+ * Where we keep the Arduino Python stubs, relative to the workspace root, and the
+ * value we point `python.analysis.stubPath` at. Lives under `.vscode/` so the
+ * editor-generated artifacts (this and `c_cpp_properties.json`) stay together and
+ * out of the app's Python/C++ source tree. Forward slashes: it's a settings value.
+ */
+const STUB_PATH = ".vscode/typings";
 
 /** Flags extracted from a single compile_commands.json entry. */
 export interface ParsedCommand {
@@ -148,27 +155,31 @@ export class IntelliSenseManager {
   }
 
   /**
-   * Copy the bundled Arduino Python stubs into `<root>/typings/arduino` so Pylance
-   * resolves `arduino.app_utils` / `arduino.app_bricks.*`. `typings` is Pylance's
-   * default `stubPath`, so no settings change is needed.
+   * Copy the bundled Arduino Python stubs into `<root>/.vscode/typings/arduino` so
+   * Pylance resolves `arduino.app_utils` / `arduino.app_bricks.*`, and point
+   * `python.analysis.stubPath` at that dir. We keep them under `.vscode/` rather
+   * than the default `typings` so the stubs don't clutter the app's source tree
+   * (Python next to C++); see {@link STUB_PATH} and {@link resolveStubDir}.
    *
    * Idempotent: a marker file records the shipped stub version; we skip the copy
-   * when it already matches (keeps the silent after-run path cheap). A `typings/
-   * arduino` we didn't create is left untouched.
+   * when it already matches (keeps the silent after-run path cheap). A stubs dir we
+   * didn't create is left untouched.
    */
   private async ensureStubs(root: string, opts: { silent?: boolean }): Promise<void> {
+    const stubDir = await this.resolveStubDir();
     const src = path.join(this.context.extensionPath, "stubs", "arduino");
-    const dest = path.join(root, "typings", "arduino");
+    const dest = path.join(root, ...stubDir.split("/"), "arduino");
     const markerPath = path.join(dest, STUBS_MARKER);
     const version = await this.stubsVersion();
 
     const existingMarker = await fsp.readFile(markerPath, "utf8").catch(() => undefined);
     if (existingMarker === undefined && (await exists(dest))) {
-      // A typings/arduino we didn't create — never clobber the user's own stubs.
+      // A stubs dir we didn't create — never clobber the user's own stubs.
       if (!opts.silent) {
         vscode.window.showWarningMessage(
           vscode.l10n.t(
-            "typings/arduino already exists and wasn't created by the extension — leaving it untouched.",
+            "{0}/arduino already exists and wasn't created by the extension — leaving it untouched.",
+            stubDir,
           ),
         );
       }
@@ -185,9 +196,35 @@ export class IntelliSenseManager {
     await this.silenceMissingSourceWarning();
 
     if (!opts.silent) {
-      this.warnIfStubPathMoved();
       this.maybeHintPython();
     }
+  }
+
+  /**
+   * The stub dir (relative to root) Pylance should scan, ensuring
+   * `python.analysis.stubPath` agrees. Defaults to {@link STUB_PATH}; if the user
+   * has explicitly chosen a different stubPath we honor it (write there) rather
+   * than fight their setting. Written workspace-scoped via the config API so
+   * `.vscode/settings.json` comments/formatting survive.
+   */
+  private async resolveStubDir(): Promise<string> {
+    const cfg = vscode.workspace.getConfiguration("python");
+    const inspected = cfg.inspect<string>("analysis.stubPath");
+    const userSet =
+      inspected?.workspaceFolderValue ?? inspected?.workspaceValue ?? inspected?.globalValue;
+
+    // Honor a stubPath the user set themselves rather than fight it.
+    if (userSet) {
+      return userSet;
+    }
+    try {
+      await cfg.update("analysis.stubPath", STUB_PATH, vscode.ConfigurationTarget.Workspace);
+    } catch (err) {
+      this.output.appendLine(
+        `[intellisense] could not set python.analysis.stubPath: ${asMessage(err)}`,
+      );
+    }
+    return STUB_PATH;
   }
 
   /**
@@ -225,21 +262,6 @@ export class IntelliSenseManager {
       this.stubsVersionCache = (await fsp.readFile(file, "utf8").catch(() => "")).trim() || "unknown";
     }
     return this.stubsVersionCache;
-  }
-
-  /** Warn if the user moved `python.analysis.stubPath` off the default `typings`. */
-  private warnIfStubPathMoved(): void {
-    const stubPath = vscode.workspace
-      .getConfiguration("python")
-      .get<string>("analysis.stubPath", "typings");
-    if (stubPath && stubPath !== "typings") {
-      vscode.window.showWarningMessage(
-        vscode.l10n.t(
-          "Arduino stubs were written to 'typings', but python.analysis.stubPath is '{0}', so they won't be picked up.",
-          stubPath,
-        ),
-      );
-    }
   }
 
   private async writeConfig(
