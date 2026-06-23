@@ -6,6 +6,12 @@ Build, run, and monitor **Arduino UNO Q** apps in **plain VS Code** — without 
 
 ---
 
+## v0.1.0 — 2026-06-23
+
+- **See your installed apps at a glance** — a new **Installed Apps** view lists the real apps on your board (not the read-only examples), each with its emoji icon, name and running/default state. Click a row to open its folder, or use the context menu to run, stop, show the console, set as default, or delete.
+- **"What's New" after an update** — when the extension updates, it now offers to open the changelog in VS Code's native **Changelog** tab so you can see what changed.
+- **Now called "Arduino App CLI"** — the extension, its commands and views are consistently named **Arduino App CLI**.
+
 ## v0.0.1 — 2026-06-16 — first public release
 
 - **Arduino App CLI views** — an Activity Bar container with **Examples**, **Brick Catalog**, and **Models** trees, plus per-app **Project Bricks** and **Project Libraries** views in the Explorer.

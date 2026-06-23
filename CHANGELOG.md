@@ -4,6 +4,24 @@ All notable changes to the "Arduino App CLI" extension will be documented in thi
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [0.1.0] - 2026-06-23
+
+### Added
+
+- **My Apps view** — a new **Installed Apps** tree listing the apps installed on
+  the board (the non-example apps), each row showing its emoji icon and name with
+  its running and default state. Clicking a row reveals the app's folder; the
+  context menu offers Run/Stop, Show Console, Set as Default and Delete.
+- **"What's New" on update** — after the extension updates to a new version, a
+  notification offers to open the changelog, now rendered in VS Code's native
+  **Changelog** tab for the extension.
+
+### Changed
+
+- **Renamed to "Arduino App CLI"** — the extension display name, commands, views
+  and localized strings now consistently use **Arduino App CLI** (previously
+  "Arduino App").
+
 ## [0.0.1] - 2026-06-16
 
 Initial release — a lightweight VS Code wrapper over the `arduino-app-cli` daemon
