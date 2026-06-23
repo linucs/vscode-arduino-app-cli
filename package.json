@@ -172,300 +172,300 @@
       {
         "command": "appLab.showVersion",
         "title": "%command.showVersion%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.reconnect",
         "title": "%command.reconnect%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.showConfig",
         "title": "%command.showConfig%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.editProperty",
         "title": "%command.editProperty%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.addProperty",
         "title": "%command.addProperty%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.deleteProperty",
         "title": "%command.deleteProperty%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.checkUpdate",
         "title": "%command.checkUpdate%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.applyUpdate",
         "title": "%command.applyUpdate%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.showResources",
         "title": "%command.showResources%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.system.init",
         "title": "%command.system.init%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.cleanup",
         "title": "%command.cleanup%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.system.networkMode",
         "title": "%command.system.networkMode%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.system.keyboard",
         "title": "%command.system.keyboard%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.system.setName",
         "title": "%command.system.setName%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.installAiAssistant",
         "title": "%command.installAiAssistant%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.refreshApps",
         "title": "%command.refreshApps%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(refresh)"
       },
       {
         "command": "appLab.newApp",
         "title": "%command.newApp%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(add)"
       },
       {
         "command": "appLab.importApp",
         "title": "%command.importApp%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(cloud-upload)"
       },
       {
         "command": "appLab.app.start",
         "title": "%command.app.start%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(run)"
       },
       {
         "command": "appLab.app.stop",
         "title": "%command.app.stop%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(debug-stop)"
       },
       {
         "command": "appLab.app.restart",
         "title": "%command.app.restart%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(debug-restart)"
       },
       {
         "command": "appLab.app.destroy",
         "title": "%command.app.destroy%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(trash)"
       },
       {
         "command": "appLab.app.logs",
         "title": "%command.app.logs%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(output)"
       },
       {
         "command": "appLab.app.export",
         "title": "%command.app.export%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(export)"
       },
       {
         "command": "appLab.app.clone",
         "title": "%command.app.clone%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(files)"
       },
       {
         "command": "appLab.app.rename",
         "title": "%command.app.rename%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.app.edit",
         "title": "%command.app.edit%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.app.openExposedPort",
         "title": "%command.app.openExposedPort%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.app.revealInExplorer",
         "title": "%command.app.revealInExplorer%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.app.cleanCache",
         "title": "%command.app.cleanCache%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(clear-all)"
       },
       {
         "command": "appLab.showAppBricks",
         "title": "%command.showAppBricks%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(package)"
       },
       {
         "command": "appLab.showAppLibs",
         "title": "%command.showAppLibs%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(library)"
       },
       {
         "command": "appLab.getDefaultApp",
         "title": "%command.getDefaultApp%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.setDefaultApp",
         "title": "%command.setDefaultApp%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.refreshBricks",
         "title": "%command.refreshBricks%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(refresh)"
       },
       {
         "command": "appLab.app.addBrick",
         "title": "%command.app.addBrick%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(add)"
       },
       {
         "command": "appLab.brick.remove",
         "title": "%command.brick.remove%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(trash)"
       },
       {
         "command": "appLab.brick.rename",
         "title": "%command.brick.rename%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.brick.configure",
         "title": "%command.brick.configure%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(gear)"
       },
       {
         "command": "appLab.brick.showDetails",
         "title": "%command.brick.showDetails%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(info)"
       },
       {
         "command": "appLab.refreshModels",
         "title": "%command.refreshModels%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(refresh)"
       },
       {
         "command": "appLab.model.import",
         "title": "%command.model.import%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(cloud-download)"
       },
       {
         "command": "appLab.model.delete",
         "title": "%command.model.delete%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(trash)"
       },
       {
         "command": "appLab.model.showDetails",
         "title": "%command.model.showDetails%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(info)"
       },
       {
         "command": "appLab.app.addSketchLib",
         "title": "%command.app.addSketchLib%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(add)"
       },
       {
         "command": "appLab.sketchLib.remove",
         "title": "%command.sketchLib.remove%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(trash)"
       },
       {
         "command": "appLab.app.refreshSketchLibs",
         "title": "%command.app.refreshSketchLibs%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(refresh)"
       },
       {
         "command": "appLab.app.refreshBricks",
         "title": "%command.app.refreshBricks%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(refresh)"
       },
       {
         "command": "appLab.openMonitor",
         "title": "%command.openMonitor%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(plug)"
       },
       {
         "command": "appLab.openPlotter",
         "title": "%command.openPlotter%",
-        "category": "Arduino App CLI",
+        "category": "Arduino App Studio",
         "icon": "$(graph-line)"
       },
       {
         "command": "appLab.setMonitorLineEnding",
         "title": "%command.setMonitorLineEnding%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.saveMonitorLog",
         "title": "%command.saveMonitorLog%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.configureIntelliSense",
         "title": "%command.configureIntelliSense%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       },
       {
         "command": "appLab.python.toggleFastReload",
         "title": "%command.python.toggleFastReload%",
-        "category": "Arduino App CLI"
+        "category": "Arduino App Studio"
       }
     ],
     "menus": {
@@ -780,7 +780,7 @@
       ]
     },
     "configuration": {
-      "title": "Arduino App CLI",
+      "title": "Arduino App Studio",
       "properties": {
         "appLab.daemon.host": {
           "type": "string",

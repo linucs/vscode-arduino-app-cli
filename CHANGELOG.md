@@ -1,8 +1,17 @@
 # Change Log
 
-All notable changes to the "Arduino App CLI" extension will be documented in this file.
+All notable changes to the "Arduino App Studio" extension will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
+
+## [Unreleased]
+
+### Changed
+
+- **Renamed to "Arduino App Studio"** — the extension display name, command
+  categories, views and localized strings now consistently use **Arduino App
+  Studio** (previously "Arduino App CLI"). The underlying `arduino-app-cli`
+  daemon it wraps is unchanged.
 
 ## [0.1.0] - 2026-06-23
 

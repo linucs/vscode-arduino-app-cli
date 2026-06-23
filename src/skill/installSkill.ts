@@ -31,11 +31,11 @@ export async function installAiAssistants(
   context: vscode.ExtensionContext,
 ): Promise<void> {
   const root = await resolveActiveWorkspaceRoot(
-    vscode.l10n.t("Select the folder to set up the Arduino App CLI AI assistant in"),
+    vscode.l10n.t("Select the folder to set up the Arduino App Studio AI assistant in"),
   );
   if (!root) {
     vscode.window.showWarningMessage(
-      vscode.l10n.t("Open a workspace folder first to install the Arduino App CLI skill."),
+      vscode.l10n.t("Open a workspace folder first to install the Arduino App Studio skill."),
     );
     return;
   }
@@ -49,7 +49,7 @@ export async function installAiAssistants(
   } catch (err) {
     vscode.window.showErrorMessage(
       vscode.l10n.t(
-        "Could not install the Arduino App CLI skill: {0}",
+        "Could not install the Arduino App Studio skill: {0}",
         err instanceof Error ? err.message : String(err),
       ),
     );
@@ -58,7 +58,7 @@ export async function installAiAssistants(
 
   vscode.window.showInformationMessage(
     vscode.l10n.t(
-      "Arduino App CLI AI assistant configured: skill installed for Claude Code and GitHub Copilot in this folder.",
+      "Arduino App Studio AI assistant configured: skill installed for Claude Code and GitHub Copilot in this folder.",
     ),
   );
 }
@@ -74,8 +74,8 @@ async function writeCopilotInstructions(
     'applyTo: "**"',
     "---",
     "",
-    "<!-- Generated from .claude/skills/arduino-app-cli/SKILL.md by the Arduino App CLI extension",
-    '     ("Arduino App CLI: Set Up AI Assistant"). Edits here are overwritten on re-install —',
+    "<!-- Generated from .claude/skills/arduino-app-cli/SKILL.md by the Arduino App Studio extension",
+    '     ("Arduino App Studio: Set Up AI Assistant"). Edits here are overwritten on re-install —',
     "     change the skill instead. -->",
     "",
     "The following is MANDATORY whenever the user works on an Arduino App",

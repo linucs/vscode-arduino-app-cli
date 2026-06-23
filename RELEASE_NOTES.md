@@ -1,10 +1,14 @@
-# Arduino App CLI — Release Notes
+# Arduino App Studio — Release Notes
 
 Build, run, and monitor **Arduino UNO Q** apps in **plain VS Code** — without leaving the editor. A thin wrapper around the [`arduino-app-cli`](https://github.com/arduino/arduino-app-cli) daemon: it talks to the App Lab daemon running on the board and gives you tree views, buttons, and a live console for what it already does.
 
-> **Requires the `arduino-app-cli` daemon** reachable from the extension (on the UNO Q board or a host running App Lab). It isn't bundled — that's what keeps the extension small. Prefer building sketches with the official `arduino-cli` toolchain? Install the sister extension [**Arduino CLI IDE**](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-cli-ide).
+> **Requires the `arduino-app-cli` daemon** reachable from the extension (on the UNO Q board or a host running App Lab). It isn't bundled — that's what keeps the extension small. Prefer building sketches with the official `arduino-cli` toolchain? Install the sister extension [**Arduino Sketch Studio**](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-cli-ide).
 
 ---
+
+## Unreleased
+
+- **Renamed to "Arduino App Studio"** — the extension, its commands and views are now consistently named **Arduino App Studio** (previously "Arduino App CLI"). The `arduino-app-cli` daemon it wraps is unchanged.
 
 ## v0.1.0 — 2026-06-23
 

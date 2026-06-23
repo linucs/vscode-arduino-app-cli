@@ -41,7 +41,7 @@ export class StatusBar implements vscode.Disposable {
 
   /** Update the connection item once a daemon version is known. */
   setConnected(version: string, baseUrl: string): void {
-    this.connItem.text = `$(circuit-board) Arduino App CLI ${version}`;
+    this.connItem.text = `$(circuit-board) Arduino App Studio ${version}`;
     this.connItem.tooltip = vscode.l10n.t("Connected to {0} — click for system resources", baseUrl);
     this.connItem.command = "appLab.showResources";
     this.connItem.backgroundColor = undefined;
@@ -49,7 +49,7 @@ export class StatusBar implements vscode.Disposable {
   }
 
   setDisconnected(): void {
-    this.connItem.text = "$(debug-disconnect) Arduino App CLI";
+    this.connItem.text = "$(debug-disconnect) Arduino App Studio";
     this.connItem.tooltip = vscode.l10n.t("Not connected — click to reconnect");
     this.connItem.command = "appLab.reconnect";
     this.connItem.backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");

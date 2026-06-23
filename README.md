@@ -1,14 +1,14 @@
-# Arduino App CLI for VS Code
+# Arduino App Studio for VS Code
 
 **Run the Arduino UNO Q apps you build with blocks — in plain VS Code.**
 
-![Arduino App CLI in action — running an app and watching its output inside VS Code](images/demo.gif)
+![Arduino App Studio in action — running an app and watching its output inside VS Code](images/demo.gif)
 
 Design an Arduino App Lab app with drag-and-drop blocks in
 **[Blocks Editor](https://marketplace.visualstudio.com/items?itemName=linucs.blocks-editor)**,
 then build, launch and monitor it here, without leaving the editor. This
 extension is the **run half** of that workflow: Blocks Editor writes the app,
-Arduino App CLI puts it on the board and shows you what it's doing. Hand-written
+Arduino App Studio puts it on the board and shows you what it's doing. Hand-written
 apps work exactly the same way — blocks are optional.
 
 > **Not a replacement for Arduino App Lab.** Arduino App Lab is the full,
@@ -20,7 +20,7 @@ apps work exactly the same way — blocks are optional.
 It's "just another Arduino CLI" by design. Arduino ships official command-line
 tools — `arduino-cli` for sketches, `arduino-app-cli` for UNO Q apps — and this
 extension gives the App Lab one a native VS Code face, the same way its sibling
-**[Arduino CLI IDE](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-cli-ide)**
+**[Arduino Sketch Studio](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-cli-ide)**
 does for plain sketches. The CLI does the real work; VS Code does what it's
 already great at.
 
@@ -54,7 +54,7 @@ anything on the board yourself — you just need to reach that daemon.
 
 ### Step 2 — Install this extension
 
-Search for **"Arduino App CLI"** in the VS Code Extensions view, or install from
+Search for **"Arduino App Studio"** in the VS Code Extensions view, or install from
 [Open VSX](https://open-vsx.org) on VSCodium / Cursor / Windsurf.
 
 The natural way to use it is to **open the board in VS Code over Remote-SSH**, so
@@ -63,7 +63,7 @@ workspace. (A tunnel to the daemon's port works too — see [Settings](#settings
 
 ### Step 3 — Run your first app
 
-1. Open the **Arduino App CLI** view in the Activity Bar. Your apps appear under
+1. Open the **Arduino App Studio** view in the Activity Bar. Your apps appear under
    **My Apps** and ready-made templates under **Examples**.
 2. Pick an app (or copy an example to edit) and click **Run** ▶.
 3. It compiles & flashes the sketch to the MCU and starts the Python side,
@@ -73,9 +73,9 @@ workspace. (A tunnel to the daemon's port works too — see [Settings](#settings
 
 That's it — no separate IDE to switch to. Just VS Code.
 
-## The Arduino App CLI sidebar
+## The Arduino App Studio sidebar
 
-Click the **Arduino App CLI icon** in the Activity Bar to open the container, with
+Click the **Arduino App Studio icon** in the Activity Bar to open the container, with
 four tree views:
 
 - **My Apps** — the apps installed on the board (the real ones you run, not the
@@ -204,7 +204,7 @@ Both refresh automatically after each successful run
 ## Settings
 
 You can leave everything at its defaults. To tweak, open Settings and search for
-**"Arduino App CLI"** (or **App Lab**):
+**"Arduino App Studio"** (or **App Lab**):
 
 | Key | Default | Description |
 | --- | --- | --- |
@@ -231,7 +231,7 @@ output back. Together they're a complete loop: drag blocks → run → watch the
 console and plotter. Drawn as a picture:
 
 ```
-Blocks Editor               Arduino App CLI                Arduino UNO Q
+Blocks Editor               Arduino App Studio                Arduino UNO Q
   drag blocks  ──►  generates the app  ──►  run (build +  ──►  MCU + Python
                                             flash + start)      run together
                                             console / plotter ◄──  logs & data
@@ -240,7 +240,7 @@ Blocks Editor               Arduino App CLI                Arduino UNO Q
 Each one is fully standalone, so you can use either alone — but they're designed to
 be two halves of one workflow: **Blocks Editor builds, this extension runs.** The
 same pairing exists for plain sketches via
-**[Arduino CLI IDE](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-cli-ide)**.
+**[Arduino Sketch Studio](https://marketplace.visualstudio.com/items?itemName=linucs.vscode-arduino-cli-ide)**.
 
 ## Requirements
 

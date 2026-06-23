@@ -15,7 +15,7 @@ export class SystemManager {
   async showVersion(): Promise<void> {
     const v = await this.client.version();
     const action = await vscode.window.showInformationMessage(
-      vscode.l10n.t("Arduino App CLI {0}", v.version),
+      vscode.l10n.t("Arduino App Studio {0}", v.version),
       vscode.l10n.t("Reconnect"),
     );
     if (action) {
@@ -25,7 +25,7 @@ export class SystemManager {
 
   async showConfig(): Promise<void> {
     const cfg = await this.client.getConfig();
-    await this.openJson(cfg, vscode.l10n.t("Arduino App CLI configuration"));
+    await this.openJson(cfg, vscode.l10n.t("Arduino App Studio configuration"));
   }
 
   async addProperty(): Promise<void> {
