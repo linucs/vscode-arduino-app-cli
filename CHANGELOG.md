@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-06-23
+
 ### Changed
 
 - **Renamed to "Arduino App Studio"** — the extension display name, command

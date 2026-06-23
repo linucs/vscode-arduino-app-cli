@@ -9,6 +9,7 @@ test/**
 scripts/**
 .claude/**
 .gitignore
+.mypy_cache/**
 .nvmrc
 .yarnrc
 esbuild.js

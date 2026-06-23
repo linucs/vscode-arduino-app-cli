@@ -6,7 +6,7 @@ Build, run, and monitor **Arduino UNO Q** apps in **plain VS Code** — without 
 
 ---
 
-## Unreleased
+## v0.1.1 — 2026-06-23
 
 - **Renamed to "Arduino App Studio"** — the extension, its commands and views are now consistently named **Arduino App Studio** (previously "Arduino App CLI"). The `arduino-app-cli` daemon it wraps is unchanged.
 

@@ -2,7 +2,7 @@
   "name": "vscode-arduino-app-cli-ide",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "publisher": "linucs",
   "icon": "images/icon.png",
@@ -21,13 +21,13 @@
   "keywords": [
     "arduino",
     "arduino-app-cli",
-    "app-lab",
     "uno-q",
-    "bricks",
-    "embedded",
-    "microcontroller",
     "python",
+    "machine-learning",
+    "ai",
+    "computer-vision",
     "edge-impulse",
+    "embedded",
     "iot"
   ],
   "engines": {
@@ -35,7 +35,8 @@
   },
   "categories": [
     "Programming Languages",
-    "Other"
+    "Machine Learning",
+    "Education"
   ],
   "activationEvents": [
     "onStartupFinished"

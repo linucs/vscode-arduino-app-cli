@@ -5,6 +5,7 @@ out/
 *.vsix
 .DS_Store
 *.log
+.mypy_cache/
 .claude/**
 !.claude/skills/
 !.claude/skills/arduino-app-cli/
