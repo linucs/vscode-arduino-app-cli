@@ -1,4 +1,5 @@
 {
+  "run on startup": "spustit při startu",
   "\"{0}\" is currently running. Stop it and run \"{1}\"?": "Aplikace \"{0}\" je momentálně spuštěná. Zastavit ji a spustit \"{1}\"?",
   "\"{0}\" is now the default app.": "Aplikace \"{0}\" je nyní výchozí.",
   "(not set)": "(nenastaveno)",

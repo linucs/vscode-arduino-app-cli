@@ -6,6 +6,7 @@
   "view.appLibs": "项目库",
   "command.showAppBricks": "显示 Bricks",
   "command.showAppLibs": "显示库",
+  "view.installedApps": "我的应用",
   "view.examples": "示例",
   "view.brickCatalog": "Brick 目录",
   "view.models": "模型",

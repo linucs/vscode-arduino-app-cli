@@ -1,4 +1,5 @@
 {
+  "run on startup": "run on startup",
   "\"{0}\" is currently running. Stop it and run \"{1}\"?": "\"{0}\" is currently running. Stop it and run \"{1}\"?",
   "\"{0}\" is now the default app.": "\"{0}\" is now the default app.",
   "(not set)": "(not set)",

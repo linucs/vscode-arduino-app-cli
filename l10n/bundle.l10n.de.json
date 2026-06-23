@@ -1,4 +1,5 @@
 {
+  "run on startup": "Beim Start ausführen",
   "\"{0}\" is currently running. Stop it and run \"{1}\"?": "\"{0}\" wird gerade ausgeführt. Stoppen und \"{1}\" ausführen?",
   "\"{0}\" is now the default app.": "\"{0}\" ist jetzt die Standard-App.",
   "(not set)": "(nicht festgelegt)",

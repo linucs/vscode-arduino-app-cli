@@ -151,6 +151,10 @@
       ],
       "appLab": [
         {
+          "id": "appLab.installedApps",
+          "name": "%view.installedApps%"
+        },
+        {
           "id": "appLab.apps",
           "name": "%view.examples%"
         },
@@ -488,18 +492,23 @@
         },
         {
           "command": "appLab.newApp",
-          "when": "view == appLab.apps",
+          "when": "view == appLab.installedApps",
           "group": "navigation@0"
         },
         {
           "command": "appLab.importApp",
-          "when": "view == appLab.apps",
+          "when": "view == appLab.installedApps",
           "group": "navigation@1"
         },
         {
           "command": "appLab.refreshApps",
-          "when": "view == appLab.apps",
+          "when": "view == appLab.installedApps",
           "group": "navigation@2"
+        },
+        {
+          "command": "appLab.refreshApps",
+          "when": "view == appLab.apps",
+          "group": "navigation@0"
         },
         {
           "command": "appLab.refreshBricks",
@@ -519,39 +528,59 @@
       ],
       "view/item/context": [
         {
-          "command": "appLab.app.clone",
-          "when": "view == appLab.apps && viewItem =~ /^app:example/",
+          "command": "appLab.app.start",
+          "when": "view == appLab.installedApps && viewItem == app:user",
           "group": "inline@0"
         },
         {
+          "command": "appLab.app.stop",
+          "when": "view == appLab.installedApps && viewItem == app:user:running",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.app.restart",
+          "when": "view == appLab.installedApps && viewItem == app:user:running",
+          "group": "inline@1"
+        },
+        {
+          "command": "appLab.app.destroy",
+          "when": "view == appLab.installedApps && viewItem == app:user",
+          "group": "inline@1"
+        },
+        {
           "command": "appLab.app.logs",
+          "when": "view == appLab.installedApps && viewItem =~ /^app:user/",
+          "group": "1_app@0"
+        },
+        {
+          "command": "appLab.setDefaultApp",
+          "when": "view == appLab.installedApps && viewItem =~ /^app:user/",
+          "group": "2_app@0"
+        },
+        {
+          "command": "appLab.app.destroy",
+          "when": "view == appLab.installedApps && viewItem =~ /^app:user/",
+          "group": "2_app@1"
+        },
+        {
+          "command": "appLab.app.start",
+          "when": "view == appLab.apps && viewItem == app:example",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.app.stop",
+          "when": "view == appLab.apps && viewItem == app:example:running",
+          "group": "inline@0"
+        },
+        {
+          "command": "appLab.app.clone",
           "when": "view == appLab.apps && viewItem =~ /^app:example/",
           "group": "inline@1"
         },
         {
-          "command": "appLab.app.revealInExplorer",
+          "command": "appLab.app.logs",
           "when": "view == appLab.apps && viewItem =~ /^app:example/",
-          "group": "2_app@0"
-        },
-        {
-          "command": "appLab.app.export",
-          "when": "view == appLab.apps && viewItem =~ /^app:example/",
-          "group": "2_app@1"
-        },
-        {
-          "command": "appLab.app.openExposedPort",
-          "when": "view == appLab.apps && viewItem == app:example:running",
-          "group": "2_app@2"
-        },
-        {
-          "command": "appLab.openMonitor",
-          "when": "view == appLab.apps && viewItem == app:example:running",
-          "group": "3_io@0"
-        },
-        {
-          "command": "appLab.openPlotter",
-          "when": "view == appLab.apps && viewItem == app:example:running",
-          "group": "3_io@1"
+          "group": "1_app@0"
         },
         {
           "command": "appLab.brick.configure",

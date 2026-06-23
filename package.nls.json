@@ -6,6 +6,7 @@
   "view.appLibs": "Project Libraries",
   "command.showAppBricks": "Show Bricks",
   "command.showAppLibs": "Show Libraries",
+  "view.installedApps": "My Apps",
   "view.examples": "Examples",
   "view.brickCatalog": "Brick Catalog",
   "view.models": "Models",

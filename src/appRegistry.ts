@@ -54,6 +54,13 @@ export class AppRegistry {
       .sort((a, b) => a.name.localeCompare(b.name));
   }
 
+  /** The user's installed (non-example) apps, sorted by name for a stable view. */
+  installedApps(): AppInfo[] {
+    return [...this.byId.values()]
+      .filter((a) => a.example !== true)
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
   /**
    * Resolve the app that owns `appRoot` — the directory holding `app.yaml` —
    * by matching its basename to the folder segment of each app id.

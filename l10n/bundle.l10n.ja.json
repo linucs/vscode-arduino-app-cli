@@ -1,4 +1,5 @@
 {
+  "run on startup": "起動時に実行",
   "\"{0}\" is currently running. Stop it and run \"{1}\"?": "\"{0}\" は現在実行中です。停止して \"{1}\" を実行しますか?",
   "\"{0}\" is now the default app.": "\"{0}\" が既定の App になりました。",
   "(not set)": "(未設定)",

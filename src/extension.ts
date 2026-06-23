@@ -11,6 +11,7 @@ import { PlotterPanel } from "./plotterPanel";
 import { PlotterFeeder } from "./plotterFeeder";
 import { AppRegistry } from "./appRegistry";
 import { ExamplesTreeProvider } from "./examplesView";
+import { InstalledAppsTreeProvider } from "./installedAppsView";
 import { AppItemsTreeProvider } from "./appBricksView";
 import { BricksTreeProvider } from "./bricksView";
 import { ModelsTreeProvider } from "./modelsView";
@@ -40,6 +41,7 @@ let activeTracker: ActiveAppTracker;
 let fastReload: FastReloadManager;
 let statusBar: StatusBar;
 let examplesView: ExamplesTreeProvider;
+let installedAppsView: InstalledAppsTreeProvider;
 let appBricksView: AppItemsTreeProvider;
 let appLibsView: AppItemsTreeProvider;
 let bricksView: BricksTreeProvider;
@@ -74,6 +76,7 @@ export function activate(ctx: vscode.ExtensionContext) {
   const clientOf = async () => (await ensureReady())!.client;
   registry = new AppRegistry(clientOf);
   examplesView = new ExamplesTreeProvider(registry);
+  installedAppsView = new InstalledAppsTreeProvider(registry);
   appBricksView = new AppItemsTreeProvider("bricks", clientOf, () => activeTracker.current);
   appLibsView = new AppItemsTreeProvider("libs", clientOf, () => activeTracker.current);
   bricksView = new BricksTreeProvider(async () => (await ensureReady())!.bricks.listCatalog());
@@ -101,7 +104,14 @@ export function activate(ctx: vscode.ExtensionContext) {
       }
     },
   });
-  ctx.subscriptions.push(statusBar, activeTracker.register(), registry, examplesView, fastReload);
+  ctx.subscriptions.push(
+    statusBar,
+    activeTracker.register(),
+    registry,
+    examplesView,
+    installedAppsView,
+    fastReload,
+  );
 
   // Once the active app changes, refresh the active-app Bricks and Libraries
   // views; once the registry lists/updates apps, the editor toolbar can resolve,
@@ -118,6 +128,7 @@ export function activate(ctx: vscode.ExtensionContext) {
   ctx.subscriptions.push(
     vscode.window.createTreeView("appLab.appBricks", { treeDataProvider: appBricksView }),
     vscode.window.createTreeView("appLab.appLibs", { treeDataProvider: appLibsView }),
+    vscode.window.createTreeView("appLab.installedApps", { treeDataProvider: installedAppsView }),
     vscode.window.createTreeView("appLab.apps", { treeDataProvider: examplesView }),
     vscode.window.createTreeView("appLab.bricks", { treeDataProvider: bricksView }),
     vscode.window.createTreeView("appLab.models", { treeDataProvider: modelsView }),

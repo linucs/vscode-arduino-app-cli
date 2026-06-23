@@ -6,6 +6,7 @@
   "view.appLibs": "Библиотеки проекта",
   "command.showAppBricks": "Показать Bricks",
   "command.showAppLibs": "Показать библиотеки",
+  "view.installedApps": "Мои приложения",
   "view.examples": "Примеры",
   "view.brickCatalog": "Каталог Bricks",
   "view.models": "Модели",

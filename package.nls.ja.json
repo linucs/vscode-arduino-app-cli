@@ -6,6 +6,7 @@
   "view.appLibs": "プロジェクトのライブラリ",
   "command.showAppBricks": "Brick を表示",
   "command.showAppLibs": "ライブラリを表示",
+  "view.installedApps": "マイアプリ",
   "view.examples": "サンプル",
   "view.brickCatalog": "Brick カタログ",
   "view.models": "モデル",

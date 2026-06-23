@@ -6,6 +6,7 @@
   "view.appLibs": "Knihovny projektu",
   "command.showAppBricks": "Zobrazit Bricks",
   "command.showAppLibs": "Zobrazit knihovny",
+  "view.installedApps": "Moje aplikace",
   "view.examples": "Příklady",
   "view.brickCatalog": "Katalog Bricks",
   "view.models": "Modely",

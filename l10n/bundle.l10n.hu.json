@@ -1,4 +1,5 @@
 {
+  "run on startup": "indításkor fut",
   "\"{0}\" is currently running. Stop it and run \"{1}\"?": "A(z) \"{0}\" jelenleg fut. Leállítja, és elindítja a(z) \"{1}\" alkalmazást?",
   "\"{0}\" is now the default app.": "Mostantól a(z) \"{0}\" az alapértelmezett App.",
   "(not set)": "(nincs beállítva)",

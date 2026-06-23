@@ -6,6 +6,7 @@
   "view.appLibs": "프로젝트 라이브러리",
   "command.showAppBricks": "Brick 표시",
   "command.showAppLibs": "라이브러리 표시",
+  "view.installedApps": "내 앱",
   "view.examples": "예제",
   "view.brickCatalog": "Brick 카탈로그",
   "view.models": "모델",
