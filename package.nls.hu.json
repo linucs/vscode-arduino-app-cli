@@ -1,7 +1,7 @@
 {
   "displayName": "Arduino App CLI",
   "description": "Egy könnyűsúlyú VS Code-burkoló az Arduino App CLI-hez — Arduino UNO Q appok, brickek és modellek kezelése, futtatása és figyelése.",
-  "viewContainer.appLab": "Arduino App",
+  "viewContainer.appLab": "Arduino App CLI",
   "view.appBricks": "Projekt Brickek",
   "view.appLibs": "Projektkönyvtárak",
   "command.showAppBricks": "Brickek megjelenítése",

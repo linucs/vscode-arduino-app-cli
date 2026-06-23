@@ -1,7 +1,7 @@
 {
   "displayName": "Arduino App CLI",
   "description": "Arduino App CLI를 위한 경량 VS Code 래퍼 — Arduino UNO Q App, Brick, 모델을 관리, 실행 및 모니터링합니다.",
-  "viewContainer.appLab": "Arduino App",
+  "viewContainer.appLab": "Arduino App CLI",
   "view.appBricks": "프로젝트 Brick",
   "view.appLibs": "프로젝트 라이브러리",
   "command.showAppBricks": "Brick 표시",

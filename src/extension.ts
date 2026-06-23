@@ -64,7 +64,7 @@ const RECONNECT_MAX_ATTEMPTS = 12;
 
 export function activate(ctx: vscode.ExtensionContext) {
   context = ctx;
-  output = vscode.window.createOutputChannel("Arduino App");
+  output = vscode.window.createOutputChannel("Arduino App CLI");
   ctx.subscriptions.push(output);
 
   daemon = new DaemonManager(output);
@@ -224,7 +224,7 @@ async function doEnsureReady(): Promise<Ready | undefined> {
     // Notify once on the initial failure; stay quiet while auto-reconnect retries.
     if (reconnectAttempts === 0) {
       vscode.window.showErrorMessage(
-        vscode.l10n.t("Cannot reach the Arduino App daemon: {0}", asMessage(err)),
+        vscode.l10n.t("Cannot reach the Arduino App CLI daemon: {0}", asMessage(err)),
       );
     }
     scheduleReconnect();

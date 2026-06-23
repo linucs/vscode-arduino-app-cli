@@ -24,7 +24,7 @@ files on disk, edited with VS Code's native editor.
 
 1. **Check `arduino-app-cli`** on your Arduino UNO Q (it ships as a systemd service listening on `127.0.0.1:8800`).
 2. **Open the board in VS Code** — typically via **Remote-SSH**, so the extension runs on the board next to the daemon and your `~/ArduinoApps` workspace.
-3. Open the **App Lab** view in the Activity Bar. Your apps appear under **My Apps** and ready-made templates under **Examples**.
+3. Open the **Arduino App CLI** view in the Activity Bar. Your apps appear under **My Apps** and ready-made templates under **Examples**.
 4. Pick an app and click **Run** ▶ — it compiles & flashes the sketch to the MCU and
    starts the Python side, streaming progress to the Console.
 

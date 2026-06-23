@@ -8,7 +8,7 @@ Build, run, and monitor **Arduino UNO Q** apps in **plain VS Code** — without 
 
 ## v0.0.1 — 2026-06-16 — first public release
 
-- **App Lab views** — an Activity Bar container with **Examples**, **Brick Catalog**, and **Models** trees, plus per-app **Project Bricks** and **Project Libraries** views in the Explorer.
+- **Arduino App CLI views** — an Activity Bar container with **Examples**, **Brick Catalog**, and **Models** trees, plus per-app **Project Bricks** and **Project Libraries** views in the Explorer.
 - **App lifecycle** — create, import, run, stop, restart, and delete apps; stream build and run progress to a live **Console**; export apps and copy examples to edit; set a default app and open an app's exposed port.
 - **Bricks** — browse the catalog, add bricks to an app, configure their variables, rename, and remove them.
 - **Models** — list models, import an Edge Impulse project, view details, and delete.

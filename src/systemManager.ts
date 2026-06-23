@@ -25,7 +25,7 @@ export class SystemManager {
 
   async showConfig(): Promise<void> {
     const cfg = await this.client.getConfig();
-    await this.openJson(cfg, vscode.l10n.t("Arduino App configuration"));
+    await this.openJson(cfg, vscode.l10n.t("Arduino App CLI configuration"));
   }
 
   async addProperty(): Promise<void> {

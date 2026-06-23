@@ -1,7 +1,7 @@
 {
   "displayName": "Arduino App CLI",
   "description": "Arduino App CLI için hafif bir VS Code sarmalayıcısı — Arduino UNO Q App'lerini, Brick'lerini ve modellerini yönetin, çalıştırın ve izleyin.",
-  "viewContainer.appLab": "Arduino App",
+  "viewContainer.appLab": "Arduino App CLI",
   "view.appBricks": "Proje Brick'leri",
   "view.appLibs": "Proje Kitaplıkları",
   "command.showAppBricks": "Brick'leri Göster",

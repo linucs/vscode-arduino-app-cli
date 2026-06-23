@@ -1,7 +1,7 @@
 {
   "displayName": "Arduino App CLI",
   "description": "Lehký wrapper Arduino App CLI pro VS Code — správa, spouštění a monitorování aplikací, Bricks a modelů pro Arduino UNO Q.",
-  "viewContainer.appLab": "Arduino App",
+  "viewContainer.appLab": "Arduino App CLI",
   "view.appBricks": "Bricks projektu",
   "view.appLibs": "Knihovny projektu",
   "command.showAppBricks": "Zobrazit Bricks",

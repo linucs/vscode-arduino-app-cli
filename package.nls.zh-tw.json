@@ -1,7 +1,7 @@
 {
   "displayName": "Arduino App CLI",
   "description": "Arduino App CLI 的輕量級 VS Code 包裝工具 — 管理、執行並監控 Arduino UNO Q 的 App、Bricks 與模型。",
-  "viewContainer.appLab": "Arduino App",
+  "viewContainer.appLab": "Arduino App CLI",
   "view.appBricks": "專案 Bricks",
   "view.appLibs": "專案程式庫",
   "command.showAppBricks": "顯示 Bricks",

@@ -43,7 +43,7 @@ export class DaemonManager {
     }
     throw new Error(
       vscode.l10n.t(
-        "No Arduino App daemon reachable at {0}. Is the arduino-app-cli service running? (systemctl status arduino-app-cli)",
+        "No Arduino App CLI daemon reachable at {0}. Is the arduino-app-cli service running? (systemctl status arduino-app-cli)",
         this.baseUrl,
       ),
     );

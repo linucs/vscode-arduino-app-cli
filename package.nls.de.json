@@ -1,7 +1,7 @@
 {
   "displayName": "Arduino App CLI",
   "description": "Ein leichtgewichtiger VS Code-Wrapper für die Arduino App CLI — Arduino UNO Q-Apps, Bricks und Modelle verwalten, ausführen und überwachen.",
-  "viewContainer.appLab": "Arduino App",
+  "viewContainer.appLab": "Arduino App CLI",
   "view.appBricks": "Projekt-Bricks",
   "view.appLibs": "Projektbibliotheken",
   "command.showAppBricks": "Bricks anzeigen",

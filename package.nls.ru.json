@@ -1,7 +1,7 @@
 {
   "displayName": "Arduino App CLI",
   "description": "Лёгкая оболочка VS Code для Arduino App CLI — управление, запуск и мониторинг приложений, bricks и моделей Arduino UNO Q.",
-  "viewContainer.appLab": "Arduino App",
+  "viewContainer.appLab": "Arduino App CLI",
   "view.appBricks": "Bricks проекта",
   "view.appLibs": "Библиотеки проекта",
   "command.showAppBricks": "Показать Bricks",

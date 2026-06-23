@@ -357,7 +357,7 @@ export class AppManager {
   private channelFor(app: AppInfo): vscode.OutputChannel {
     let ch = this.logChannels.get(app.id);
     if (!ch) {
-      ch = vscode.window.createOutputChannel(`Arduino App: ${app.name}`);
+      ch = vscode.window.createOutputChannel(`Arduino App CLI: ${app.name}`);
       this.logChannels.set(app.id, ch);
     }
     return ch;
@@ -367,7 +367,7 @@ export class AppManager {
   private pythonChannelFor(app: AppInfo): vscode.OutputChannel {
     let ch = this.pythonChannels.get(app.id);
     if (!ch) {
-      ch = vscode.window.createOutputChannel(`Arduino App: ${app.name} — Python`);
+      ch = vscode.window.createOutputChannel(`Arduino App CLI: ${app.name} — Python`);
       this.pythonChannels.set(app.id, ch);
     }
     return ch;
