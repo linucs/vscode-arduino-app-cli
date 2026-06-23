@@ -150,11 +150,11 @@ export function activate(ctx: vscode.ExtensionContext) {
  */
 function maybeAnnounceVersion(ctx: vscode.ExtensionContext): void {
   const currentVersion = ctx.extension.packageJSON.version as string;
-  const lastVersion = ctx.globalState.get<string>("announcedVersion");
+  const lastVersion = ctx.globalState.get<string>("lastVersion");
   if (lastVersion === currentVersion) {
     return;
   }
-  void ctx.globalState.update("announcedVersion", currentVersion);
+  void ctx.globalState.update("lastVersion", currentVersion);
 
   if (lastVersion === undefined) {
     // Fresh install → Get Started walkthrough.
@@ -180,8 +180,14 @@ async function showUpdateNotification(
     whatsNew,
   );
   if (choice === whatsNew) {
-    const uri = vscode.Uri.joinPath(ctx.extensionUri, "CHANGELOG.md");
-    void vscode.commands.executeCommand("markdown.showPreview", uri);
+    // Open the extension's native Changelog tab (rendered by VS Code from the
+    // bundled CHANGELOG.md) rather than previewing the file by path, which is
+    // unreliable in the installed layout.
+    void vscode.commands.executeCommand(
+      "extension.open",
+      ctx.extension.id,
+      "changelog",
+    );
   }
 }
 
