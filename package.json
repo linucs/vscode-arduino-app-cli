@@ -402,7 +402,8 @@
       {
         "command": "appLab.brick.rename",
         "title": "%command.brick.rename%",
-        "category": "Arduino App Studio"
+        "category": "Arduino App Studio",
+        "icon": "$(edit)"
       },
       {
         "command": "appLab.brick.configure",
@@ -629,12 +630,12 @@
         {
           "command": "appLab.brick.rename",
           "when": "view == appLab.appBricks && viewItem == appBrick",
-          "group": "1_brick@1"
+          "group": "inline@1"
         },
         {
           "command": "appLab.brick.remove",
           "when": "view == appLab.appBricks && viewItem == appBrick",
-          "group": "1_brick@2"
+          "group": "inline@2"
         },
         {
           "command": "appLab.sketchLib.remove",
