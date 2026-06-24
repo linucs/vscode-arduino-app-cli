@@ -346,6 +346,11 @@ export class AppLabClient {
     );
     return res.bricks ?? [];
   }
+  createLocalAppBrick(appId: string, name: string): Promise<{ id: string }> {
+    return this.request("POST", `/apps/${encodeURIComponent(appId)}/bricks`, {
+      body: { name },
+    });
+  }
   addAppBrick(appId: string, brickId: string, config?: Record<string, string>): Promise<BrickInstance> {
     return this.request("PUT", `/apps/${encodeURIComponent(appId)}/bricks/${encodeURIComponent(brickId)}`, {
       body: config ? { variables: config } : {},

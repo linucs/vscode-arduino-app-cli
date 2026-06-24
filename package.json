@@ -388,6 +388,12 @@
         "icon": "$(add)"
       },
       {
+        "command": "appLab.app.createLocalBrick",
+        "title": "%command.app.createLocalBrick%",
+        "category": "Arduino App Studio",
+        "icon": "$(new-file)"
+      },
+      {
         "command": "appLab.brick.remove",
         "title": "%command.brick.remove%",
         "category": "Arduino App Studio",
@@ -499,9 +505,14 @@
           "group": "navigation@0"
         },
         {
-          "command": "appLab.app.refreshBricks",
+          "command": "appLab.app.createLocalBrick",
           "when": "view == appLab.appBricks",
           "group": "navigation@1"
+        },
+        {
+          "command": "appLab.app.refreshBricks",
+          "when": "view == appLab.appBricks",
+          "group": "navigation@2"
         },
         {
           "command": "appLab.app.addSketchLib",
@@ -754,6 +765,10 @@
         },
         {
           "command": "appLab.app.addBrick",
+          "when": "false"
+        },
+        {
+          "command": "appLab.app.createLocalBrick",
           "when": "false"
         },
         {

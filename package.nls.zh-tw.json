@@ -45,6 +45,7 @@
   "command.setDefaultApp": "設為預設 App",
   "command.refreshBricks": "重新整理 Bricks",
   "command.app.addBrick": "新增 Brick",
+  "command.app.createLocalBrick": "新增本機 Brick",
   "command.brick.remove": "移除 Brick",
   "command.brick.rename": "重新命名 Brick",
   "command.brick.configure": "設定 Brick",

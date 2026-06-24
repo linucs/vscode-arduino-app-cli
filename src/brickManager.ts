@@ -13,6 +13,22 @@ export class BrickManager {
     return this.client.listBricks();
   }
 
+  /** Create a new local (custom) brick scaffolded under the app's `bricks/` folder. */
+  async createLocal(app: AppInfo): Promise<void> {
+    const name = await vscode.window.showInputBox({
+      title: vscode.l10n.t("New Local Brick"),
+      prompt: vscode.l10n.t("Name for the new local brick in {0}", app.name),
+      ignoreFocusOut: true,
+      validateInput: (v) => (v.trim() ? undefined : vscode.l10n.t("Name is required")),
+    });
+    const trimmed = name?.trim();
+    if (!trimmed) {
+      return;
+    }
+    await this.client.createLocalAppBrick(app.id, trimmed);
+    this.onChanged();
+  }
+
   /** Add a brick to the given app (or prompt to pick one from the catalog). */
   async addToApp(app: AppInfo, brickId?: string): Promise<void> {
     let id = brickId;

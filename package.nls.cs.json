@@ -45,6 +45,7 @@
   "command.setDefaultApp": "Nastavit jako výchozí aplikaci",
   "command.refreshBricks": "Obnovit Bricks",
   "command.app.addBrick": "Přidat Brick",
+  "command.app.createLocalBrick": "Nový místní Brick",
   "command.brick.remove": "Odebrat Brick",
   "command.brick.rename": "Přejmenovat Brick",
   "command.brick.configure": "Konfigurovat Brick",

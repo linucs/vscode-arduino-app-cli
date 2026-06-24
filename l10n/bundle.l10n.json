@@ -158,5 +158,7 @@
   "{0} / {1} ({2}%)": "{0} / {1} ({2}%)",
   "{0} is coming in a later release.": "{0} is coming in a later release.",
   "{0} package(s) can be updated.": "{0} package(s) can be updated.",
-  "{0}: {1} → {2}": "{0}: {1} → {2}"
+  "{0}: {1} → {2}": "{0}: {1} → {2}",
+  "New Local Brick": "New Local Brick",
+  "Name for the new local brick in {0}": "Name for the new local brick in {0}"
 }

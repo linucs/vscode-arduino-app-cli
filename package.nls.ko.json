@@ -45,6 +45,7 @@
   "command.setDefaultApp": "기본 App으로 설정",
   "command.refreshBricks": "Brick 새로 고침",
   "command.app.addBrick": "Brick 추가",
+  "command.app.createLocalBrick": "새 로컬 Brick",
   "command.brick.remove": "Brick 제거",
   "command.brick.rename": "Brick 이름 바꾸기",
   "command.brick.configure": "Brick 구성",

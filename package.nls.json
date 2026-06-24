@@ -45,6 +45,7 @@
   "command.setDefaultApp": "Set as Default App",
   "command.refreshBricks": "Refresh Bricks",
   "command.app.addBrick": "Add Brick",
+  "command.app.createLocalBrick": "New Local Brick",
   "command.brick.remove": "Remove Brick",
   "command.brick.rename": "Rename Brick",
   "command.brick.configure": "Configure Brick",

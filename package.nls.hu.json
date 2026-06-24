@@ -45,6 +45,7 @@
   "command.setDefaultApp": "Beállítás alapértelmezett Appként",
   "command.refreshBricks": "Brickek frissítése",
   "command.app.addBrick": "Brick hozzáadása",
+  "command.app.createLocalBrick": "Új helyi Brick",
   "command.brick.remove": "Brick eltávolítása",
   "command.brick.rename": "Brick átnevezése",
   "command.brick.configure": "Brick konfigurálása",

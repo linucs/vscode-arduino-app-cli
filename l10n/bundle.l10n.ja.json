@@ -158,5 +158,7 @@
   "{0} / {1} ({2}%)": "{0} / {1} ({2}%)",
   "{0} is coming in a later release.": "{0} は今後のリリースで提供される予定です。",
   "{0} package(s) can be updated.": "{0} 個のパッケージを更新できます。",
-  "{0}: {1} → {2}": "{0}: {1} → {2}"
+  "{0}: {1} → {2}": "{0}: {1} → {2}",
+  "New Local Brick": "新しいローカル Brick",
+  "Name for the new local brick in {0}": "{0} 内の新しいローカル Brick の名前"
 }

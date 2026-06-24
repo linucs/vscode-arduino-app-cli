@@ -158,5 +158,7 @@
   "{0} / {1} ({2}%)": "{0} / {1} ({2}%)",
   "{0} is coming in a later release.": "{0} 將在後續版本中推出。",
   "{0} package(s) can be updated.": "有 {0} 個套件可更新。",
-  "{0}: {1} → {2}": "{0}: {1} → {2}"
+  "{0}: {1} → {2}": "{0}: {1} → {2}",
+  "New Local Brick": "新增本機 Brick",
+  "Name for the new local brick in {0}": "{0} 中新增本機 Brick 的名稱"
 }

@@ -538,6 +538,15 @@ function registerCommands(ctx: vscode.ExtensionContext) {
       return d.bricks.addToApp(app, brickId);
     }),
   );
+  reg("appLab.app.createLocalBrick", (arg) =>
+    withReady((d) => {
+      const app = appFrom(arg);
+      if (!app) {
+        return noActiveApp();
+      }
+      return d.bricks.createLocal(app);
+    }),
+  );
   reg("appLab.brick.configure", (arg) => withReady((d) => withAppBrick(arg, (a, b) => d.bricks.configure(a, b))));
   reg("appLab.brick.remove", (arg) => withReady((d) => withAppBrick(arg, (a, b) => d.bricks.remove(a, b))));
   reg("appLab.brick.rename", (arg) => withReady((d) => withAppBrick(arg, (a, b) => d.bricks.rename(a, b))));

@@ -45,6 +45,7 @@
   "command.setDefaultApp": "既定の App に設定",
   "command.refreshBricks": "Brick を更新",
   "command.app.addBrick": "Brick を追加",
+  "command.app.createLocalBrick": "新しいローカル Brick",
   "command.brick.remove": "Brick を削除",
   "command.brick.rename": "Brick の名前を変更",
   "command.brick.configure": "Brick を構成",

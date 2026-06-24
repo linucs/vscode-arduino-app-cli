@@ -45,6 +45,7 @@
   "command.setDefaultApp": "Varsayılan App Olarak Ayarla",
   "command.refreshBricks": "Brick'leri Yenile",
   "command.app.addBrick": "Brick Ekle",
+  "command.app.createLocalBrick": "Yeni Yerel Brick",
   "command.brick.remove": "Brick'i Kaldır",
   "command.brick.rename": "Brick'i Yeniden Adlandır",
   "command.brick.configure": "Brick'i Yapılandır",

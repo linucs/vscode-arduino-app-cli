@@ -45,6 +45,7 @@
   "command.setDefaultApp": "设为默认 App",
   "command.refreshBricks": "刷新 Bricks",
   "command.app.addBrick": "添加 Brick",
+  "command.app.createLocalBrick": "新建本地 Brick",
   "command.brick.remove": "移除 Brick",
   "command.brick.rename": "重命名 Brick",
   "command.brick.configure": "配置 Brick",

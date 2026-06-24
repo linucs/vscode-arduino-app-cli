@@ -158,5 +158,7 @@
   "{0} / {1} ({2}%)": "{0} / {1} ({2}%)",
   "{0} is coming in a later release.": "A(z) {0} egy későbbi kiadásban érkezik.",
   "{0} package(s) can be updated.": "{0} csomag frissíthető.",
-  "{0}: {1} → {2}": "{0}: {1} → {2}"
+  "{0}: {1} → {2}": "{0}: {1} → {2}",
+  "New Local Brick": "Új helyi Brick",
+  "Name for the new local brick in {0}": "Az új helyi Brick neve itt: {0}"
 }
