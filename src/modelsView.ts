@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import type { ModelInfo } from "./api/types";
+import type { DaemonState } from "./appRegistry";
 
 type Node = { kind: "model"; model: ModelInfo } | { kind: "message"; label: string };
 
@@ -8,7 +9,10 @@ export class ModelsTreeProvider implements vscode.TreeDataProvider<Node> {
   private readonly emitter = new vscode.EventEmitter<Node | undefined>();
   readonly onDidChangeTreeData = this.emitter.event;
 
-  constructor(private readonly load: () => Promise<ModelInfo[]>) {}
+  constructor(
+    private readonly load: () => Promise<ModelInfo[]>,
+    private readonly daemonState: () => DaemonState,
+  ) {}
 
   refresh(): void {
     this.emitter.fire(undefined);
@@ -27,6 +31,11 @@ export class ModelsTreeProvider implements vscode.TreeDataProvider<Node> {
   }
 
   async getChildren(): Promise<Node[]> {
+    // Daemon unreachable: render an empty tree so the `viewsWelcome` panel
+    // (Reconnect button + hint) shows, instead of a cryptic error row.
+    if (this.daemonState() === "disconnected") {
+      return [];
+    }
     try {
       const models = await this.load();
       return models.length

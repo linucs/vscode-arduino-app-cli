@@ -12,6 +12,7 @@
   "view.models": "모델",
   "command.showVersion": "버전 표시",
   "command.reconnect": "데몬에 다시 연결",
+  "welcome.daemonUnreachable": "arduino-app-cli 데몬에 연결할 수 없습니다.\n[다시 연결](command:appLab.reconnect)\n서비스가 실행 중인지 확인하세요: `systemctl status arduino-app-cli`.",
   "command.showConfig": "구성 표시",
   "command.editProperty": "속성 편집",
   "command.addProperty": "속성 추가",

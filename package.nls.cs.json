@@ -12,6 +12,7 @@
   "view.models": "Modely",
   "command.showVersion": "Zobrazit verzi",
   "command.reconnect": "Znovu se připojit k démonu",
+  "welcome.daemonUnreachable": "Nelze se připojit k démonu arduino-app-cli.\n[Znovu se připojit](command:appLab.reconnect)\nZkontrolujte, že služba běží: `systemctl status arduino-app-cli`.",
   "command.showConfig": "Zobrazit konfiguraci",
   "command.editProperty": "Upravit vlastnost",
   "command.addProperty": "Přidat vlastnost",

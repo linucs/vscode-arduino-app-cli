@@ -12,6 +12,7 @@
   "view.models": "模型",
   "command.showVersion": "顯示版本",
   "command.reconnect": "重新連線至常駐程式",
+  "welcome.daemonUnreachable": "無法連線至 arduino-app-cli 常駐程式。\n[重新連線](command:appLab.reconnect)\n請確認服務正在執行：`systemctl status arduino-app-cli`。",
   "command.showConfig": "顯示設定",
   "command.editProperty": "編輯屬性",
   "command.addProperty": "新增屬性",

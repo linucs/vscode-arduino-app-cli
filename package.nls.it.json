@@ -12,6 +12,7 @@
   "view.models": "Modelli",
   "command.showVersion": "Mostra versione",
   "command.reconnect": "Riconnetti al daemon",
+  "welcome.daemonUnreachable": "Impossibile raggiungere il daemon arduino-app-cli.\n[Riconnetti](command:appLab.reconnect)\nVerifica che il servizio sia in esecuzione: `systemctl status arduino-app-cli`.",
   "command.showConfig": "Mostra configurazione",
   "command.editProperty": "Modifica proprietà",
   "command.addProperty": "Aggiungi proprietà",

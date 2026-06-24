@@ -9,7 +9,7 @@ import { SystemManager } from "./systemManager";
 import { SerialMonitor } from "./monitor";
 import { PlotterPanel } from "./plotterPanel";
 import { PlotterFeeder } from "./plotterFeeder";
-import { AppRegistry } from "./appRegistry";
+import { AppRegistry, type DaemonState } from "./appRegistry";
 import { ExamplesTreeProvider } from "./examplesView";
 import { InstalledAppsTreeProvider } from "./installedAppsView";
 import { AppItemsTreeProvider } from "./appBricksView";
@@ -58,6 +58,8 @@ let plotterSource: "serial" | "python" | undefined;
 let statusAbort: AbortController | undefined;
 let reconnectTimer: ReturnType<typeof setTimeout> | undefined;
 let reconnectAttempts = 0;
+/** Mirrors the published `appLab.daemonState` context key, so {@link setDaemonState} is idempotent. */
+let daemonState: DaemonState | undefined;
 let lastAppClick: { id: string; time: number } | undefined;
 
 /** Bounded background reconnect: re-probe every 5s, up to ~1 minute. */
@@ -79,8 +81,20 @@ export function activate(ctx: vscode.ExtensionContext) {
   installedAppsView = new InstalledAppsTreeProvider(registry);
   appBricksView = new AppItemsTreeProvider("bricks", clientOf, () => activeTracker.current);
   appLibsView = new AppItemsTreeProvider("libs", clientOf, () => activeTracker.current);
-  bricksView = new BricksTreeProvider(async () => (await ensureReady())!.bricks.listCatalog());
-  modelsView = new ModelsTreeProvider(async () => (await ensureReady())!.models.list());
+  bricksView = new BricksTreeProvider(
+    async () => {
+      const d = await ensureReady();
+      return d ? d.bricks.listCatalog() : [];
+    },
+    () => registry.daemonState(),
+  );
+  modelsView = new ModelsTreeProvider(
+    async () => {
+      const d = await ensureReady();
+      return d ? d.models.list() : [];
+    },
+    () => registry.daemonState(),
+  );
 
   activeTracker = new ActiveAppTracker((root) => registry.resolveByPath(root));
   statusBar = new StatusBar(activeTracker);
@@ -136,9 +150,31 @@ export function activate(ctx: vscode.ExtensionContext) {
 
   registerCommands(ctx);
 
+  // Publish the initial connection state so the views' `viewsWelcome` panels are
+  // gated correctly from the first render (no disconnected flash while probing).
+  setDaemonState("connecting");
+
   // Kick off a connection in the background so the views populate and the status
   // bar reflects reality without waiting for the first user action.
   void ensureReady();
+}
+
+/**
+ * Single source of truth for the daemon connection state. Publishes a
+ * `appLab.daemonState` context key (gating the `viewsWelcome` panels in
+ * package.json) and notifies every dependent view to re-render: the registry-fed
+ * views (Examples, My Apps) via the registry's change event, and the load-fed
+ * views (Bricks, Models) via an explicit refresh.
+ */
+function setDaemonState(state: DaemonState): void {
+  if (state === daemonState) {
+    return; // idempotent: the SSE loop calls this on every app event
+  }
+  daemonState = state;
+  void vscode.commands.executeCommand("setContext", "appLab.daemonState", state);
+  registry.setDaemonState(state);
+  bricksView.refresh();
+  modelsView.refresh();
 }
 
 /**
@@ -234,10 +270,20 @@ async function doEnsureReady(): Promise<Ready | undefined> {
     return ready;
   }
   let version: VersionResponse;
+  // Only show "connecting" for a genuine fresh attempt. Once we're disconnected,
+  // the bounded background re-probe keeps re-entering here every 5s; flipping
+  // disconnected→connecting→disconnected on each retry would make the welcome
+  // panel (and the four views) flash/reload ~12 times before giving up. Staying
+  // "disconnected" through the retries keeps the panel still — the idempotent
+  // setDaemonState then no-ops until the daemon actually comes back.
+  if (daemonState !== "disconnected") {
+    setDaemonState("connecting");
+  }
   try {
     version = await daemon.start();
   } catch (err) {
     statusBar.setDisconnected();
+    setDaemonState("disconnected");
     // Notify once on the initial failure; stay quiet while auto-reconnect retries.
     if (reconnectAttempts === 0) {
       vscode.window.showErrorMessage(
@@ -297,6 +343,7 @@ async function doEnsureReady(): Promise<Ready | undefined> {
   // The probe already fetched the version (it hits /v1/version), so reuse it
   // instead of a second round-trip.
   statusBar.setConnected(version.version, daemon.baseUrl);
+  setDaemonState("connected");
 
   // Bootstrap the apps index straight from the SSE: connecting emits a full
   // snapshot (apps + examples) which populates the registry via applyStatus — no
@@ -348,9 +395,18 @@ function subscribeStatusEvents(client: AppLabClient): void {
   const run = async () => {
     while (!ctrl.signal.aborted) {
       try {
-        await client.appStatusEvents((app) => registry.applyStatus(app), ctrl.signal);
+        // Events flowing again means the daemon is reachable: clear any stale
+        // disconnected state so the views leave the welcome panel.
+        await client.appStatusEvents((app) => {
+          setDaemonState("connected");
+          registry.applyStatus(app);
+        }, ctrl.signal);
       } catch {
-        // fall through to backoff
+        // The stream couldn't establish or dropped with an error: the daemon went
+        // away after we connected — fall back to the disconnected welcome state.
+        if (!ctrl.signal.aborted) {
+          setDaemonState("disconnected");
+        }
       }
       if (ctrl.signal.aborted) {
         return;
@@ -358,7 +414,13 @@ function subscribeStatusEvents(client: AppLabClient): void {
       // The stream dropped: events may have been missed, and an upsert can't
       // reflect a deletion that happened while we were away — re-list (unfiltered,
       // atomic replace) to resync before the next reconnect re-emits the snapshot.
-      void registry.refresh();
+      // A successful re-list also confirms the daemon is back.
+      try {
+        await registry.refresh();
+        setDaemonState("connected");
+      } catch {
+        setDaemonState("disconnected");
+      }
       await new Promise((r) => setTimeout(r, 3000));
     }
   };

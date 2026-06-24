@@ -12,6 +12,7 @@
   "view.models": "模型",
   "command.showVersion": "显示版本",
   "command.reconnect": "重新连接到守护进程",
+  "welcome.daemonUnreachable": "无法连接到 arduino-app-cli 守护进程。\n[重新连接](command:appLab.reconnect)\n请确认服务正在运行：`systemctl status arduino-app-cli`。",
   "command.showConfig": "显示配置",
   "command.editProperty": "编辑属性",
   "command.addProperty": "添加属性",

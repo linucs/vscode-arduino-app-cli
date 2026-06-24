@@ -3,6 +3,9 @@ import * as vscode from "vscode";
 import type { AppLabClient } from "./appLabClient";
 import type { AppInfo } from "./api/types";
 
+/** Connection state to the daemon, shared with the tree views via {@link AppRegistry}. */
+export type DaemonState = "connecting" | "connected" | "disconnected";
+
 /**
  * Tree-independent registry of the apps the daemon knows about, keyed by id. It
  * exists so app discovery survives the removal of the My-Apps tree:
@@ -32,6 +35,15 @@ export class AppRegistry {
   /** Set once the SSE has delivered its first event (drives the Examples loading state). */
   private booted = false;
 
+  /**
+   * Connection state to the daemon. The dependent views (Examples, My Apps, and —
+   * via the injected getter — Bricks, Models) read this to render a disconnected
+   * empty state (which surfaces the `viewsWelcome` panel) instead of a perpetual
+   * "Loading…" or a cryptic error. Driven by `extension.ts` as the connection probe
+   * succeeds or fails.
+   */
+  private connState: DaemonState = "connecting";
+
   /** Fires whenever the map changes, so dependent views can re-render. */
   private readonly changed = new vscode.EventEmitter<void>();
   readonly onDidChange = this.changed.event;
@@ -41,6 +53,20 @@ export class AppRegistry {
   /** Whether the SSE snapshot has started arriving (used for the Examples loading state). */
   hasBooted(): boolean {
     return this.booted;
+  }
+
+  /** Current daemon connection state. */
+  daemonState(): DaemonState {
+    return this.connState;
+  }
+
+  /** Update the daemon connection state and notify dependent views to re-render. */
+  setDaemonState(state: DaemonState): void {
+    if (this.connState === state) {
+      return;
+    }
+    this.connState = state;
+    this.changed.fire();
   }
 
   get(id: string): AppInfo | undefined {

@@ -12,6 +12,7 @@
   "view.models": "モデル",
   "command.showVersion": "バージョンを表示",
   "command.reconnect": "デーモンに再接続",
+  "welcome.daemonUnreachable": "arduino-app-cli デーモンに接続できません。\n[再接続](command:appLab.reconnect)\nサービスが実行中か確認してください: `systemctl status arduino-app-cli`。",
   "command.showConfig": "構成を表示",
   "command.editProperty": "プロパティを編集",
   "command.addProperty": "プロパティを追加",

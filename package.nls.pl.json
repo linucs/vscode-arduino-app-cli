@@ -12,6 +12,7 @@
   "view.models": "Modele",
   "command.showVersion": "Pokaż wersję",
   "command.reconnect": "Połącz ponownie z demonem",
+  "welcome.daemonUnreachable": "Nie można połączyć się z demonem arduino-app-cli.\n[Połącz ponownie](command:appLab.reconnect)\nUpewnij się, że usługa działa: `systemctl status arduino-app-cli`.",
   "command.showConfig": "Pokaż konfigurację",
   "command.editProperty": "Edytuj właściwość",
   "command.addProperty": "Dodaj właściwość",

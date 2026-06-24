@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import type { BrickInfo } from "./api/types";
+import type { DaemonState } from "./appRegistry";
 
 type Node = { kind: "brick"; brick: BrickInfo } | { kind: "message"; label: string };
 
@@ -8,7 +9,10 @@ export class BricksTreeProvider implements vscode.TreeDataProvider<Node> {
   private readonly emitter = new vscode.EventEmitter<Node | undefined>();
   readonly onDidChangeTreeData = this.emitter.event;
 
-  constructor(private readonly load: () => Promise<BrickInfo[]>) {}
+  constructor(
+    private readonly load: () => Promise<BrickInfo[]>,
+    private readonly daemonState: () => DaemonState,
+  ) {}
 
   refresh(): void {
     this.emitter.fire(undefined);
@@ -28,6 +32,11 @@ export class BricksTreeProvider implements vscode.TreeDataProvider<Node> {
   }
 
   async getChildren(): Promise<Node[]> {
+    // Daemon unreachable: render an empty tree so the `viewsWelcome` panel
+    // (Reconnect button + hint) shows, instead of a cryptic error row.
+    if (this.daemonState() === "disconnected") {
+      return [];
+    }
     try {
       const bricks = await this.load();
       return bricks.length

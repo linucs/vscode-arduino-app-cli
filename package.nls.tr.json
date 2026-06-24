@@ -12,6 +12,7 @@
   "view.models": "Modeller",
   "command.showVersion": "Sürümü Göster",
   "command.reconnect": "Daemon'a Yeniden Bağlan",
+  "welcome.daemonUnreachable": "arduino-app-cli daemon'ına ulaşılamıyor.\n[Yeniden bağlan](command:appLab.reconnect)\nServisin çalıştığından emin olun: `systemctl status arduino-app-cli`.",
   "command.showConfig": "Yapılandırmayı Göster",
   "command.editProperty": "Özelliği Düzenle",
   "command.addProperty": "Özellik Ekle",

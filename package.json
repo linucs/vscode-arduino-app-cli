@@ -169,6 +169,28 @@
         }
       ]
     },
+    "viewsWelcome": [
+      {
+        "view": "appLab.installedApps",
+        "when": "appLab.daemonState == 'disconnected'",
+        "contents": "%welcome.daemonUnreachable%"
+      },
+      {
+        "view": "appLab.apps",
+        "when": "appLab.daemonState == 'disconnected'",
+        "contents": "%welcome.daemonUnreachable%"
+      },
+      {
+        "view": "appLab.bricks",
+        "when": "appLab.daemonState == 'disconnected'",
+        "contents": "%welcome.daemonUnreachable%"
+      },
+      {
+        "view": "appLab.models",
+        "when": "appLab.daemonState == 'disconnected'",
+        "contents": "%welcome.daemonUnreachable%"
+      }
+    ],
     "commands": [
       {
         "command": "appLab.showVersion",

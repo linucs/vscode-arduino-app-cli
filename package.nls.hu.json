@@ -12,6 +12,7 @@
   "view.models": "Modellek",
   "command.showVersion": "Verzió megjelenítése",
   "command.reconnect": "Újracsatlakozás a démonhoz",
+  "welcome.daemonUnreachable": "Az arduino-app-cli démon nem érhető el.\n[Újracsatlakozás](command:appLab.reconnect)\nEllenőrizze, hogy a szolgáltatás fut-e: `systemctl status arduino-app-cli`.",
   "command.showConfig": "Konfiguráció megjelenítése",
   "command.editProperty": "Tulajdonság szerkesztése",
   "command.addProperty": "Tulajdonság hozzáadása",

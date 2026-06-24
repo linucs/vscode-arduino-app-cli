@@ -76,6 +76,11 @@ export class InstalledAppsTreeProvider implements vscode.TreeDataProvider<Node> 
     if (node) {
       return [];
     }
+    // Daemon unreachable: render an empty tree so the `viewsWelcome` panel
+    // (Reconnect button + hint) shows, instead of a perpetual "Loading…".
+    if (this.registry.daemonState() === "disconnected") {
+      return [];
+    }
     const apps = this.registry.installedApps();
     if (!apps.length) {
       // Distinguish "snapshot not in yet" from "genuinely none".

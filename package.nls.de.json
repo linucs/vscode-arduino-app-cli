@@ -12,6 +12,7 @@
   "view.models": "Modelle",
   "command.showVersion": "Version anzeigen",
   "command.reconnect": "Erneut mit Daemon verbinden",
+  "welcome.daemonUnreachable": "Der arduino-app-cli-Daemon ist nicht erreichbar.\n[Erneut verbinden](command:appLab.reconnect)\nStellen Sie sicher, dass der Dienst läuft: `systemctl status arduino-app-cli`.",
   "command.showConfig": "Konfiguration anzeigen",
   "command.editProperty": "Eigenschaft bearbeiten",
   "command.addProperty": "Eigenschaft hinzufügen",

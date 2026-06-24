@@ -73,6 +73,11 @@ export class ExamplesTreeProvider implements vscode.TreeDataProvider<Node> {
     if (node) {
       return [];
     }
+    // Daemon unreachable: render an empty tree so the `viewsWelcome` panel
+    // (Reconnect button + hint) shows, instead of a perpetual "Loading…".
+    if (this.registry.daemonState() === "disconnected") {
+      return [];
+    }
     const examples = this.registry.examples();
     if (!examples.length) {
       // Distinguish "snapshot not in yet" from "genuinely none".

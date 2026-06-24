@@ -12,6 +12,7 @@
   "view.models": "Модели",
   "command.showVersion": "Показать версию",
   "command.reconnect": "Переподключиться к демону",
+  "welcome.daemonUnreachable": "Не удаётся подключиться к демону arduino-app-cli.\n[Переподключиться](command:appLab.reconnect)\nУбедитесь, что служба запущена: `systemctl status arduino-app-cli`.",
   "command.showConfig": "Показать конфигурацию",
   "command.editProperty": "Изменить свойство",
   "command.addProperty": "Добавить свойство",
