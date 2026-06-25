@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-06-25
+
+### Added
+
+- **Create a new local brick** — a command to scaffold a new local brick for the
+  current app, alongside browsing and adding bricks from the catalog.
+- **Disconnected state** — when the `arduino-app-cli` daemon is unreachable, the
+  Examples, Brick Catalog, Models and Installed Apps views now show a welcome
+  message instead of appearing empty, and the extension tracks daemon connection
+  state to drive them.
+
+### Changed
+
+- **"Update complete" feedback** — the System update flow now surfaces a
+  completion notification when an update finishes.
+- Added icons to the brick **Rename** command and tidied command groups for a
+  more consistent context menu.
+
 ## [0.1.1] - 2026-06-23
 
 ### Changed

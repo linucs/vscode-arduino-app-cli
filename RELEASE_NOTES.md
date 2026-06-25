@@ -6,6 +6,12 @@ Build, run, and monitor **Arduino UNO Q** apps in **plain VS Code** — without 
 
 ---
 
+## v0.1.2 — 2026-06-25
+
+- **Create your own bricks** — a new command scaffolds a fresh local brick for the current app, so you can build custom bricks instead of only adding ones from the catalog.
+- **Clearer when the board is offline** — when the `arduino-app-cli` daemon can't be reached, the Examples, Brick Catalog, Models and Installed Apps views now explain that you're disconnected instead of just showing empty lists.
+- **Update feedback** — you now get an "Update complete" notification once a System update finishes, plus small polish to the brick **Rename** action and context menus.
+
 ## v0.1.1 — 2026-06-23
 
 - **Renamed to "Arduino App Studio"** — the extension, its commands and views are now consistently named **Arduino App Studio** (previously "Arduino App CLI"). The `arduino-app-cli` daemon it wraps is unchanged.
