@@ -117,7 +117,10 @@ export class SystemManager {
       async (progress, token) => {
         const ctrl = new AbortController();
         token.onCancellationRequested(() => ctrl.abort());
-        await this.client.updateEvents(
+        // Subscribe to the event stream first (the daemon has no replay for late
+        // subscribers), but do NOT await it — it stays open until the update
+        // finishes. Only `applyUpdate` actually starts the update.
+        const streaming = this.client.updateEvents(
           {
             onProgress: (p) => progress.report({ message: `${p.name} ${Math.round((p.progress ?? 0) * 100)}%` }),
             onMessage: (m) => this.output.appendLine(m.message),
@@ -126,6 +129,9 @@ export class SystemManager {
           ctrl.signal,
         );
         await this.client.applyUpdate();
+        // Wait for the daemon to close the stream once the update completes.
+        await streaming;
+        this.output.appendLine(vscode.l10n.t("Update complete."));
       },
     );
   }
